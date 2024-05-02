@@ -1,0 +1,19 @@
+@charset 'utf-8';
+@use '../abstract/functions' as *;
+html {
+  box-sizing: border-box;
+}
+*,*::before,*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+img {
+  vertical-align: middle;
+  max-width: 100%;
+}
