@@ -14,6 +14,10 @@ body {
 }
 
 img {
-  vertical-align: middle;
   max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  font-style: italic;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
