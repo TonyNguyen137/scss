@@ -1,0 +1,26 @@
+@use '../abstract/functions' as *;
+@use "sass:meta";
+
+$breakpoints: (
+  'sm': (min-width:  px-to-em(576)),
+  'md': (min-width:  px-to-em(768)),
+  'lg': (min-width: px-to-em(992)),
+  'xl': (min-width: px-to-em(1200)),
+  'xxl': (min-width: px-to-em(1400)),
+);
+ 
+@mixin mq($name) {
+  // If the key exists in the map
+  @if map-has-key($breakpoints, $name) {
+    // Prints a media query based on the value
+    @media #{meta.inspect(map-get($breakpoints, $name))} {
+      @content;
+    }
+  }
+
+  // If the key doesn't exist in the map
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Please make sure it is defined in `$breakpoints` map.";
+  }
+}

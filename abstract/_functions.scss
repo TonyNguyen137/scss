@@ -8,3 +8,8 @@
   $base-font-size: 16;
   @return #{math.div($pixels, 16)}rem;
 }
+
+@function px-to-em($pixels){
+  $base-font-size: 16;
+  @return #{math.div($pixels, 16)}em;
+}
