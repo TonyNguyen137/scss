@@ -1,5 +1,5 @@
-Use with Sass
-In order to build that boulderplate, one needs to:
+#Use with Sass
+In order to build that boilerplate, one needs to:
 
 install sass if not yet installed:
 npm install -g sass
