@@ -1,4 +1,5 @@
-#Use with Sass
+# Use with Sass
+
 In order to build that boilerplate, one needs to:
 
 install sass if not yet installed:
