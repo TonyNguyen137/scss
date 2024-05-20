@@ -5,14 +5,16 @@
 html {
   box-sizing: border-box;
 }
-*,*::before,*::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: inherit;
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
 }
 
 img {
@@ -22,4 +24,12 @@ img {
   font-style: italic;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+select,
+input,
+button,
+textarea {
+  font: inherit;
+  color: inherit;
 }
