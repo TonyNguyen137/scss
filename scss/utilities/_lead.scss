@@ -1,0 +1,11 @@
+@use '../abstracts/' as *;
+
+.lead {
+  color: black;
+  text-transform: uppercase;
+  font-weight: $fw-400;
+
+  & + p {
+    margin-top: 0;
+  }
+}

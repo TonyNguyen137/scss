@@ -1,4 +1,8 @@
-index.html
 .DS_Store
-css
-img
+node_modules
+public
+src
+package-lock.json
+package.json
+vite.config.js
+dist

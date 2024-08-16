@@ -1,0 +1,42 @@
+@use '../abstracts/' as *;
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  font-family: $body-font-family;
+  font-size: $body-font-size;
+  font-weight: $body-font-weight;
+  color: $body-text-color;
+  background-color: $body-background-color;
+  line-height: $body-line-height;
+  height: 100vh;
+  display: grid;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  font-style: italic;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+a,
+select,
+input,
+button,
+textarea {
+  font: inherit;
+  color: inherit;
+}

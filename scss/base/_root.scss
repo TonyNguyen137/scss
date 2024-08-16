@@ -1,0 +1,116 @@
+@use '../abstracts' as *;
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:math';
+
+$clamp-map: map.merge($font-size-clamp, $spacer-clamp);
+
+@debug $clamp-map;
+
+:root {
+  // css variables for default color theme
+  @each $color, $shade-map in $active-theme {
+    $type: meta.type-of($shade-map);
+
+    @if ($type == 'color') {
+      --#{$prefix}#{$color-prefix}#{$color}: #{$shade-map};
+    } @else if ($type == 'map') {
+      @each $shade, $value in $shade-map {
+        @if (meta.type-of($value) != 'color') {
+          @error '#{$value} is not a color!';
+        }
+        --#{$prefix}#{$color-prefix}#{$color}-#{$shade}: #{$value};
+      }
+    } @else {
+      @error 'the input is not correct';
+    }
+  }
+
+  @if ($enable-media-query-dark-mode) {
+    @media (prefers-color-scheme: dark) {
+      @each $color, $shade-map in map.get($color-theme, dark) {
+        @each $shade, $value in $shade-map {
+          --#{$prefix}#{$color-prefix}#{$color}-#{$shade}: #{$value};
+        }
+      }
+    }
+  }
+
+  // css variables for font-size
+  @each $screen-size, $size-map in $font-sizes {
+    @if $screen-size == default {
+      @each $size-name, $size-value in $size-map {
+        --#{$prefix}#{$font-size-prefix}#{$size-name}: #{$size-value};
+      }
+    } @else {
+      @include mq($screen-size) {
+        @each $size-name, $size-value in $size-map {
+          --#{$prefix}#{$font-size-prefix}#{$size-name}: #{$size-value};
+        }
+      }
+    }
+  }
+
+  // css variables for spacers
+  @each $screen-size, $size-map in $spacers {
+    @if $screen-size == default {
+      @each $size-name, $size-value in $size-map {
+        --#{$prefix}#{$spacers-prefix}#{$size-name}: #{$size-value};
+      }
+    } @else {
+      @include mq($screen-size) {
+        @each $size-name, $size-value in $size-map {
+          --#{$prefix}#{$spacers-prefix}#{$size-name}: #{$size-value};
+        }
+      }
+    }
+  }
+
+  // css variables for utilities
+  @each $key, $map in $utilities {
+    $hasVar: map.get($map, 'hasVar');
+
+    @if $hasVar {
+      @each $suffix, $value in $valueObject {
+        .#{$class}-#{$suffix} {
+          #{$prefix}#{$property}: $value;
+        }
+        @if $responsive {
+          @each $breakpoint, $size in $grid-breakpoints {
+            @media (min-width:#{$size}) {
+              .#{$prefix}#{$class}-#{$breakpoint}-#{$suffix} {
+                #{$property}: $value;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// css variables for other color themes
+@each $theme, $theme-map in $color-theme {
+  @if ($theme != 'default') {
+    :root[data-theme='#{$theme}'] {
+      @each $color, $shade-map in $theme-map {
+        $type: meta.type-of($shade-map);
+
+        @if ($type == 'color') {
+          --#{$prefix}#{$color-prefix}#{$color}: #{$shade-map};
+        } @else if ($type == 'map') {
+          @each $shade, $value in $shade-map {
+            @if (meta.type-of($value) != 'color') {
+              @error '#{$value} is not a color!';
+            }
+
+            --#{$prefix}#{$color-prefix}#{$color}-#{$shade}: #{$value};
+          }
+        } @else {
+          @error 'the input is not correct';
+        }
+      }
+    }
+  }
+}

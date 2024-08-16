@@ -1,0 +1,14 @@
+@use '../abstracts' as *;
+@use 'sass:map';
+
+@if $enable-bootstrap-grid-system {
+  .row {
+    @include make-row();
+
+    > * {
+      @include make-col-ready();
+    }
+  }
+
+  @include make-grid-columns();
+}

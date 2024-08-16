@@ -1,0 +1,85 @@
+@use '../abstracts' as *;
+
+%v-stack-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card {
+  @extend %v-stack-center;
+  padding: $card-padding;
+  row-gap: $card-row-gap;
+  background-color: $card-background-clr;
+  width: 100%;
+  max-width: px-to-rem(456);
+  border-radius: $card-border-r;
+
+  @include mq(xxl) {
+    max-width: px-to-rem(384);
+  }
+
+  &__header {
+    @extend %v-stack-center;
+    row-gap: $card-row-gap;
+    text-align: center;
+  }
+  &__image {
+    width: $card-image-size;
+    height: $card-image-size;
+    object-fit: cover;
+    border-radius: 100%;
+  }
+
+  &__name {
+    font-size: $card-heading-fs;
+    font-weight: $card-name-fw;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  &__location {
+    color: $card-location-color;
+    font-size: $card-location-fs;
+    font-weight: $card-location-fw;
+    display: block;
+  }
+
+  &__quote {
+    margin-bottom: $card-row-gap;
+    text-align: center;
+  }
+
+  &__body {
+    width: 100%;
+  }
+
+  &__social-media-list {
+    @extend %v-stack-center;
+    align-items: stretch;
+    row-gap: $card-row-gap-li;
+    font-size: $card-content-fs;
+    font-weight: $card-network-profils-fw;
+    list-style: none;
+  }
+
+  &__social-media-item {
+    background-color: $card-item-bg;
+    padding-block: $card-item-padding-y;
+    text-align: center;
+    border-radius: $card-item-border-r;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: $card-item-bg-hover;
+        color: $card-item-color-hover;
+      }
+    }
+  }
+
+  &__social-media-link {
+    text-decoration: none;
+  }
+}

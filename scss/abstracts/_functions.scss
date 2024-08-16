@@ -1,0 +1,39 @@
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:meta';
+// @use 'colors' as *;
+// @use 'spacing' as *;
+// @use 'typography' as *;
+
+@function px-to-rem($pixels) {
+  $base-font-size: 16;
+  @return #{math.div($pixels, 16)}rem;
+}
+
+@function px-to-em($pixels) {
+  $base-font-size: 16;
+  @return #{math.div($pixels, 16)}em;
+}
+
+@function clr($color, $shade) {
+  @if map.has-key($colors, $color, $shade) {
+    @return map.get($colors, $color, $shade);
+  } @else {
+    @error '$colors does not have that color!';
+  }
+}
+@function fs($font-size) {
+  @if map.has-key($font-sizes, $font-size) {
+    @return map.get($font-sizes, $font-size);
+  } @else {
+    @error '$font-sizes does not have that size!';
+  }
+}
+
+@function size($size) {
+  @if map.has-key($spacers, $size) {
+    @return map.get($spacers, $size);
+  } @else {
+    @error '$spacers does not have that size!';
+  }
+}

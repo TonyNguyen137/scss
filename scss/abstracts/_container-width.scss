@@ -1,0 +1,9 @@
+@use 'functions' as *;
+// container max-widths
+$container-max-widths: (
+  sm: px-to-rem(540),
+  md: px-to-rem(720),
+  lg: px-to-rem(1320),
+  xl: px-to-rem(1140),
+  xxl: px-to-rem(1320),
+);

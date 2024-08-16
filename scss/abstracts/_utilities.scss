@@ -1,0 +1,86 @@
+@use 'functions' as *;
+@use 'spacing' as *;
+@use 'sass:map';
+
+// Utilities
+
+// position values
+$position-values: (
+  0: 0,
+  50: 50%,
+  100: 100%,
+);
+
+// - z-index values
+$zindex-levels: (
+  n1: -1,
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3,
+);
+
+// MAIN UTILITIES MAP
+/* 
+  syntax of a utility class: $class-$value, 
+  syntax of a utility class with responsivness; $class-$breakpoint-$value
+
+  example 1: 
+
+  class: z,
+  values: 1, 2, 3, 4
+  output: .z-1, .z-2, .z-3, .z-4;
+  output responsive: .z-sm-1, z-md-1, z-lg-1 etc.
+
+  class: d-grid,
+  values: justify-center
+  output responsive: .z-sm-1, z-md-1, z-lg-1 etc.
+
+  output: .d-grid-justify-center
+
+
+*/
+$utilities: () !default;
+$utilities: map-merge(
+  (
+    'z-index': (
+      property: z-index,
+      class: z,
+      values: $zindex-levels,
+      isResponsive: true,
+    ),
+    'margin-top': (
+      property: margin-top,
+      class: mt,
+      values: $sizes,
+    ),
+    'margin-bot': (
+      property: margin-bottom,
+      class: mb,
+      values: $sizes,
+    ),
+    'margin-inline': (
+      property: margin-inline,
+      class: mx,
+      values: $sizes,
+      isResponsive: true,
+    ),
+    'padding-inline': (
+      property: padding-inline,
+      class: px,
+      values: $sizes,
+    ),
+    'grid': (
+      property: display,
+      class: d,
+      values: grid,
+      isResponsive: true,
+    ),
+    'place-items': (
+      property: place-items,
+      class: place-items,
+      values: center,
+    ),
+  ),
+  $utilities
+);

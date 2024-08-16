@@ -1,0 +1,63 @@
+@use '../abstracts' as *;
+@use 'sass:map';
+@use 'sass:meta';
+
+@each $key, $map in $utilities {
+  $class: map.get($map, 'class');
+  $property: map.get($map, 'property');
+  $valueObject: map.get($map, 'values');
+  $responsive: map.get($map, 'isResponsive');
+
+  @if meta.type-of($valueObject) == 'map' {
+    @each $suffix, $value in $valueObject {
+      .#{$class}-#{$suffix} {
+        #{$property}: $value;
+      }
+      @if $responsive {
+        @each $breakpoint, $size in $grid-breakpoints {
+          @include mq(#{$breakpoint}) {
+            .#{$class}-#{$breakpoint}-#{$suffix} {
+              #{$property}: $value;
+            }
+          }
+        }
+      }
+    }
+  } @else if meta.type-of($valueObject) == 'list' {
+    @each $value in $valueObject {
+      .#{$class}-#{$value} {
+        #{$property}: $value;
+      }
+
+      @if $responsive {
+        @each $breakpoint, $size in $grid-breakpoints {
+          @include mq(#{$breakpoint}) {
+            .#{$class}-#{$breakpoint}-#{$value} {
+              #{$property}: $value;
+            }
+          }
+        }
+      }
+    }
+  } @else if
+    meta.type-of($valueObject) ==
+    'string' or
+    meta.type-of($valueObject) ==
+    number
+  {
+    .#{$class}-#{$valueObject} {
+      #{$property}: $valueObject;
+    }
+    @if $responsive {
+      @each $breakpoint, $size in $grid-breakpoints {
+        @include mq(#{$breakpoint}) {
+          .#{$class}-#{$breakpoint}-#{$valueObject} {
+            #{$property}: $valueObject;
+          }
+        }
+      }
+    }
+  } @else {
+    @error 'something went wrong. Check your inputs in utilities';
+  }
+}
