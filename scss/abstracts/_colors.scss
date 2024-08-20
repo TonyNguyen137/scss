@@ -1,3 +1,14 @@
+/* color themes from bootstrap */
+
+$primary: #0d6efd;
+$secondary: #6c757d;
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #212529;
+
 /*
   css variable syntax: --prefix-colorName-colorShade 
   prefix: clr
@@ -17,22 +28,13 @@ $color-prefix: clr-;
 
 $color-theme: (
   default: (
-    'grey': (
-      '900': #141414,
-      '800': #1f1f1f,
-      '700': #333,
-    ),
-    'green': (
-      '400': #c4f82a,
-    ),
-    'white': (
-      '400': #fff,
-    ),
+    'primary': $primary,
+    'secondary': $secondary,
+    'success': $success,
+    'info': $info,
+    'warning': $warning,
+    'danger': $danger,
+    'light': $light,
+    'dark': $dark,
   ),
 );
-
-$clr-grey-900: var(--clr-grey-900);
-$clr-grey-800: var(--clr-grey-800);
-$clr-grey-700: var(--clr-grey-700);
-$clr-green-400: var(--clr-green-400);
-$clr-white-400: var(--clr-white-400);
