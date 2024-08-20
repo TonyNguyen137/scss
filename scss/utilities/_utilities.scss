@@ -8,56 +8,106 @@
   $valueObject: map.get($map, 'values');
   $responsive: map.get($map, 'isResponsive');
 
-  @if meta.type-of($valueObject) == 'map' {
-    @each $suffix, $value in $valueObject {
-      .#{$class}-#{$suffix} {
-        #{$property}: $value;
-      }
-      @if $responsive {
-        @each $breakpoint, $size in $grid-breakpoints {
-          @include mq(#{$breakpoint}) {
-            .#{$class}-#{$breakpoint}-#{$suffix} {
-              #{$property}: $value;
-            }
-          }
-        }
-      }
-    }
-  } @else if meta.type-of($valueObject) == 'list' {
-    @each $value in $valueObject {
-      .#{$class}-#{$value} {
-        #{$property}: $value;
-      }
+  @if $key == 'background-colors' or $key == 'text-colors' {
+    @each $color, $shade-map in $valueObject {
+      $type: meta.type-of($shade-map);
+      $class: if($class == null, $key, $class);
 
-      @if $responsive {
-        @each $breakpoint, $size in $grid-breakpoints {
-          @include mq(#{$breakpoint}) {
-            .#{$class}-#{$breakpoint}-#{$value} {
-              #{$property}: $value;
+      @if ($type == 'color') {
+        .#{$class}-#{$color} {
+          #{$property}: var(--#{$prefix}#{$color-variable-prefix}#{$color});
+        }
+
+        @if $responsive {
+          @each $breakpoint, $size in $grid-breakpoints {
+            @include mq(#{$breakpoint}) {
+              .#{$class}-#{$breakpoint}-#{$color} {
+                #{$property}: var(
+                  --#{$prefix}#{$color-variable-prefix}#{$color}
+                );
+              }
             }
           }
         }
-      }
-    }
-  } @else if
-    meta.type-of($valueObject) ==
-    'string' or
-    meta.type-of($valueObject) ==
-    number
-  {
-    .#{$class}-#{$valueObject} {
-      #{$property}: $valueObject;
-    }
-    @if $responsive {
-      @each $breakpoint, $size in $grid-breakpoints {
-        @include mq(#{$breakpoint}) {
-          .#{$class}-#{$breakpoint}-#{$valueObject} {
-            #{$property}: $valueObject;
+      } @else if ($type == 'map') {
+        @each $shade, $value in $shade-map {
+          @if (meta.type-of($value) != 'color') {
+            @error '#{$value} is not a color!';
+          }
+          .#{$class}-#{$color}-#{$shade} {
+            #{$property}: var(
+              --#{$prefix}#{$color-variable-prefix}#{$color}-#{$shade}
+            );
+          }
+          @if $responsive {
+            @each $breakpoint, $size in $grid-breakpoints {
+              @include mq(#{$breakpoint}) {
+                .#{$class}-#{$breakpoint}-#{$color}#{$shade} {
+                  #{$property}: var(
+                    --#{$prefix}#{$color-variable-prefix}#{$color}-#{$shade}
+                  );
+                }
+              }
+            }
           }
         }
+      } @else {
+        @error 'the input is not correct';
       }
     }
   } @else {
-    @error 'something went wrong. Check your inputs in utilities';
+    @if meta.type-of($valueObject) == 'map' {
+      @each $suffix, $value in $valueObject {
+        $class: if($class == null, $key, $class);
+        .#{$class}-#{$suffix} {
+          #{$property}: $value;
+        }
+        @if $responsive {
+          @each $breakpoint, $size in $grid-breakpoints {
+            @include mq(#{$breakpoint}) {
+              .#{$class}-#{$breakpoint}-#{$suffix} {
+                #{$property}: $value;
+              }
+            }
+          }
+        }
+      }
+    } @else if meta.type-of($valueObject) == 'list' {
+      @each $value in $valueObject {
+        .#{$class}-#{$value} {
+          #{$property}: $value;
+        }
+
+        @if $responsive {
+          @each $breakpoint, $size in $grid-breakpoints {
+            @include mq(#{$breakpoint}) {
+              .#{$class}-#{$breakpoint}-#{$value} {
+                #{$property}: $value;
+              }
+            }
+          }
+        }
+      }
+    } @else if
+      meta.type-of($valueObject) ==
+      'string' or
+      meta.type-of($valueObject) ==
+      number
+    {
+      .#{$class}-#{$valueObject} {
+        #{$property}: $valueObject;
+      }
+      @if $responsive {
+        @each $breakpoint, $size in $grid-breakpoints {
+          @include mq(#{$breakpoint}) {
+            .#{$class}-#{$breakpoint}-#{$valueObject} {
+              #{$property}: $valueObject;
+            }
+          }
+        }
+      }
+    } @else {
+      @error 'something went wrong. Check your inputs in utilities';
+    }
   }
 }

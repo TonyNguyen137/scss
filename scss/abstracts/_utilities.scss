@@ -1,5 +1,7 @@
 @use 'functions' as *;
 @use 'spacing' as *;
+@use 'colors' as *;
+
 @use 'sass:map';
 
 // Utilities
@@ -47,7 +49,6 @@ $utilities: map-merge(
       property: z-index,
       class: z,
       values: $zindex-levels,
-      isResponsive: true,
     ),
     'margin-top': (
       property: margin-top,
@@ -59,11 +60,50 @@ $utilities: map-merge(
       class: mb,
       values: $sizes,
     ),
+    'margin-left': (
+      property: margin-left,
+      class: ms,
+      values: $sizes,
+    ),
+    'margin-right': (
+      property: margin-right,
+      class: me,
+      values: $sizes,
+    ),
     'margin-inline': (
       property: margin-inline,
       class: mx,
       values: $sizes,
-      isResponsive: true,
+    ),
+    'margin-block': (
+      property: margin-block,
+      class: my,
+      values: $sizes,
+    ),
+    'padding-top': (
+      property: padding-top,
+      class: pt,
+      values: $sizes,
+    ),
+    'padding-bottom': (
+      property: padding-bottom,
+      class: pb,
+      values: $sizes,
+    ),
+    'padding-left': (
+      property: padding-left,
+      class: ps,
+      values: $sizes,
+    ),
+    'padding-right': (
+      property: padding-right,
+      class: pe,
+      values: $sizes,
+    ),
+    'padding-block': (
+      property: padding-block,
+      class: py,
+      values: $sizes,
     ),
     'padding-inline': (
       property: padding-inline,
@@ -80,6 +120,47 @@ $utilities: map-merge(
       property: place-items,
       class: place-items,
       values: center,
+    ),
+    'flex': (
+      property: display,
+      class: d,
+      values: flex,
+    ),
+    'justify-content': (
+      isResponsive: true,
+      property: justify-content,
+      values: (
+        start: flex-start,
+        end: flex-end,
+        center: center,
+        between: space-between,
+        around: space-around,
+        evenly: space-evenly,
+      ),
+    ),
+    'background-colors': (
+      property: background-color,
+      class: bg,
+      values:
+        map-merge(
+          map.get($color-theme, default),
+          (
+            'black': #000,
+            'white': #fff,
+          )
+        ),
+    ),
+    'text-colors': (
+      property: color,
+      class: text,
+      values:
+        map-merge(
+          map.get($color-theme, default),
+          (
+            'black': #000,
+            'white': #fff,
+          )
+        ),
     ),
   ),
   $utilities
