@@ -1,5 +1,5 @@
 @use 'colors' as *;
-@use 'typography' as *;
+@use 'fonts' as *;
 @use 'functions' as *;
 @use 'spacing' as *;
 @use 'sass:map';
@@ -27,30 +27,9 @@ $enable-container-classes: true;
 $container-padding-x: 12px;
 
 // body
-$body-font-family: 'Inter', sans-serif;
-$body-font-size: px-to-rem(14);
+$body-font-family: $font-family-base;
+$body-font-size: px-to-rem(16);
 $body-line-height: 1.5;
 $body-font-weight: $fw-400;
-$body-text-color: $clr-white-400;
-$body-background-color: $clr-grey-900;
-
-// card
-$card-heading-fs: $fs-heading-preset;
-$card-content-fs: $fs-text-content-preset;
-$card-padding: $size-preset-primary;
-$card-row-gap: 24px;
-$card-row-gap-li: 16px;
-$card-border-r: 12px;
-
-$card-background-clr: $clr-grey-800;
-$card-image-size: px-to-rem(88);
-$card-name-fw: $fw-700;
-$card-network-profils-fw: $fw-700;
-$card-location-color: $clr-green-400;
-$card-location-fw: $fw-700;
-$card-location-fs: $fs-text-content-preset;
-$card-item-bg: $clr-grey-700;
-$card-item-bg-hover: $clr-green-400;
-$card-item-color-hover: $clr-grey-900;
-$card-item-padding-y: 12px;
-$card-item-border-r: 8px;
+$body-text-color: #000;
+$body-background-color: null;

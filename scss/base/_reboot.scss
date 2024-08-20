@@ -17,7 +17,9 @@ body {
   font-size: $body-font-size;
   font-weight: $body-font-weight;
   color: $body-text-color;
-  background-color: $body-background-color;
+  @if $body-background-color {
+    background-color: $body-background-color;
+  }
   line-height: $body-line-height;
   height: 100vh;
   display: grid;
