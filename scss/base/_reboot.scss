@@ -15,14 +15,20 @@ html {
 body {
   font-family: $body-font-family;
   font-size: $body-font-size;
-  font-weight: $body-font-weight;
-  color: $body-text-color;
+  line-height: $body-line-height;
+  @if $body-text-color {
+    color: $body-text-color;
+  }
+
+  @if $body-font-weight {
+    font-weight: $body-font-weight;
+  }
   @if $body-background-color {
     background-color: $body-background-color;
   }
-  line-height: $body-line-height;
-  height: 100vh;
-  display: grid;
+  @if $body-min-height {
+    min-height: $body-min-height;
+  }
 }
 
 img {
