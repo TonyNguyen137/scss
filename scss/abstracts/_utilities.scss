@@ -1,7 +1,7 @@
 @use 'functions' as *;
 @use 'spacing' as *;
 @use 'colors' as *;
-
+@use 'tokens' as *;
 @use 'sass:map';
 
 // Utilities
@@ -138,24 +138,27 @@ $utilities: map-merge(
         evenly: space-evenly,
       ),
     ),
-    'background-colors': (
-      property: background-color,
-      class: bg,
-      values:
-        map-merge(
-          map.get($color-theme, default),
-          (
-            'black': #000,
-            'white': #fff,
-          )
-        ),
-    ),
+
+    /* The background-colors and text-colors keys must remain unchanged. */
+      'background-colors':
+      (
+        property: background-color,
+        class: bg,
+        values:
+          map-merge(
+            $active-theme,
+            (
+              'black': #000,
+              'white': #fff,
+            )
+          ),
+      ),
     'text-colors': (
       property: color,
       class: text,
       values:
         map-merge(
-          map.get($color-theme, default),
+          $active-theme,
           (
             'black': #000,
             'white': #fff,
