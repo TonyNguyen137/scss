@@ -14,13 +14,13 @@ $clamp-map: map.merge($font-size-clamp, $spacer-clamp);
     $type: meta.type-of($shade-map);
 
     @if ($type == 'color') {
-      --#{$prefix}#{$color-prefix}#{$color}: #{$shade-map};
+      --#{$prefix}#{$color-variable-prefix}#{$color}: #{$shade-map};
     } @else if ($type == 'map') {
       @each $shade, $value in $shade-map {
         @if (meta.type-of($value) != 'color') {
           @error '#{$value} is not a color!';
         }
-        --#{$prefix}#{$color-prefix}#{$color}-#{$shade}: #{$value};
+        --#{$prefix}#{$color-variable-prefix}#{$color}-#{$shade}: #{$value};
       }
     } @else {
       @error 'the input is not correct';
@@ -31,7 +31,7 @@ $clamp-map: map.merge($font-size-clamp, $spacer-clamp);
     @media (prefers-color-scheme: dark) {
       @each $color, $shade-map in map.get($color-theme, dark) {
         @each $shade, $value in $shade-map {
-          --#{$prefix}#{$color-prefix}#{$color}-#{$shade}: #{$value};
+          --#{$prefix}#{$color-variable-prefix}#{$color}-#{$shade}: #{$value};
         }
       }
     }
@@ -98,14 +98,14 @@ $clamp-map: map.merge($font-size-clamp, $spacer-clamp);
         $type: meta.type-of($shade-map);
 
         @if ($type == 'color') {
-          --#{$prefix}#{$color-prefix}#{$color}: #{$shade-map};
+          --#{$prefix}#{$color-variable-prefix}#{$color}: #{$shade-map};
         } @else if ($type == 'map') {
           @each $shade, $value in $shade-map {
             @if (meta.type-of($value) != 'color') {
               @error '#{$value} is not a color!';
             }
 
-            --#{$prefix}#{$color-prefix}#{$color}-#{$shade}: #{$value};
+            --#{$prefix}#{$color-variable-prefix}#{$color}-#{$shade}: #{$value};
           }
         } @else {
           @error 'the input is not correct';
