@@ -156,26 +156,12 @@ $utilities: map-merge(
       (
         property: background-color,
         class: bg,
-        values:
-          map-merge(
-            $active-theme,
-            (
-              'black': #000,
-              'white': #fff,
-            )
-          ),
+        values: $active-theme,
       ),
     'text-colors': (
       property: color,
       class: text,
-      values:
-        map-merge(
-          $active-theme,
-          (
-            'black': #000,
-            'white': #fff,
-          )
-        ),
+      values: $active-theme,
     ),
   ),
   $utilities

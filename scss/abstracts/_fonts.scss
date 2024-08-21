@@ -8,7 +8,12 @@ $font-sizes: (
   ),
 );
 
-$font-size-clamp: ();
+$font-size-clamp: (
+  heading: (
+    576: 16,
+    1400: 128,
+  ),
+);
 
 $font-family-base: sans-serif;
 $font-family-accent: serif;
