@@ -39,9 +39,8 @@ $zindex-levels: (
   output responsive: .z-sm-1, z-md-1, z-lg-1 etc.
 
   output: .d-grid-justify-center
-
-
 */
+
 $utilities: () !default;
 $utilities: map-merge(
   (

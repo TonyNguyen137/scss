@@ -16,6 +16,7 @@ body {
   font-family: $body-font-family;
   font-size: $body-font-size;
   line-height: $body-line-height;
+
   @if $body-text-color {
     color: $body-text-color;
   }
