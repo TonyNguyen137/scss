@@ -54,15 +54,17 @@
   $size-map-merge: map.deep-merge($font-sizes, $spacers);
 
   // css variables for font-size & spacers
-  @each $screen-size, $size-map in $size-map-merge {
-    @if $screen-size == default {
-      @each $size-name, $size-value in $size-map {
-        --#{$prefix}#{$size-name}: #{$size-value};
-      }
-    } @else {
-      @include mq($screen-size) {
+  @if (list.length($size-map-merge) > 0) {
+    @each $screen-size, $size-map in $size-map-merge {
+      @if $screen-size == default {
         @each $size-name, $size-value in $size-map {
           --#{$prefix}#{$size-name}: #{$size-value};
+        }
+      } @else {
+        @include mq($screen-size) {
+          @each $size-name, $size-value in $size-map {
+            --#{$prefix}#{$size-name}: #{$size-value};
+          }
         }
       }
     }
