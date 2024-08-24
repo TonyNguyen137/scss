@@ -1,10 +1,17 @@
 @use 'functions' as *;
 
-$font-size-prefix: fs-;
 $font-sizes: (
   'default': (
-    'text-content-preset': px-to-rem(14),
-    'heading-preset': px-to-rem(24),
+    'fs-text-content-preset': px-to-rem(14),
+    'fs-heading-preset': px-to-rem(24),
+  ),
+  'sm': (
+    'fs-text-content-preset': px-to-rem(15),
+    'fs-heading-preset': px-to-rem(25),
+  ),
+  'md': (
+    'fs-text-content-preset': px-to-rem(16),
+    'fs-heading-preset': px-to-rem(26),
   ),
 );
 

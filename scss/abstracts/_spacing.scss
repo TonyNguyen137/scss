@@ -25,13 +25,15 @@ $sizes: ();
   );
 }
 
-$spacers-prefix: 'sc-';
 $spacers: (
   'default': (
-    size-preset-primary: 24px,
+    sc-size-preset-primary: 24px,
   ),
   'md': (
-    size-preset-primary: 40px,
+    sc-size-preset-primary: 40px,
+  ),
+  'lg': (
+    sc-size-preset-primary: 41px,
   ),
 );
 
