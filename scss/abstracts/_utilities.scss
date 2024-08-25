@@ -122,10 +122,18 @@ $utilities: map-merge(
       class: px,
       values: $sizes,
     ),
-    'grid': (
+    'display': (
       property: display,
       class: d,
-      values: grid,
+      values: (
+        flex: flex,
+        grid: grid,
+        none: none,
+        block: block,
+        inline-block: inline-block,
+        inline: inline,
+        contents: contents,
+      ),
       isResponsive: true,
     ),
     'place-items': (
@@ -133,11 +141,7 @@ $utilities: map-merge(
       class: place-items,
       values: center,
     ),
-    'flex': (
-      property: display,
-      class: d,
-      values: flex,
-    ),
+
     'justify-content': (
       isResponsive: true,
       property: justify-content,

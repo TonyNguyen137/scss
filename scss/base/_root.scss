@@ -71,25 +71,25 @@
   }
 
   // css variables for utilities
-  @each $key, $map in $utilities {
-    $hasVar: map.get($map, 'hasVar');
-    @if $hasVar {
-      @each $suffix, $value in $valueObject {
-        .#{$class}-#{$suffix} {
-          #{$prefix}#{$property}: $value;
-        }
-        @if $responsive {
-          @each $breakpoint, $size in $grid-breakpoints {
-            @media (min-width:#{$size}) {
-              .#{$prefix}#{$class}-#{$breakpoint}-#{$suffix} {
-                #{$property}: $value;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+  // @each $key, $map in $utilities {
+  //   $hasVar: map.get($map, 'hasVar');
+  //   @if $hasVar {
+  //     @each $suffix, $value in $valueObject {
+  //       .#{$class}-#{$suffix} {
+  //         #{$prefix}#{$property}: $value;
+  //       }
+  //       @if $responsive {
+  //         @each $breakpoint, $size in $grid-breakpoints {
+  //           @media (min-width:#{$size}) {
+  //             .#{$prefix}#{$class}-#{$breakpoint}-#{$suffix} {
+  //               #{$property}: $value;
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   @if ($enable-media-query-dark-mode) {
     @media (prefers-color-scheme: dark) {

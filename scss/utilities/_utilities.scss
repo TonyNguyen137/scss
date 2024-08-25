@@ -94,13 +94,13 @@
       meta.type-of($valueObject) ==
       number
     {
-      .#{$class}-#{$valueObject} {
+      .#{$class} {
         #{$property}: $valueObject;
       }
       @if $responsive {
         @each $breakpoint, $size in $grid-breakpoints {
           @include mq(#{$breakpoint}) {
-            .#{$class}-#{$breakpoint}-#{$valueObject} {
+            .#{$class}-#{$breakpoint} {
               #{$property}: $valueObject;
             }
           }
