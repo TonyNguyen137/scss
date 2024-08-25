@@ -31,7 +31,12 @@ $zindex-levels: (
   example 1: 
   class: z,
   property: z-index,
-  values: 1, 2, 3, 4
+  values: (
+    1: 1, 
+    2: 2, 
+    3: 3, 
+    4: 4
+  )
   isResponsive: true,
   output: .z-1, .z-2, .z-3, .z-4;
   output responsive: .z-sm-1, z-md-1, z-lg-1 etc.
@@ -40,16 +45,21 @@ $zindex-levels: (
   class: d,
   property: display,
   values: grid
-  output: .d-grid
+  output: .d
+
 
   example 3:
   class: justify,
   property: justify-content,
   value: (
     between: space-between,
+    even: space-evenly,
   )
 
-  output: .justify-content-between
+  output: 
+  .justify-content-between
+  .justify-content-even
+
 
 
 */
