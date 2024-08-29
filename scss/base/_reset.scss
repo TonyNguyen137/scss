@@ -52,3 +52,16 @@ textarea {
   font: inherit;
   color: inherit;
 }
+
+button {
+  border: none;
+  background-color: transparent;
+}
+
+@if ($focus-ring) {
+  @debug inside $focus-ring;
+  :focus-visible {
+    outline: $focus-ring;
+    outline-offset: $focus-ring-offset;
+  }
+}

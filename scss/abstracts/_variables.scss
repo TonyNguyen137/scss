@@ -9,6 +9,8 @@ $active-theme: map.get($color-theme, default);
 $enable-media-query-dark-mode: false;
 $enable-container-classes: true;
 $enable-bootstrap-grid-system: true;
+$focus-ring: 2px dashed $clr-primary;
+$focus-ring-offset: 1px;
 $prefix: '';
 
 // bootstrap grid container
