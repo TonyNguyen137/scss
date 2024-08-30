@@ -57,6 +57,9 @@ button {
   border: none;
   background-color: transparent;
 }
+address {
+  font-style: normal;
+}
 
 @if ($focus-ring) {
   @debug inside $focus-ring;
