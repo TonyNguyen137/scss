@@ -68,6 +68,14 @@ $zindex-levels: (
 $utilities: () !default;
 $utilities: map-merge(
   (
+    'box-sizing': (
+      property: box-sizing,
+      class: box,
+      values: (
+        content: content-box,
+        border: border-box,
+      ),
+    ),
     'font-weight': (
       property: font-weight,
       class: fw,
@@ -81,32 +89,68 @@ $utilities: map-merge(
     'margin-top': (
       property: margin-top,
       class: mt,
-      values: $sizes,
+      values:
+        map-merge(
+          $sizes,
+          (
+            auto: auto,
+          )
+        ),
     ),
     'margin-bot': (
       property: margin-bottom,
       class: mb,
-      values: $sizes,
+      values:
+        map-merge(
+          $sizes,
+          (
+            auto: auto,
+          )
+        ),
     ),
     'margin-left': (
       property: margin-left,
       class: ms,
-      values: $sizes,
+      values:
+        map-merge(
+          $sizes,
+          (
+            auto: auto,
+          )
+        ),
     ),
     'margin-right': (
       property: margin-right,
       class: me,
-      values: $sizes,
+      values:
+        map-merge(
+          $sizes,
+          (
+            auto: auto,
+          )
+        ),
     ),
     'margin-inline': (
       property: margin-inline,
       class: mx,
-      values: $sizes,
+      values:
+        map-merge(
+          $sizes,
+          (
+            auto: auto,
+          )
+        ),
     ),
     'margin-block': (
       property: margin-block,
       class: my,
-      values: $sizes,
+      values:
+        map-merge(
+          $sizes,
+          (
+            auto: auto,
+          )
+        ),
     ),
     'padding-top': (
       property: padding-top,
@@ -169,6 +213,11 @@ $utilities: map-merge(
         around: space-around,
         evenly: space-evenly,
       ),
+    ),
+    'gap': (
+      property: gap,
+      class: gap,
+      values: $sizes,
     ),
 
     /* The background-colors and text-colors keys must remain unchanged. */
