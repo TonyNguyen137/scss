@@ -2,6 +2,7 @@
 @use 'spacing' as *;
 @use 'colors' as *;
 @use 'variables' as *;
+@use 'fonts' as *;
 @use 'sass:map';
 
 // Utilities
@@ -67,6 +68,11 @@ $zindex-levels: (
 $utilities: () !default;
 $utilities: map-merge(
   (
+    'font-weight': (
+      property: font-weight,
+      class: fw,
+      values: $font-weight,
+    ),
     'z-index': (
       property: z-index,
       class: z,

@@ -15,6 +15,18 @@ $font-sizes: (
   ),
 );
 
+$font-weight: (
+  'regular': 400,
+  'medium': 500,
+  'semi-bold': 600,
+  'bold': 700,
+);
+
+$fw-regular: 400;
+$fw-regular: 500;
+$fw-semi-bold: 600;
+$fw-bold: 700;
+
 $font-size-clamp: (
   heading: (
     576: 16,
@@ -24,10 +36,6 @@ $font-size-clamp: (
 
 $font-family-base: sans-serif;
 $font-family-accent: serif;
-
-$fw-400: 400;
-$fw-600: 600;
-$fw-700: 700;
 
 $fs-text-content-preset: var(--fs-text-content-preset);
 $fs-heading-preset: var(--fs-heading-preset);
