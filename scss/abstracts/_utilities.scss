@@ -196,6 +196,14 @@ $utilities: map-merge(
       ),
       isResponsive: true,
     ),
+    'flex-direction': (
+      property: flex-direction,
+      class: flex,
+      values: (
+        column: column,
+        row: row,
+      ),
+    ),
     'place-items': (
       property: place-items,
       class: place-items,
@@ -218,6 +226,14 @@ $utilities: map-merge(
       property: gap,
       class: gap,
       values: $sizes,
+    ),
+
+    'text-decoration': (
+      property: text-decoration,
+      class: decoration,
+      values: (
+        none: none,
+      ),
     ),
 
     /* The background-colors and text-colors keys must remain unchanged. */
