@@ -3,7 +3,7 @@
 .lead {
   color: black;
   text-transform: uppercase;
-  font-weight: $fw-400;
+  font-weight: $body-font-weight;
 
   & + p {
     margin-top: 0;

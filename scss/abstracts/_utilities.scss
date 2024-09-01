@@ -1,8 +1,8 @@
 @use 'functions' as *;
 @use 'spacing' as *;
 @use 'colors' as *;
-@use 'variables' as *;
 @use 'fonts' as *;
+@use 'variables' as *;
 @use 'sass:map';
 
 // Utilities
@@ -25,7 +25,6 @@ $zindex-levels: (
 
 /* 
   MAIN UTILITIES MAP
-  
   syntax of a utility class: $class-$value, 
   syntax of a utility class with responsivness; $class-$breakpoint-$value
 
@@ -61,8 +60,6 @@ $zindex-levels: (
   .justify-content-between
   .justify-content-even
 
-
-
 */
 
 $utilities: () !default;
@@ -76,37 +73,35 @@ $utilities: map-merge(
         border: border-box,
       ),
     ),
-    'font-weight': (
-      property: font-weight,
-      class: fw,
-      values: $font-weight,
-    ),
     'z-index': (
       property: z-index,
       class: z,
       values: $zindex-levels,
     ),
+    'position': (
+      property: position,
+      class: position,
+      values: (
+        absolute: absolute,
+        relative: relative,
+        static: static,
+      ),
+    ),
+    'border-top': (
+      property: border-top,
+      values: (
+        solid: 1px solid #979797,
+      ),
+    ),
     'margin-top': (
       property: margin-top,
       class: mt,
-      values:
-        map-merge(
-          $sizes,
-          (
-            auto: auto,
-          )
-        ),
+      values: $sizes,
     ),
     'margin-bot': (
       property: margin-bottom,
       class: mb,
-      values:
-        map-merge(
-          $sizes,
-          (
-            auto: auto,
-          )
-        ),
+      values: $sizes,
     ),
     'margin-left': (
       property: margin-left,
@@ -122,13 +117,7 @@ $utilities: map-merge(
     'margin-right': (
       property: margin-right,
       class: me,
-      values:
-        map-merge(
-          $sizes,
-          (
-            auto: auto,
-          )
-        ),
+      values: $sizes,
     ),
     'margin-inline': (
       property: margin-inline,
@@ -144,13 +133,7 @@ $utilities: map-merge(
     'margin-block': (
       property: margin-block,
       class: my,
-      values:
-        map-merge(
-          $sizes,
-          (
-            auto: auto,
-          )
-        ),
+      values: $sizes,
     ),
     'padding-top': (
       property: padding-top,
@@ -181,6 +164,7 @@ $utilities: map-merge(
       property: padding-inline,
       class: px,
       values: $sizes,
+      isResponsive: true,
     ),
     'display': (
       property: display,
@@ -222,12 +206,37 @@ $utilities: map-merge(
         evenly: space-evenly,
       ),
     ),
+    'align-items': (
+      isResponsive: true,
+      property: align-items,
+      values: (
+        start: flex-start,
+        end: flex-end,
+        center: center,
+        between: space-between,
+        around: space-around,
+        evenly: space-evenly,
+      ),
+    ),
+    'flex-grow': (
+      property: flex-grow,
+      class: flex-grow,
+      values: (
+        1: 1,
+        2: 2,
+        3: 3,
+      ),
+    ),
     'gap': (
       property: gap,
       class: gap,
       values: $sizes,
     ),
-
+    'font-weight': (
+      property: font-weight,
+      class: fw,
+      values: $font-weight,
+    ),
     'text-decoration': (
       property: text-decoration,
       class: decoration,
@@ -235,7 +244,22 @@ $utilities: map-merge(
         none: none,
       ),
     ),
-
+    'opacity': (
+      property: opacity,
+      class: opacity,
+      values: (
+        1: 10%,
+        2: 20%,
+        3: 30%,
+        4: 40%,
+        5: 50%,
+        6: 60%,
+        7: 70%,
+        8: 80%,
+        9: 90%,
+        10: 100%,
+      ),
+    ),
     /* The background-colors and text-colors keys must remain unchanged. */
       'background-colors':
       (

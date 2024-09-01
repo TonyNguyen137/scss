@@ -2,11 +2,3 @@
 @use 'components';
 @use 'layout';
 @use 'utilities';
-
-.test {
-  font-size: var(--clamp-heading);
-}
-
-.test2 {
-  font-size: var(--test);
-}
