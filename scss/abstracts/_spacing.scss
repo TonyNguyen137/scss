@@ -2,8 +2,15 @@
 @use 'functions';
 
 $factor: 0.25rem;
-$sizes-list: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 24;
-$sizes: ();
+$sizes-list: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+  20, 24;
+
+$sizes-regular: ();
+$sizes-irregular: (
+  32: 32rem,
+  89: 89rem,
+  'nav': 99px 100px,
+);
 
 /*
   the @each loop will generate:
@@ -17,8 +24,8 @@ $sizes: ();
 */
 
 @each $size in $sizes-list {
-  $sizes: map.merge(
-    $sizes,
+  $sizes-regular: map.merge(
+    $sizes-regular,
     (
       $size: $factor * $size,
     )

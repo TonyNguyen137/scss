@@ -23,6 +23,19 @@ $zindex-levels: (
   3: 3,
 );
 
+$percentage: (
+  1: 10%,
+  2: 20%,
+  3: 30%,
+  4: 40%,
+  5: 50%,
+  6: 60%,
+  7: 70%,
+  8: 80%,
+  9: 90%,
+  10: 100%,
+);
+
 /* 
   MAIN UTILITIES MAP
   syntax of a utility class: $class-$value, 
@@ -62,15 +75,40 @@ $zindex-levels: (
 
 */
 
-$utilities: () !default;
+$utilities: ();
 $utilities: map-merge(
   (
+    'overlay': (
+      property: border-image,
+      class: overlay,
+      values: (
+        dark: fill 0 linear-gradient(#0003, #000),
+      ),
+    ),
+    'width': (
+      property: width,
+      class: w,
+      values: $percentage,
+    ),
+
+    'height': (
+      property: height,
+      class: h,
+      values: $percentage,
+    ),
     'box-sizing': (
       property: box-sizing,
       class: box,
       values: (
         content: content-box,
         border: border-box,
+      ),
+    ),
+    'isolation': (
+      property: isolation,
+      class: isolation,
+      values: (
+        isolate: isolate,
       ),
     ),
     'z-index': (
@@ -87,6 +125,18 @@ $utilities: map-merge(
         static: static,
       ),
     ),
+    'position-bot': (
+      property: bottom,
+      class: bot,
+      values: $position-values,
+    ),
+    'inset': (
+      property: inset,
+      class: inset,
+      values: (
+        full: 0,
+      ),
+    ),
     'border-top': (
       property: border-top,
       values: (
@@ -96,75 +146,135 @@ $utilities: map-merge(
     'margin-top': (
       property: margin-top,
       class: mt,
-      values: $sizes,
+      values: $sizes-regular,
+    ),
+    'margin-top-irregular': (
+      property: margin-top,
+      class: mt-i,
+      values: $sizes-irregular,
     ),
     'margin-bot': (
       property: margin-bottom,
       class: mb,
-      values: $sizes,
+      values: $sizes-regular,
+    ),
+    'margin-bot-irregular': (
+      property: margin-bottom,
+      class: mb-i,
+      values: $sizes-irregular,
     ),
     'margin-left': (
       property: margin-left,
       class: ms,
       values:
         map-merge(
-          $sizes,
+          $sizes-regular,
           (
             auto: auto,
           )
         ),
     ),
+    'margin-left-irregular': (
+      property: margin-left,
+      class: ms-i,
+      values: $sizes-irregular,
+    ),
     'margin-right': (
       property: margin-right,
       class: me,
-      values: $sizes,
+      values: $sizes-regular,
+    ),
+    'margin-right-irregular': (
+      property: margin-right,
+      class: me-i,
+      values: $sizes-irregular,
     ),
     'margin-inline': (
       property: margin-inline,
       class: mx,
       values:
         map-merge(
-          $sizes,
+          $sizes-regular,
           (
             auto: auto,
           )
         ),
     ),
+    'margin-inline-irregular': (
+      property: margin-inline,
+      class: mx-i,
+      values: $sizes-irregular,
+    ),
     'margin-block': (
       property: margin-block,
       class: my,
-      values: $sizes,
+      values: $sizes-regular,
+    ),
+    'margin-block-irregular': (
+      property: margin-block,
+      class: my-i,
+      values: $sizes-irregular,
     ),
     'padding-top': (
       property: padding-top,
       class: pt,
-      values: $sizes,
+      values: $sizes-regular,
+    ),
+    'padding-top-irregular': (
+      property: padding-top,
+      class: pt-i,
+      values: $sizes-irregular,
     ),
     'padding-bottom': (
       property: padding-bottom,
       class: pb,
-      values: $sizes,
+      values: $sizes-regular,
+    ),
+    'padding-bottom-irregular': (
+      property: padding-bottom,
+      class: pb-i,
+      values: $sizes-irregular,
     ),
     'padding-left': (
       property: padding-left,
       class: ps,
-      values: $sizes,
+      values: $sizes-regular,
+    ),
+    'padding-left-irregular': (
+      property: padding-left,
+      class: ps-i,
+      values: $sizes-irregular,
     ),
     'padding-right': (
       property: padding-right,
       class: pe,
-      values: $sizes,
+      values: $sizes-regular,
+    ),
+    'padding-right-irregular': (
+      property: padding-right,
+      class: pe,
+      values: $sizes-irregular,
     ),
     'padding-block': (
       property: padding-block,
       class: py,
-      values: $sizes,
+      values: $sizes-regular,
+    ),
+    'padding-block-irregular': (
+      property: padding-block,
+      class: py-i,
+      values: $sizes-irregular,
     ),
     'padding-inline': (
       property: padding-inline,
       class: px,
-      values: $sizes,
+      values: $sizes-regular,
       isResponsive: true,
+    ),
+    'padding-inline-irregular': (
+      property: padding-inline,
+      class: px-i,
+      values: $sizes-irregular,
     ),
     'display': (
       property: display,
@@ -186,6 +296,14 @@ $utilities: map-merge(
       values: (
         column: column,
         row: row,
+      ),
+    ),
+    'flex-wrap': (
+      property: flex-wrap,
+      class: flex,
+      values: (
+        nowrap: nowrap,
+        wrap: wrap,
       ),
     ),
     'place-items': (
@@ -230,7 +348,7 @@ $utilities: map-merge(
     'gap': (
       property: gap,
       class: gap,
-      values: $sizes,
+      values: $sizes-regular,
     ),
     'font-weight': (
       property: font-weight,
@@ -244,22 +362,21 @@ $utilities: map-merge(
         none: none,
       ),
     ),
+    'text-align': (
+      property: text-align,
+      class: text,
+      values: (
+        'start': start,
+        'end': end,
+        'center': center,
+      ),
+    ),
     'opacity': (
       property: opacity,
       class: opacity,
-      values: (
-        1: 10%,
-        2: 20%,
-        3: 30%,
-        4: 40%,
-        5: 50%,
-        6: 60%,
-        7: 70%,
-        8: 80%,
-        9: 90%,
-        10: 100%,
-      ),
+      values: $percentage,
     ),
+
     /* The background-colors and text-colors keys must remain unchanged. */
       'background-colors':
       (

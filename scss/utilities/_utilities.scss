@@ -8,6 +8,8 @@
   $valueObject: map.get($map, 'values');
   $responsive: map.get($map, 'isResponsive');
 
+  @debug $class, $property, $valueObject, $responsive;
+
   @if $key == 'background-colors' or $key == 'text-colors' {
     @each $color, $shade-map in $valueObject {
       $type: meta.type-of($shade-map);
@@ -58,8 +60,6 @@
   } @else {
     @if meta.type-of($valueObject) == 'map' {
       @each $suffix, $value in $valueObject {
-        @debug $property $value;
-
         $class: if($class == null, $key, $class);
         .#{$class}-#{$suffix} {
           #{$property}: $value;

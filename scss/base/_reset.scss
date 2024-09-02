@@ -62,7 +62,6 @@ address {
 }
 
 @if ($focus-ring) {
-  @debug inside $focus-ring;
   :focus-visible {
     outline: $focus-ring;
     outline-offset: $focus-ring-offset;
