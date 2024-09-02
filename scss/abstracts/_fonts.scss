@@ -1,6 +1,6 @@
 @use 'functions' as *;
 
-$font-prefix: fs-res-;
+$font-prefix: fs-;
 $font-sizes: (
   'default': (
     'text-content-preset': px-to-rem(14),
@@ -17,16 +17,19 @@ $font-sizes: (
 );
 
 $font-weight: (
+  'light': 300,
   'regular': 400,
   'medium': 500,
   'semi-bold': 600,
   'bold': 700,
+  'extra-bold': 800,
 );
 
 $fw-regular: 400;
-$fw-regular: 500;
+$fw-medium: 500;
 $fw-semi-bold: 600;
 $fw-bold: 700;
+$fw-extra-bold: 800;
 
 $font-size-clamp: (
   heading: (

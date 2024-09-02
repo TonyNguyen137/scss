@@ -119,7 +119,7 @@ $fs-default: map.get($font-sizes, default);
 // css class for font-size
 @if (list.length($fs-default) > 0) {
   @each $size-name, $size-value in $fs-default {
-    .#{$prefix}#{$size-name} {
+    .#{$prefix}#{$font-prefix}#{$size-name} {
       font-size: var(--#{$prefix}#{$font-prefix}#{$size-name});
     }
   }
@@ -130,7 +130,7 @@ $spacers-default: map.get($spacers, default);
 // css variables for spacers != default
 @if (list.length($spacers-default) > 0) {
   @each $size-name, $size-value in $spacers-default {
-    .#{$prefix}#{$size-name}-mt {
+    .#{$prefix}#{$spacer-prefix}#{$size-name}-mt {
       margin-top: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
     }
     .#{$prefix}#{$size-name}-mb {
