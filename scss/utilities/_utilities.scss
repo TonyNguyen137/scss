@@ -1,14 +1,13 @@
 @use '../abstracts' as *;
 @use 'sass:map';
 @use 'sass:meta';
+@use 'sass:list';
 
 @each $key, $map in $utilities {
   $class: map.get($map, 'class');
   $property: map.get($map, 'property');
   $valueObject: map.get($map, 'values');
   $responsive: map.get($map, 'isResponsive');
-
-  @debug $class, $property, $valueObject, $responsive;
 
   @if $key == 'background-colors' or $key == 'text-colors' {
     @each $color, $shade-map in $valueObject {
@@ -60,6 +59,8 @@
   } @else {
     @if meta.type-of($valueObject) == 'map' {
       @each $suffix, $value in $valueObject {
+        @debug $suffix meta.type-of($value);
+
         $class: if($class == null, $key, $class);
         .#{$class}-#{$suffix} {
           #{$property}: $value;
@@ -110,6 +111,61 @@
       }
     } @else {
       @error 'something went wrong. Check your inputs in utilities';
+    }
+  }
+}
+$fs-default: map.get($font-sizes, default);
+
+// css class for font-size
+@if (list.length($fs-default) > 0) {
+  @each $size-name, $size-value in $fs-default {
+    .#{$prefix}#{$size-name} {
+      font-size: var(--#{$prefix}#{$font-prefix}#{$size-name});
+    }
+  }
+}
+
+$spacers-default: map.get($spacers, default);
+
+// css variables for spacers != default
+@if (list.length($spacers-default) > 0) {
+  @each $size-name, $size-value in $spacers-default {
+    .#{$prefix}#{$size-name}-mt {
+      margin-top: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+    }
+    .#{$prefix}#{$size-name}-mb {
+      margin-bottom: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+    }
+    .#{$prefix}#{$size-name}-ms {
+      margin-left: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+    }
+    .#{$prefix}#{$size-name}-me {
+      margin-right: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+    }
+    .#{$prefix}#{$size-name}-mx {
+      margin-inline: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+    }
+    .#{$prefix}#{$size-name}-my {
+      margin-block: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+    }
+
+    .#{$prefix}#{$size-name}-pt {
+      padding-top: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+    }
+    .#{$prefix}#{$size-name}-pb {
+      padding-bottom: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+    }
+    .#{$prefix}#{$size-name}-ps {
+      padding-left: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+    }
+    .#{$prefix}#{$size-name}-pe {
+      padding-end: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+    }
+    .#{$prefix}#{$size-name}-px {
+      paddiing-inline: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+    }
+    .#{$prefix}#{$size-name}-my {
+      padding-block: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
     }
   }
 }

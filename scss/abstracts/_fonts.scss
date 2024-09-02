@@ -1,17 +1,18 @@
 @use 'functions' as *;
 
+$font-prefix: fs-res-;
 $font-sizes: (
   'default': (
-    'fs-text-content-preset': px-to-rem(14),
-    'fs-heading-preset': px-to-rem(24),
+    'text-content-preset': px-to-rem(14),
+    'heading-preset': px-to-rem(24),
   ),
   'sm': (
-    'fs-text-content-preset': px-to-rem(15),
-    'fs-heading-preset': px-to-rem(25),
+    'text-content-preset': px-to-rem(15),
+    'heading-preset': px-to-rem(25),
   ),
   'md': (
-    'fs-text-content-preset': px-to-rem(16),
-    'fs-heading-preset': px-to-rem(26),
+    'text-content-preset': px-to-rem(16),
+    'heading-preset': px-to-rem(26),
   ),
 );
 

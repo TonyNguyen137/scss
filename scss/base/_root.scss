@@ -24,7 +24,6 @@
   }
 
   /* Generates CSS variables with clamp() values derived from the font-size-clamp and spacer-clamp maps in fonts.scss and spacing.scss */
-  $clamp-prefix: clamp-;
   $clamp-map: map.merge($font-size-clamp, $spacer-clamp);
   @each $key, $map in $clamp-map {
     $threshold: map.keys($map);
@@ -51,45 +50,49 @@
     );
   }
 
-  $size-map-merge: map.deep-merge($font-sizes, $spacers);
+  $spacer-default: map.get($spacers, default);
+  $fs-default: map.get($font-sizes, default);
 
-  // css variables for font-size & spacers
-  @if (list.length($size-map-merge) > 0) {
-    @each $screen-size, $size-map in $size-map-merge {
-      @if $screen-size == default {
+  // css variables for spacers
+  @if (list.length($spacer-default) > 0) {
+    @each $size-name, $size-value in $spacer-default {
+      --#{$prefix}#{$spacer-prefix}#{$size-name}: #{$size-value};
+    }
+  }
+
+  // css variables for font-size
+  @if (list.length($fs-default) > 0) {
+    @each $size-name, $size-value in $fs-default {
+      --#{$prefix}#{$font-prefix}#{$size-name}: #{$size-value};
+    }
+  }
+
+  $spacers-no-default: map-remove($spacers, 'default');
+  $font-sizes-no-default: map-remove($font-sizes, 'default');
+
+  // css variables for spacers != default
+  @if (list.length($spacers-no-default) > 0) {
+    @each $screen-size, $size-map in $spacers-no-default {
+      @include mq($screen-size) {
         @each $size-name, $size-value in $size-map {
-          --#{$prefix}#{$size-name}: #{$size-value};
-        }
-      } @else {
-        @include mq($screen-size) {
-          @each $size-name, $size-value in $size-map {
-            --#{$prefix}#{$size-name}: #{$size-value};
-          }
+          @debug $screen-size, $size-name, $size-value;
+
+          --#{$prefix}#{$spacer-prefix}#{$size-name}: #{$size-value};
         }
       }
     }
   }
 
-  // css variables for utilities
-  // @each $key, $map in $utilities {
-  //   $hasVar: map.get($map, 'hasVar');
-  //   @if $hasVar {
-  //     @each $suffix, $value in $valueObject {
-  //       .#{$class}-#{$suffix} {
-  //         #{$prefix}#{$property}: $value;
-  //       }
-  //       @if $responsive {
-  //         @each $breakpoint, $size in $grid-breakpoints {
-  //           @media (min-width:#{$size}) {
-  //             .#{$prefix}#{$class}-#{$breakpoint}-#{$suffix} {
-  //               #{$property}: $value;
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+  // css variables for font-sizes != default
+  @if (list.length($font-sizes-no-default) > 0) {
+    @each $screen-size, $size-map in $font-sizes-no-default {
+      @include mq($screen-size) {
+        @each $size-name, $size-value in $size-map {
+          --#{$prefix}#{$font-prefix}#{$size-name}: #{$size-value};
+        }
+      }
+    }
+  }
 
   @if ($enable-media-query-dark-mode) {
     @media (prefers-color-scheme: dark) {

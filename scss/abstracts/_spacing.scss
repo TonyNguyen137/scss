@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use 'functions';
+@use 'functions' as *;
 
 $factor: 0.25rem;
 $sizes-list: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
@@ -7,9 +7,7 @@ $sizes-list: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
 
 $sizes-regular: ();
 $sizes-irregular: (
-  32: 32rem,
-  89: 89rem,
-  'nav': 99px 100px,
+  '32': px-to-rem(32),
 );
 
 /*
@@ -32,18 +30,21 @@ $sizes-irregular: (
   );
 }
 
+$spacer-prefix: sc-res-;
 $spacers: (
   'default': (
-    sc-size-preset-primary: 24px,
+    preset-primary: 24px,
+    secondary: 10px,
   ),
   'md': (
-    sc-size-preset-primary: 40px,
+    preset-primary: 40px,
   ),
   'lg': (
-    sc-size-preset-primary: 41px,
+    preset-primary: 41px,
   ),
 );
 
+$clamp-prefix: clamp-;
 $spacer-clamp: (
   card-font: (
     375: 16,
