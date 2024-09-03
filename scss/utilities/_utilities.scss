@@ -114,7 +114,7 @@
 }
 $fs-default: map.get($font-sizes, default);
 
-// css class for font-size
+// css class for font-size default
 @if (list.length($fs-default) > 0) {
   @each $size-name, $size-value in $fs-default {
     .#{$prefix}#{$font-prefix}#{$size-name} {
@@ -125,7 +125,7 @@ $fs-default: map.get($font-sizes, default);
 
 $spacers-default: map.get($spacers, default);
 
-// css variables for spacers != default
+// css class for spacers default
 @if (list.length($spacers-default) > 0) {
   @each $size-name, $size-value in $spacers-default {
     .#{$prefix}#{$spacer-prefix}#{$size-name}-mt {
@@ -157,10 +157,10 @@ $spacers-default: map.get($spacers, default);
       padding-left: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
     }
     .#{$prefix}#{$size-name}-pe {
-      padding-end: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+      padding-right: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
     }
     .#{$prefix}#{$size-name}-px {
-      paddiing-inline: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+      padding-inline: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
     }
     .#{$prefix}#{$size-name}-my {
       padding-block: var(--#{$prefix}#{$spacer-prefix}#{$size-name});

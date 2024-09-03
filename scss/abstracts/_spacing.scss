@@ -46,10 +46,10 @@ $spacers: (
 */
 $clamp-prefix: clamp-;
 $spacer-clamp: (
-  card-font: (
-    375: 16,
-    768: 48,
-  ),
+  // card-font: (
+  //   375: 16,
+  //   768: 48,
+  // ),
 );
 
 $size-preset-primary: var(--sc-size-preset-primary);
