@@ -25,14 +25,17 @@
 
   /* Generates CSS variables with clamp() values derived from the font-size-clamp and spacer-clamp maps in fonts.scss and spacing.scss */
   $clamp-map: map.merge($font-size-clamp, $spacer-clamp);
-  @debug clamp-map $clamp-map;
   @each $key, $map in $clamp-map {
-    @debug bin drin;
     $threshold: map.keys($map);
     $sizeMin: map.get($map, list.nth($threshold, 1));
     $sizeMax: map.get($map, list.nth($threshold, 2));
-    $viewportMin: list.nth($threshold, 1);
-    $viewportMax: list.nth($threshold, 2);
+
+    $viewportMin: remove-unit-and-convert(
+      map.get($grid-breakpoints, list.nth($threshold, 1))
+    );
+    $viewportMax: remove-unit-and-convert(
+      map.get($grid-breakpoints, list.nth($threshold, 2))
+    );
 
     $deltaSize: $sizeMax - $sizeMin;
     $deltaViewport: $viewportMax - $viewportMin;

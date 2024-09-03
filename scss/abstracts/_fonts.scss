@@ -37,8 +37,8 @@ $fw-extra-bold: 800;
 $fw-black: 900;
 
 $font-size-clamp: (
-  // heading: (
-  //   576: 16,
-  //   1400: 128,
-  // ),
+  heading: (
+    sm: 16,
+    xxl: 128,
+  ),
 );

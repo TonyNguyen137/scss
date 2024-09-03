@@ -44,12 +44,13 @@ $spacers: (
 /*
   map for css clamp variables
 */
+
 $clamp-prefix: clamp-;
 $spacer-clamp: (
-  // card-font: (
-  //   375: 16,
-  //   768: 48,
-  // ),
+  card-font: (
+    sm: 16,
+    md: 48,
+  ),
 );
 
 $size-preset-primary: var(--sc-size-preset-primary);
