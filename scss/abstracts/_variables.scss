@@ -19,8 +19,6 @@ $clr-white: var(--clr-white);
 $prefix: '';
 $active-theme: map.get($color-theme, default);
 $enable-media-query-dark-mode: false;
-$enable-container-classes: true;
-$enable-bootstrap-grid-system: true;
 $focus-ring: 2px dashed $clr-primary;
 $focus-ring-offset: 1px;
 
@@ -28,13 +26,16 @@ $focus-ring-offset: 1px;
 $font-family-base: sans-serif;
 $font-family-accent: serif;
 
-// bootstrap grid container
+// bootstrap grid-system and container
+$bs-prefix: bs-;
+$enable-bootstrap-grid-system: true;
+$enable-cssgrid: true;
+$enable-container-classes: true;
+
 $grid-columns: 12;
 $grid-gutter-width: 1.5rem;
 $grid-row-columns: 6;
 $gutters: $sizes-regular;
-
-$bs-prefix: bs-;
 
 // grid setting
 $grid-gutter-width: 16px !default;
