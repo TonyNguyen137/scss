@@ -16,13 +16,13 @@ $clr-black: var(--clr-black);
 $clr-white: var(--clr-white);
 
 // general
+$prefix: '';
 $active-theme: map.get($color-theme, default);
 $enable-media-query-dark-mode: false;
 $enable-container-classes: true;
 $enable-bootstrap-grid-system: true;
 $focus-ring: 2px dashed $clr-primary;
 $focus-ring-offset: 1px;
-$prefix: '';
 
 // font
 $font-family-base: sans-serif;
@@ -32,12 +32,14 @@ $font-family-accent: serif;
 $grid-columns: 12;
 $grid-gutter-width: 1.5rem;
 $grid-row-columns: 6;
+$gutters: $sizes-regular;
+
 $bs-prefix: bs-;
 
 // grid setting
 $grid-gutter-width: 16px !default;
-$grid-even-col-gap: $grid-gutter-width !default;
-$grid-even-row-gap: $grid-gutter-width !default;
+$grid-even-col-gap: $grid-gutter-width;
+$grid-even-row-gap: $grid-gutter-width;
 
 // container setting
 $enable-container-classes: true;

@@ -6,6 +6,7 @@
 
 /* em */
 $grid-breakpoints: (
+  xs: 0,
   sm: px-to-em(576),
   md: px-to-em(768),
   lg: px-to-em(992),
@@ -15,6 +16,7 @@ $grid-breakpoints: (
 
 /* rem */
 // $grid-breakpoints: (
+//    xs: 0,
 //   sm: px-to-rem(576),
 //   md: px-to-rem(768),
 //   lg: px-to-rem(992),
@@ -24,6 +26,7 @@ $grid-breakpoints: (
 
 /* px */
 // $grid-breakpoints: (
+//  xs: 0,
 //   sm: 576px,
 //   md: 768px,
 //   lg: 992px,
