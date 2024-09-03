@@ -59,8 +59,6 @@
   } @else {
     @if meta.type-of($valueObject) == 'map' {
       @each $suffix, $value in $valueObject {
-        @debug $suffix meta.type-of($value);
-
         $class: if($class == null, $key, $class);
         .#{$class}-#{$suffix} {
           #{$property}: $value;

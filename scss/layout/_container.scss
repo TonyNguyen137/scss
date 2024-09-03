@@ -20,7 +20,7 @@
     }
 
     .container-fluid-#{$breakpoint} {
-      max-width: $container-max-width;
+      @include make-container-fluid($container-max-width);
     }
 
     @include media-breakpoint-up($breakpoint, $grid-breakpoints) {

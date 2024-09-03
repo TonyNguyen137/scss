@@ -6,12 +6,10 @@ $sizes-list: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
   20, 24;
 
 $sizes-regular: ();
-$sizes-irregular: (
-  '32': px-to-rem(32),
-);
+$sizes-irregular: ();
 
 /*
-  the @each loop will generate:
+  the below @each loop will generate:
   $sizes: (
     1: 0.25rem
     2: 0.5rem,
@@ -30,20 +28,22 @@ $sizes-irregular: (
   );
 }
 
+/*
+  map for css spacer variables
+*/
+
 $spacer-prefix: sc-;
 $spacers: (
-  'default': (
-    preset-primary: 24px,
-    secondary: 10px,
-  ),
-  'md': (
-    preset-primary: 40px,
-  ),
-  'lg': (
-    preset-primary: 41px,
-  ),
+  'default': (),
+  'md': (),
+  'lg': (),
+  'xl': (),
+  'xxl': (),
 );
 
+/*
+  map for css clamp variables
+*/
 $clamp-prefix: clamp-;
 $spacer-clamp: (
   card-font: (

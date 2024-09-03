@@ -3,6 +3,17 @@
 @use 'functions' as *;
 @use 'spacing' as *;
 @use 'sass:map';
+// colors
+$clr-primary: var(--clr-primary);
+$clr-secondary: var(--clr-secondary);
+$clr-success: var(--clr-success);
+$clr-info: var(--clr-info);
+$clr-warning: var(--clr-warning);
+$clr-danger: var(--clr-danger);
+$clr-light: var(--clr-light);
+$clr-dark: var(--clr-dark);
+$clr-black: var(--clr-black);
+$clr-white: var(--clr-white);
 
 // general
 $active-theme: map.get($color-theme, default);
@@ -12,6 +23,10 @@ $enable-bootstrap-grid-system: true;
 $focus-ring: 2px dashed $clr-primary;
 $focus-ring-offset: 1px;
 $prefix: '';
+
+// font
+$font-family-base: sans-serif;
+$font-family-accent: serif;
 
 // bootstrap grid container
 $grid-columns: 12;

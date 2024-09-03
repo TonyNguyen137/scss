@@ -4,6 +4,7 @@
   Bootstrap Breakpoints
 */
 
+/* em */
 $grid-breakpoints: (
   sm: px-to-em(576),
   md: px-to-em(768),
@@ -11,3 +12,21 @@ $grid-breakpoints: (
   xl: px-to-em(1200),
   xxl: px-to-em(1400),
 );
+
+/* rem */
+// $grid-breakpoints: (
+//   sm: px-to-rem(576),
+//   md: px-to-rem(768),
+//   lg: px-to-rem(992),
+//   xl: px-to-rem(1200),
+//   xxl: px-to-rem(1400),
+// );
+
+/* px */
+// $grid-breakpoints: (
+//   sm: 576px,
+//   md: 768px,
+//   lg: 992px,
+//   xl: 1200px,
+//   xxl: 1400px,
+// );

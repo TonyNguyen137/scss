@@ -1,35 +1,40 @@
 @use 'functions' as *;
 
+/*
+  generates css variables for font-sizes
+
+*/
 $font-prefix: fs-;
 $font-sizes: (
-  'default': (
-    'text-content-preset': px-to-rem(14),
-    'heading-preset': px-to-rem(24),
-  ),
-  'sm': (
-    'text-content-preset': px-to-rem(15),
-    'heading-preset': px-to-rem(25),
-  ),
-  'md': (
-    'text-content-preset': px-to-rem(16),
-    'heading-preset': px-to-rem(26),
-  ),
+  'default': (),
+  'sm': (),
+  'md': (),
+  'lg': (),
+  'xl': (),
+  'xxl': (),
 );
 
 $font-weight: (
+  'thin': 100,
+  'extra-light': 200,
   'light': 300,
   'regular': 400,
   'medium': 500,
   'semi-bold': 600,
   'bold': 700,
   'extra-bold': 800,
+  'black': 900,
 );
 
+$fw-thin: 100;
+$fw-extra-light: 200;
+$fw-light: 300;
 $fw-regular: 400;
 $fw-medium: 500;
 $fw-semi-bold: 600;
 $fw-bold: 700;
 $fw-extra-bold: 800;
+$fw-black: 900;
 
 $font-size-clamp: (
   heading: (
@@ -37,9 +42,3 @@ $font-size-clamp: (
     1400: 128,
   ),
 );
-
-$font-family-base: sans-serif;
-$font-family-accent: serif;
-
-$fs-text-content-preset: var(--fs-text-content-preset);
-$fs-heading-preset: var(--fs-heading-preset);

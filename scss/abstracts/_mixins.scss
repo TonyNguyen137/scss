@@ -32,6 +32,12 @@
   margin-inline: auto;
 }
 
+@mixin make-container-fluid($max-width, $gutter: $container-padding-x) {
+  max-width: $max-width;
+  padding-inline: $gutter;
+  margin-inline: auto;
+}
+
 @function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
   @return if(breakpoint-min($name, $breakpoints) == null, '', '-#{$name}');
 }

@@ -25,6 +25,7 @@
 
   /* Generates CSS variables with clamp() values derived from the font-size-clamp and spacer-clamp maps in fonts.scss and spacing.scss */
   $clamp-map: map.merge($font-size-clamp, $spacer-clamp);
+  @debug clamp-map $clamp-map;
   @each $key, $map in $clamp-map {
     $threshold: map.keys($map);
     $sizeMin: map.get($map, list.nth($threshold, 1));
