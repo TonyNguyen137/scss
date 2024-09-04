@@ -4,7 +4,11 @@
 @use 'sass:list';
 
 @each $key, $utility in $utilities {
-  @include generate-utility($utility, $key);
+  @if ($key == 'background-colors' or $key == 'text-colors') {
+    @include generate-colors($utility, $key);
+  } @else {
+    @include generate-utility($utility, $key);
+  }
 }
 
 $fs-default: map.get($font-sizes, default);

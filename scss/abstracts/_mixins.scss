@@ -5,6 +5,7 @@
 @use 'functions' as *;
 @use 'breakpoints' as *;
 @use 'variables' as *;
+@use 'colors' as *;
 
 // media query
 @mixin mq($size) {
@@ -340,13 +341,13 @@
   $property: map.get($utility, 'property');
   $values: map.get($utility, 'values');
   $values-type: meta.type-of($values);
-  $responsive: map.get($utility, 'responsive');
-  $important: map.get($utility, 'important');
+  $is-responsive: map.get($utility, 'responsive');
+  $is-important: map.get($utility, 'important');
 
   $css-var: map.get($utility, 'css-var');
   $local-vars: map.get($utility, 'local-vars');
 
-  @if $responsive {
+  @if $is-responsive {
     @each $breakpoint in map.keys($grid-breakpoints) {
       $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
@@ -354,7 +355,7 @@
         @if ($values-type == 'map') {
           @each $suffix, $value in $values {
             @if meta.type-of($value) == 'map' {
-              @if $important {
+              @if $is-important {
                 @each $k, $v in $value {
                   .#{$class}#{$infix}-#{$suffix}-#{$k} {
                     #{$property}: $v !important;
@@ -368,7 +369,7 @@
                 }
               }
             } @else {
-              @if $important {
+              @if $is-important {
                 .#{$class}#{$infix}-#{$suffix} {
                   #{$property}: $value !important;
                 }
@@ -381,7 +382,7 @@
           }
         } @else if($values-type == 'list') {
           @each $value in $values {
-            @if $important {
+            @if $is-important {
               .#{$class}#{$infix}-#{$value} {
                 #{$property}: $value !important;
               }
@@ -401,7 +402,7 @@
         )
         {
           @each $value in $values {
-            @if $important {
+            @if $is-important {
               .#{$class}#{$infix} {
                 #{$property}: $value !important;
               }
@@ -425,7 +426,7 @@
       'color'
     {
       @each $value in $values {
-        @if $important {
+        @if $is-important {
           .#{$class} {
             #{$property}: $value !important;
           }
@@ -437,10 +438,8 @@
       }
     } @else if $values-type == 'map' {
       @each $suffix, $value in $values {
-        @debug VALUEEE $value;
-
         @if meta.type-of($value) == 'map' {
-          @if $important {
+          @if $is-important {
             @each $k, $v in $value {
               .#{$class}-#{$suffix}-#{$k} {
                 #{$property}: $v !important;
@@ -454,7 +453,7 @@
             }
           }
         } @else {
-          @if $important {
+          @if $is-important {
             .#{$class}-#{$suffix} {
               #{$property}: $value !important;
             }
@@ -479,6 +478,71 @@
       }
     } @else {
       @error "Something went wrong. Check your inputs in utilites map!";
+    }
+  }
+}
+
+@mixin generate-colors($utility, $key) {
+  // @debug utility $utility key $key;
+  $class: if(
+    map.get($utility, 'class') == null,
+    $key,
+    map.get($utility, 'class')
+  );
+  $property: map.get($utility, 'property');
+  $values: map.get($utility, 'values');
+  $values-type: meta.type-of($values);
+  $is-responsive: map.get($utility, 'responsive');
+  $is-important: map.get($utility, 'important');
+  $is-css-var: map.get($utility, 'css-var');
+  $is-local-vars: map.get($utility, 'local-vars');
+
+  @if $is-responsive {
+    @each $breakpoint in map.keys($grid-breakpoints) {
+      $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+      @include media-breakpoint-up($breakpoint) {
+        @each $key, $value in $values {
+          @if meta.type-of($value) != 'map' {
+            .#{$class}#{$infix}-#{$key} {
+              #{$property}: rgba(
+                var(--#{$prefix}#{$color-variable-prefix}#{$key}),
+                var(--bg-opacity, 1)
+              );
+            }
+          } @else {
+            @each $k, $v in $value {
+              .#{$class}#{$infix}-#{$key}-#{$k} {
+                #{$property}: rgba(
+                  var(--#{$prefix}#{$color-variable-prefix}#{$key}-#{$k}),
+                  var(--bg-opacity, 1)
+                );
+              }
+            }
+          }
+        }
+      }
+    }
+  } @else {
+    @each $key, $value in $values {
+      @debug value $value != 'map';
+      @if meta.type-of($value) != 'map' {
+        .#{$class}-#{$key} {
+          #{$property}: rgba(
+            var(--#{$prefix}#{$color-variable-prefix}#{$key}),
+            var(--bg-opacity, 1)
+          );
+        }
+      } @else {
+        @each $k, $v in $value {
+          .#{$class}-#{$key}-#{$k} {
+            #{$property}: rgba(
+              var(--#{$prefix}#{$color-variable-prefix}#{$key}-#{$k}),
+              var(--bg-opacity, 1)
+            );
+          }
+        }
+      }
     }
   }
 }
