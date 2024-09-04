@@ -3,6 +3,9 @@
 @use 'functions' as *;
 @use 'spacing' as *;
 @use 'sass:map';
+
+$enable-important-utilities: true !default;
+
 // colors
 $clr-primary: var(--clr-primary);
 $clr-secondary: var(--clr-secondary);
@@ -29,8 +32,8 @@ $font-family-accent: serif;
 // bootstrap grid-system and container
 $bs-prefix: bs-;
 $enable-bootstrap-grid-system: true;
-$enable-cssgrid: true;
-$enable-container-classes: true;
+$enable-cssgrid: false;
+$enable-container-classes: false;
 
 $grid-columns: 12;
 $grid-gutter-width: 1.5rem;

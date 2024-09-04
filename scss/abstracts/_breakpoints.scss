@@ -5,14 +5,14 @@
 */
 
 /* em */
-$grid-breakpoints: (
-  xs: 0,
-  sm: px-to-em(576),
-  md: px-to-em(768),
-  lg: px-to-em(992),
-  xl: px-to-em(1200),
-  xxl: px-to-em(1400),
-);
+// $grid-breakpoints: (
+//   xs: 0,
+//   sm: px-to-em(576),
+//   md: px-to-em(768),
+//   lg: px-to-em(992),
+//   xl: px-to-em(1200),
+//   xxl: px-to-em(1400),
+// );
 
 /* rem */
 // $grid-breakpoints: (
@@ -25,11 +25,11 @@ $grid-breakpoints: (
 // );
 
 /* px */
-// $grid-breakpoints: (
-//  xs: 0,
-//   sm: 576px,
-//   md: 768px,
-//   lg: 992px,
-//   xl: 1200px,
-//   xxl: 1400px,
-// );
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);

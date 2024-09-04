@@ -3,118 +3,13 @@
 @use 'sass:meta';
 @use 'sass:list';
 
-@each $key, $map in $utilities {
-  $class: map.get($map, 'class');
-  $property: map.get($map, 'property');
-  $valueObject: map.get($map, 'values');
-  $responsive: map.get($map, 'isResponsive');
-
-  @if $key == 'background-colors' or $key == 'text-colors' {
-    @each $color, $shade-map in $valueObject {
-      $type: meta.type-of($shade-map);
-      $class: if($class == null, $key, $class);
-
-      @if ($type == 'color') {
-        .#{$class}-#{$color} {
-          #{$property}: var(--#{$prefix}#{$color-variable-prefix}#{$color});
-        }
-
-        @if $responsive {
-          @each $breakpoint, $size in $grid-breakpoints {
-            @include mq(#{$breakpoint}) {
-              .#{$class}-#{$breakpoint}-#{$color} {
-                #{$property}: var(
-                  --#{$prefix}#{$color-variable-prefix}#{$color}
-                );
-              }
-            }
-          }
-        }
-      } @else if ($type == 'map') {
-        @each $shade, $value in $shade-map {
-          @if (meta.type-of($value) != 'color') {
-            @error '#{$value} is not a color!';
-          }
-          .#{$class}-#{$color}-#{$shade} {
-            #{$property}: var(
-              --#{$prefix}#{$color-variable-prefix}#{$color}-#{$shade}
-            );
-          }
-          @if $responsive {
-            @each $breakpoint, $size in $grid-breakpoints {
-              @include mq(#{$breakpoint}) {
-                .#{$class}-#{$breakpoint}-#{$color}#{$shade} {
-                  #{$property}: var(
-                    --#{$prefix}#{$color-variable-prefix}#{$color}-#{$shade}
-                  );
-                }
-              }
-            }
-          }
-        }
-      } @else {
-        @error 'the input is not correct';
-      }
-    }
-  } @else {
-    @if meta.type-of($valueObject) == 'map' {
-      @each $suffix, $value in $valueObject {
-        $class: if($class == null, $key, $class);
-        .#{$class}-#{$suffix} {
-          #{$property}: $value;
-        }
-        @if $responsive {
-          @each $breakpoint, $size in $grid-breakpoints {
-            @include mq(#{$breakpoint}) {
-              .#{$class}-#{$breakpoint}-#{$suffix} {
-                #{$property}: $value;
-              }
-            }
-          }
-        }
-      }
-    } @else if meta.type-of($valueObject) == 'list' {
-      @each $value in $valueObject {
-        .#{$class}-#{$value} {
-          #{$property}: $value;
-        }
-
-        @if $responsive {
-          @each $breakpoint, $size in $grid-breakpoints {
-            @include mq(#{$breakpoint}) {
-              .#{$class}-#{$breakpoint}-#{$value} {
-                #{$property}: $value;
-              }
-            }
-          }
-        }
-      }
-    } @else if
-      meta.type-of($valueObject) ==
-      'string' or
-      meta.type-of($valueObject) ==
-      number
-    {
-      .#{$class} {
-        #{$property}: $valueObject;
-      }
-      @if $responsive {
-        @each $breakpoint, $size in $grid-breakpoints {
-          @include mq(#{$breakpoint}) {
-            .#{$class}-#{$breakpoint} {
-              #{$property}: $valueObject;
-            }
-          }
-        }
-      }
-    } @else {
-      @error 'something went wrong. Check your inputs in utilities';
-    }
-  }
+@each $key, $utility in $utilities {
+  @include generate-utility($utility, $key);
 }
-$fs-default: map.get($font-sizes, default);
 
-// css class for font-size default
+$fs-default: map.get($font-sizes, default);
+// css class for font-size
+
 @each $size-name, $size-value in $fs-default {
   .#{$prefix}#{$font-prefix}#{$size-name} {
     font-size: var(--#{$prefix}#{$font-prefix}#{$size-name});
@@ -122,7 +17,8 @@ $fs-default: map.get($font-sizes, default);
 }
 
 $spacers-default: map.get($spacers, default);
-// css class for spacers default
+// css class for spacers != default
+
 @each $size-name, $size-value in $spacers-default {
   .#{$prefix}#{$spacer-prefix}#{$size-name}-mt {
     margin-top: var(--#{$prefix}#{$spacer-prefix}#{$size-name});

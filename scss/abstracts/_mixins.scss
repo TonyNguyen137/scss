@@ -128,7 +128,6 @@
 
     @include media-breakpoint-up($breakpoint, $breakpoints) {
       // Provide basic `.col-{bp}` classes for equal-width flexbox columns
-      @debug infix $infix;
       .col#{$infix} {
         flex: 1 0 0%; // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
       }
@@ -205,6 +204,281 @@
           }
         }
       }
+    }
+  }
+}
+
+// Utility generator
+// Used to generate utilities & print utilities
+// @mixin generate-utility($utility, $infix: '', $is-rfs-media-query: false) {
+//   $values: map.get($utility, values);
+//   @debug 'valuesss' $values;
+//   // If the values are a list or string, convert it into a map
+//   @if meta.type-of($values) ==
+//     'string' or
+//     meta.type-of(list.nth($values, 1)) !=
+//     'list'
+//   {
+//     $values: zip($values, $values);
+//   }
+
+//   @each $key, $value in $values {
+//     $properties: map-get($utility, property);
+
+//     // Multiple properties are possible, for example with vertical or horizontal margins or paddings
+//     @if type-of($properties) == 'string' {
+//       $properties: append((), $properties);
+//     }
+
+//     // Use custom class if present
+//     $property-class: if(
+//       map-has-key($utility, class),
+//       map-get($utility, class),
+//       nth($properties, 1)
+//     );
+//     $property-class: if($property-class == null, '', $property-class);
+
+//     // Use custom CSS variable name if present, otherwise default to `class`
+//     $css-variable-name: if(
+//       map-has-key($utility, css-variable-name),
+//       map-get($utility, css-variable-name),
+//       map-get($utility, class)
+//     );
+
+//     // State params to generate pseudo-classes
+//     $state: if(map-has-key($utility, state), map-get($utility, state), ());
+
+//     $infix: if(
+//       $property-class == '' and str-slice($infix, 1, 1) == '-',
+//       str-slice($infix, 2),
+//       $infix
+//     );
+
+//     // Don't prefix if value key is null (e.g. with shadow class)
+//     $property-class-modifier: if(
+//       $key,
+//       if($property-class == '' and $infix == '', '', '-') + $key,
+//       ''
+//     );
+
+//     @if map-get($utility, rfs) {
+//       // Inside the media query
+//       @if $is-rfs-media-query {
+//         $val: rfs-value($value);
+
+//         // Do not render anything if fluid and non fluid values are the same
+//         $value: if($val == rfs-fluid-value($value), null, $val);
+//       } @else {
+//         $value: rfs-fluid-value($value);
+//       }
+//     }
+
+//     $is-css-var: map-get($utility, css-var);
+//     $is-local-vars: map-get($utility, local-vars);
+//     $is-rtl: map-get($utility, rtl);
+
+//     @if $value != null {
+//       @if $is-rtl == false {
+//         /* rtl:begin:remove */
+//       }
+
+//       @if $is-css-var {
+//         .#{$property-class + $infix + $property-class-modifier} {
+//           --#{$prefix}#{$css-variable-name}: #{$value};
+//         }
+
+//         @each $pseudo in $state {
+//           .#{$property-class
+//             + $infix
+//             + $property-class-modifier}-#{$pseudo}:#{$pseudo} {
+//             --#{$prefix}#{$css-variable-name}: #{$value};
+//           }
+//         }
+//       } @else {
+//         .#{$property-class + $infix + $property-class-modifier} {
+//           @each $property in $properties {
+//             @if $is-local-vars {
+//               @each $local-var, $variable in $is-local-vars {
+//                 --#{$prefix}#{$local-var}: #{$variable};
+//               }
+//             }
+//             #{$property}: $value
+//               if($enable-important-utilities, !important, null);
+//           }
+//         }
+
+//         @each $pseudo in $state {
+//           .#{$property-class
+//             + $infix
+//             + $property-class-modifier}-#{$pseudo}:#{$pseudo} {
+//             @each $property in $properties {
+//               @if $is-local-vars {
+//                 @each $local-var, $variable in $is-local-vars {
+//                   --#{$prefix}#{$local-var}: #{$variable};
+//                 }
+//               }
+//               #{$property}: $value
+//                 if($enable-important-utilities, !important, null);
+//             }
+//           }
+//         }
+//       }
+
+//       @if $is-rtl == false {
+//         /* rtl:end:remove */
+//       }
+//     }
+//   }
+// }
+
+@mixin generate-utility($utility, $key) {
+  $class: if(
+    map.get($utility, 'class') == null,
+    $key,
+    map.get($utility, 'class')
+  );
+  $property: map.get($utility, 'property');
+  $values: map.get($utility, 'values');
+  $values-type: meta.type-of($values);
+  $responsive: map.get($utility, 'responsive');
+  $important: map.get($utility, 'important');
+
+  $css-var: map.get($utility, 'css-var');
+  $local-vars: map.get($utility, 'local-vars');
+
+  @if $responsive {
+    @each $breakpoint in map.keys($grid-breakpoints) {
+      $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+      @include media-breakpoint-up($breakpoint) {
+        @if ($values-type == 'map') {
+          @each $suffix, $value in $values {
+            @if meta.type-of($value) == 'map' {
+              @if $important {
+                @each $k, $v in $value {
+                  .#{$class}#{$infix}-#{$suffix}-#{$k} {
+                    #{$property}: $v !important;
+                  }
+                }
+              } @else {
+                @each $k, $v in $value {
+                  .#{$class}#{$infix}-#{$suffix}-#{$k} {
+                    #{$property}: $v;
+                  }
+                }
+              }
+            } @else {
+              @if $important {
+                .#{$class}#{$infix}-#{$suffix} {
+                  #{$property}: $value !important;
+                }
+              } @else {
+                .#{$class}#{$infix}-#{$suffix} {
+                  #{$property}: $value;
+                }
+              }
+            }
+          }
+        } @else if($values-type == 'list') {
+          @each $value in $values {
+            @if $important {
+              .#{$class}#{$infix}-#{$value} {
+                #{$property}: $value !important;
+              }
+            } @else {
+              .#{$class}#{$infix}-#{$value} {
+                #{$property}: $value;
+              }
+            }
+          }
+        } @else if(
+          $values-type ==
+            'number' or
+            $values-type ==
+            'color'
+            $values-type ==
+            'string'
+        )
+        {
+          @each $value in $values {
+            @if $important {
+              .#{$class}#{$infix} {
+                #{$property}: $value !important;
+              }
+            } @else {
+              .#{$class}#{$infix} {
+                #{$property}: $value;
+              }
+            }
+          }
+        } @else {
+          @error "Something went wrong. Check your inputs in utilites map!";
+        }
+      }
+    }
+  } @else {
+    @if $values-type ==
+      'number' or
+      $values-type ==
+      'string' or
+      $values-type ==
+      'color'
+    {
+      @each $value in $values {
+        @if $important {
+          .#{$class} {
+            #{$property}: $value !important;
+          }
+        } @else {
+          .#{$class} {
+            #{$property}: $value;
+          }
+        }
+      }
+    } @else if $values-type == 'map' {
+      @each $suffix, $value in $values {
+        @debug VALUEEE $value;
+
+        @if meta.type-of($value) == 'map' {
+          @if $important {
+            @each $k, $v in $value {
+              .#{$class}-#{$suffix}-#{$k} {
+                #{$property}: $v !important;
+              }
+            }
+          } @else {
+            @each $k, $v in $value {
+              .#{$class}-#{$suffix}-#{$k} {
+                #{$property}: $v;
+              }
+            }
+          }
+        } @else {
+          @if $important {
+            .#{$class}-#{$suffix} {
+              #{$property}: $value !important;
+            }
+          } @else {
+            .#{$class}-#{$suffix} {
+              #{$property}: $value;
+            }
+          }
+        }
+      }
+    } @else if $values-type == 'list' {
+      @each $value in $values {
+        @if $imporant {
+          .#{$class}-#{$value} {
+            #{$property}: $value !important;
+          }
+        } @else {
+          .#{$class}-#{$value} {
+            #{$property}: $value;
+          }
+        }
+      }
+    } @else {
+      @error "Something went wrong. Check your inputs in utilites map!";
     }
   }
 }
