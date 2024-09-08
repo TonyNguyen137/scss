@@ -1,6 +1,8 @@
 @use 'sass:math';
 @use 'sass:map';
 @use 'sass:meta';
+@use 'sass:color';
+@use 'sass:list';
 
 @function px-to-rem($pixels) {
   $base-font-size: 16;
@@ -61,3 +63,103 @@
 //     @error '$spacers does not have that size!';
 //   }
 // }
+
+@function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
+  @return if(breakpoint-min($name, $breakpoints) == null, '', '-#{$name}');
+}
+
+@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+  $min: map-get($breakpoints, $name);
+  @return if($min != 0, $min, null);
+}
+
+@function map-loop($map, $func, $args...) {
+  $_map: ();
+
+  // @debug type-of meta.type-of($args);
+  // @debug args__ $args;
+  @each $key, $value in $map {
+    // allow to pass the $key and $value of the map as an function argument
+    // @debug a key $key value $value;
+    $_args: ();
+    @each $arg in $args {
+      // @debug arg $arg;
+      $_args: list.append(
+        $_args,
+        if($arg == '$key', $key, if($arg == '$value', $value, $arg))
+      );
+      // @debug append arg $_args;
+    }
+
+    // @debug after each loop _args $_args;
+
+    $_map: map-merge(
+      $_map,
+      (
+        $key: call(get-function($func), $_args...),
+      )
+    );
+    // @debug _map $_map;
+  }
+  // @debug return _map $_map;
+  @return $_map;
+}
+
+@function to-rgb($value) {
+  @debug value $value;
+  @return color.red($value), color.green($value), color.blue($value);
+}
+
+@function rgba-css-var($identifier, $target, $color-prefix, $prefix: '') {
+  @if $identifier == 'body' and $target == 'bg' {
+    @return rgba(
+      var(--#{$prefix}#{$color-prefix}#{$identifier}-bg-rgb),
+      var(--#{$target})
+    );
+  }
+  @if $identifier == 'body' and $target == 'text' {
+    @return rgba(
+      var(--#{$prefix}#{$color-prefix}#{$identifier}-color-rgb),
+      var(--#{$target})
+    );
+  } @else {
+    @return rgba(
+      var(--#{$prefix}#{$color-prefix}#{$identifier}),
+      var(--#{$target})
+    );
+  }
+}
+
+@function negativify-map($map) {
+  $result: ();
+  @each $key, $value in $map {
+    @if $key != 0 {
+      $result: map-merge($result, ('n' + $key: (-$value)));
+    }
+  }
+  @return $result;
+}
+
+@function deep-loop($map, $prefix: '') {
+  $flat-map: (); // Initialize an empty map to store the results
+
+  @each $key, $value in $map {
+    // Generate a new key by concatenating the prefix and the current key
+    $new-key: if($prefix != '', '#{$prefix}-#{$key}', $key);
+
+    @if type-of($value) == 'map' {
+      // Recursively call the function if the value is a map
+      $flat-map: map-merge($flat-map, deep-loop($value, $new-key));
+    } @else {
+      // Otherwise, add the key-value pair to the flat map
+      $flat-map: map-merge(
+        $flat-map,
+        (
+          $new-key: $value,
+        )
+      );
+    }
+  }
+
+  @return $flat-map; // Return the flattened map
+}

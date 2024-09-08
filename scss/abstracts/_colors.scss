@@ -1,5 +1,7 @@
-/* color themes from bootstrap */
+@use 'functions' as *;
+@use 'sass:map';
 
+/* color themes from bootstrap */
 $primary: #0d6efd;
 $secondary: #6c757d;
 $success: #198754;
@@ -24,7 +26,7 @@ $dark: #212529;
 
 */
 
-$color-variable-prefix: clr-;
+$color-prefix: clr-;
 
 $color-theme: (
   default: (
@@ -40,7 +42,39 @@ $color-theme: (
     'white': #fff,
     'tony': (
       100: #100,
-      200: #200,
+      200: #2ff,
     ),
   ),
+  grimson: (
+    'primary': $success,
+    'secondary': $primary,
+    'success': $secondary,
+  ),
 );
+
+$color-theme-flat: ();
+
+@each $theme-name, $map in $color-theme {
+  $color-theme-flat: map.merge(
+    $color-theme-flat,
+    (
+      $theme-name: deep-loop($map),
+    )
+  );
+}
+
+// $color-theme-rgb: ();
+
+// @each $theme-name, $map in $color-theme {
+//   @debug theme-name $theme-name;
+//   @debug map $map;
+//   $color-theme-rgb: map.merge(
+//     $color-theme-rgb,
+//     (
+//       $theme-name: map-loop(deep-loop($map), to-rgb, '$value'),
+//     )
+//   );
+// }
+// @debug theme $color-theme-rgb;
+// $color-theme-rgb: map-loop($color-theme-flat, to-rgb, '$value');
+// map-loop($color-theme-rgb, rgba-css-var, '$key', 'bg', $color-variable-prefix);

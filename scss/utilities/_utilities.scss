@@ -3,11 +3,27 @@
 @use 'sass:meta';
 @use 'sass:list';
 
-@each $key, $utility in $utilities {
-  @if ($key == 'background-colors' or $key == 'text-colors') {
-    @include generate-colors($utility, $key);
-  } @else {
-    @include generate-utility($utility, $key);
+// Loop over each breakpoint
+@each $breakpoint in map.keys($grid-breakpoints) {
+  // Generate media query if needed
+  @include media-breakpoint-up($breakpoint) {
+    // @debug $breakpoint;
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    // Loop over each utility property
+    @each $key, $utility in $utilities {
+      // @debug type-of($utility) == 'map' and
+      //   (map-get($utility, responsive) or $infix == '');
+      // The utility can be disabled with `false`, thus check if the utility is a map first
+      // Only proceed if responsive media queries are enabled or if it's the base media query
+      @if meta.type-of($utility) ==
+        'map' and
+        (map.get($utility, responsive) or $infix == '')
+      {
+        @debug infix $infix;
+        @include generate-utility($utility, $infix, $key);
+      }
+    }
   }
 }
 

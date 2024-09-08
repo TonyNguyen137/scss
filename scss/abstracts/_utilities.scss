@@ -1,11 +1,23 @@
 @use 'functions' as *;
-@use 'spacing' as *;
+@use 'sass:map';
+@use 'sizes' as *;
 @use 'colors' as *;
 @use 'fonts' as *;
 @use 'variables' as *;
-@use 'sass:map';
 
 // Utilities
+
+$negative-sizes: if(
+  $enable-negative-margins,
+  negativify-map($sizes-regular),
+  null
+) !default;
+
+$negative-sizes-irregular: if(
+  $enable-negative-margins-irregular,
+  negativify-map($sizes-irregular),
+  null
+) !default;
 
 // - z-index values
 $zindex-levels: (
@@ -22,6 +34,18 @@ $percentage-values: (
   100: 100%,
 );
 
+$opacity: (
+  0: 0,
+  10: 0.1,
+  25: 0.25,
+  50: 0.5,
+  75: 0.75,
+  100: 1,
+);
+
+$fixed-values: (
+  200: 200px,
+);
 /* 
   MAIN UTILITIES MAP
   syntax of a utility class: $class-$value, 
@@ -69,9 +93,25 @@ $percentage-values: (
 $utilities: ();
 $utilities: map-merge(
   (
+    'nav-height': (
+      global-vars: (
+        xs: (
+          nav-height: 200px,
+          header-height: 300px,
+        ),
+        sm: (
+          nav-height: 400px,
+        ),
+      ),
+      property: height,
+      class: nav-height,
+    ),
+  ),
+  (
     'overlay': (
       property: border-image,
       class: overlay,
+      important: true,
       values: (
         dark: fill 0 linear-gradient(#0003, #000),
       ),
@@ -150,7 +190,7 @@ $utilities: map-merge(
     ),
     'order': (
       property: order,
-      class: oder,
+      class: order,
       values: (
         0: 0,
         1: 1,
@@ -271,6 +311,90 @@ $utilities: map-merge(
       property: margin-block,
       class: my-i,
       values: $sizes-irregular,
+      responsive: true,
+    ),
+    'negative-margin': (
+      property: margin,
+      class: m,
+      values: $negative-sizes,
+      responsive: true,
+    ),
+    'negative-margin-top': (
+      property: margin-top,
+      class: mt,
+      values: $negative-sizes,
+      responsive: true,
+    ),
+    'negative-margin-bottom': (
+      property: margin-bottom,
+      class: mb,
+      values: $negative-sizes,
+      responsive: true,
+    ),
+    'negative-margin-left': (
+      property: margin-left,
+      class: ms,
+      values: $negative-sizes,
+      responsive: true,
+    ),
+    'negative-margin-right': (
+      property: margin-right,
+      class: me,
+      values: $negative-sizes,
+      responsive: true,
+    ),
+    'negative-margin-block': (
+      property: margin-block,
+      class: my,
+      values: $negative-sizes,
+      responsive: true,
+    ),
+    'negative-margin-inline': (
+      property: margin-inline,
+      class: mx,
+      values: $negative-sizes,
+      responsive: true,
+    ),
+    'negative-margin-irregular': (
+      property: margin,
+      class: m-i,
+      values: $negative-sizes-irregular,
+      responsive: true,
+    ),
+    'negative-margin-top-irregular': (
+      property: margin-top,
+      class: mt-i,
+      values: $negative-sizes-irregular,
+      responsive: true,
+    ),
+    'negative-margin-bottom-irregular': (
+      property: margin-bottom,
+      class: mb-i,
+      values: $negative-sizes-irregular,
+      responsive: true,
+    ),
+    'negative-margin-left-irregular': (
+      property: margin-left,
+      class: ms-i,
+      values: $negative-sizes-irregular,
+      responsive: true,
+    ),
+    'negative-margin-right-irregular': (
+      property: margin-right,
+      class: me-i,
+      values: $negative-sizes-irregular,
+      responsive: true,
+    ),
+    'negative-margin-block-irregular': (
+      property: margin-block,
+      class: my-i,
+      values: $negative-sizes-irregular,
+      responsive: true,
+    ),
+    'negative-margin-inline-irregular': (
+      property: margin-inline,
+      class: mx-i,
+      values: $negative-sizes-irregular,
       responsive: true,
     ),
     'padding': (
@@ -464,32 +588,35 @@ $utilities: map-merge(
     'opacity': (
       property: opacity,
       class: opacity,
-      values: $percentage-values,
+      values: $opacity,
     ),
-    // 'bg-opacity': (
-    //   css-var: true,
-    //   class: bg-opacity,
-    //   values: (
-    //     10: 0.1,
-    //     25: 0.25,
-    //     50: 0.5,
-    //     75: 0.75,
-    //     100: 1,
-    //   ),
-    // ),
     //The background-colors and text-colors property names must remain unchanged.
     'background-colors':
       (
         property: background-color,
+        local-vars: (
+          'alpha': 1,
+        ),
         class: bg,
-        values: $active-theme,
+        values:
+          map-loop($active-theme, rgba-css-var, '$key', 'alpha', $color-prefix),
         responsive: true,
       ),
     'text-colors': (
       property: color,
+      local-vars: (
+        'alpha': 1,
+      ),
       class: text,
-      values: $active-theme,
+      values:
+        map-loop($active-theme, rgba-css-var, '$key', 'alpha', $color-prefix),
       responsive: true,
+    ),
+    'alpha-channel': (
+      css-var: true,
+      class: alpha,
+      responsive: true,
+      values: $opacity,
     ),
   ),
   $utilities

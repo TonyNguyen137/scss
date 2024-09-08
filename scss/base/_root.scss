@@ -4,22 +4,17 @@
 @use 'sass:list';
 @use 'sass:math';
 
+$color-theme-rgb: map-loop($active-theme, to-rgb, '$value');
+
 :root {
   // css variables for default color theme
-  @each $color, $shade-map in $active-theme {
-    $type: meta.type-of($shade-map);
+  @each $color, $rgb-value in $color-theme-rgb {
+    $type: meta.type-of($rgb-value);
 
-    @if ($type == 'color') {
-      --#{$prefix}#{$color-variable-prefix}#{$color}: #{$shade-map};
-    } @else if ($type == 'map') {
-      @each $shade, $value in $shade-map {
-        @if (meta.type-of($value) != 'color') {
-          @error '#{$value} is not a color!';
-        }
-        --#{$prefix}#{$color-variable-prefix}#{$color}-#{$shade}: #{$value};
-      }
+    @if ($type == 'list') {
+      --#{$prefix}#{$color-prefix}#{$color}: rgb(#{$rgb-value});
     } @else {
-      @error 'the input is not correct';
+      @error 'the color input is not correct';
     }
   }
 
@@ -80,7 +75,7 @@
     @each $screen-size, $size-map in $spacers-no-default {
       @include mq($screen-size) {
         @each $size-name, $size-value in $size-map {
-          @debug $screen-size, $size-name, $size-value;
+          // @debug $screen-size, $size-name, $size-value;
 
           --#{$prefix}#{$spacer-prefix}#{$size-name}: #{$size-value};
         }
@@ -99,11 +94,36 @@
     }
   }
 
-  @if ($enable-media-query-dark-mode) {
-    @media (prefers-color-scheme: dark) {
-      @each $color, $shade-map in map.get($color-theme, dark) {
-        @each $shade, $value in $shade-map {
-          --#{$prefix}#{$color-variable-prefix}#{$color}-#{$shade}: #{$value};
+  // @if ($enable-media-query-dark-mode) {
+  //   @media (prefers-color-scheme: dark) {
+  //     @each $color, $shade-map in map.get($color-theme, dark) {
+  //       @each $shade, $value in $shade-map {
+  //         --#{$prefix}#{$color-prefix}#{$color}-#{$shade}: #{$value};
+  //       }
+  //     }
+  //   }
+  // }
+}
+
+// css variables for utilities
+
+:root {
+  @each $key, $utility in $utilities {
+    $global-vars: if(
+      map.get($utility, global-vars),
+      map.get($utility, global-vars),
+      ()
+    );
+    @each $breakpoint in map.keys($global-vars) {
+      @debug $breakpoint;
+
+      @include media-breakpoint-up($breakpoint) {
+        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+        @each $variable-name, $value in map.get($global-vars, $breakpoint) {
+          @debug name $variable-name, value $value;
+
+          --#{$variable-name}: #{$value};
         }
       }
     }
@@ -111,24 +131,16 @@
 }
 
 // css variables for other color themes
-@each $theme, $theme-map in $color-theme {
+@each $theme, $colors in $color-theme-flat {
   @if ($theme != 'default') {
-    :root[data-theme='#{$theme}'] {
-      @each $color, $shade-map in $theme-map {
-        $type: meta.type-of($shade-map);
-
-        @if ($type == 'color') {
-          --#{$prefix}#{$color-variable-prefix}#{$color}: #{$shade-map};
-        } @else if ($type == 'map') {
-          @each $shade, $value in $shade-map {
-            @if (meta.type-of($value) != 'color') {
-              @error '#{$value} is not a color!';
-            }
-
-            --#{$prefix}#{$color-variable-prefix}#{$color}-#{$shade}: #{$value};
-          }
+    [data-theme='#{$theme}'] {
+      $color-rgb: map-loop($colors, to-rgb, '$value');
+      @each $color, $rgb-value in $color-rgb {
+        $type: meta.type-of($rgb-value);
+        @if ($type == 'list') {
+          --#{$prefix}#{$color-prefix}#{$color}: rgb(#{$rgb-value});
         } @else {
-          @error 'the input is not correct';
+          @error 'the color input is not correct';
         }
       }
     }

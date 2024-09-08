@@ -1,10 +1,8 @@
 @use 'colors' as *;
 @use 'fonts' as *;
 @use 'functions' as *;
-@use 'spacing' as *;
+@use 'sizes' as *;
 @use 'sass:map';
-
-$enable-important-utilities: true !default;
 
 // colors
 $clr-primary: var(--clr-primary);
@@ -20,7 +18,10 @@ $clr-white: var(--clr-white);
 
 // general
 $prefix: '';
-$active-theme: map.get($color-theme, default);
+$selected-theme: default;
+$active-theme: map.get($color-theme-flat, $selected-theme);
+$enable-negative-margins: false;
+$enable-negative-margins-irregular: false;
 $enable-media-query-dark-mode: false;
 $focus-ring: 2px dashed $clr-primary;
 $focus-ring-offset: 1px;
@@ -57,3 +58,6 @@ $body-font-weight: null;
 $body-text-color: null;
 $body-background-color: null;
 $body-min-height: null;
+
+//header
+$nav-height: (--nav-height);
