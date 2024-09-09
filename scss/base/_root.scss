@@ -5,94 +5,30 @@
 @use 'sass:math';
 
 $color-theme-rgb: map-loop($active-theme, to-rgb, '$value');
+$clamp-map: map.merge($font-size-clamp, $spacer-clamp);
+$sizes-default: if(
+  map.get($sizes-vars, default) == null,
+  (),
+  map.get($sizes-vars, default)
+);
+
+$sizes-res: map-remove($sizes-vars, 'default');
+
+@debug sizes-default $sizes-default;
+@debug sizes-res $sizes-res;
 
 :root {
   // css variables for default color theme
-  @each $color, $rgb-value in $color-theme-rgb {
-    $type: meta.type-of($rgb-value);
+  @include generate-color-vars-rgb($color-theme-rgb, $color-prefix);
 
-    @if ($type == 'list') {
-      --#{$prefix}#{$color-prefix}#{$color}: rgb(#{$rgb-value});
-    } @else {
-      @error 'the color input is not correct';
-    }
-  }
+  // generates CSS vars from $size-vars default;
+  @include generate-vars($sizes-default, $sizes-prefix);
 
-  /* Generates CSS variables with clamp() values derived from the font-size-clamp and spacer-clamp maps in fonts.scss and spacing.scss */
-  $clamp-map: map.merge($font-size-clamp, $spacer-clamp);
-  @each $key, $map in $clamp-map {
-    $threshold: map.keys($map);
-    $sizeMin: map.get($map, list.nth($threshold, 1));
-    $sizeMax: map.get($map, list.nth($threshold, 2));
+  // generates CSS vars with clamp() values derived from the font-size-clamp and spacer-clamp maps in fonts.scss and spacing.scss
+  @include generate-clamp-vars($clamp-map, $clamp-prefix);
 
-    $viewportMin: remove-unit-and-convert(
-      map.get($grid-breakpoints, list.nth($threshold, 1))
-    );
-    $viewportMax: remove-unit-and-convert(
-      map.get($grid-breakpoints, list.nth($threshold, 2))
-    );
-
-    $deltaSize: $sizeMax - $sizeMin;
-    $deltaViewport: $viewportMax - $viewportMin;
-    $change: math.div($deltaSize, $deltaViewport);
-
-    $preferred: px-to-rem($sizeMax - ($viewportMax * $change));
-
-    $rateOfChange: 100vw * $change;
-
-    $sizeMin: px-to-rem($sizeMin);
-    $sizeMax: px-to-rem($sizeMax);
-
-    --#{$prefix}#{$clamp-prefix}#{$key}: clamp(
-      #{$sizeMin},
-      #{$preferred} + #{$rateOfChange},
-      #{$sizeMax}
-    );
-  }
-
-  $spacer-default: map.get($spacers, default);
-  $fs-default: map.get($font-sizes, default);
-
-  // css variables for spacers
-  @if (list.length($spacer-default) > 0) {
-    @each $size-name, $size-value in $spacer-default {
-      --#{$prefix}#{$spacer-prefix}#{$size-name}: #{$size-value};
-    }
-  }
-
-  // css variables for font-size
-  @if (list.length($fs-default) > 0) {
-    @each $size-name, $size-value in $fs-default {
-      --#{$prefix}#{$font-prefix}#{$size-name}: #{$size-value};
-    }
-  }
-
-  $spacers-no-default: map-remove($spacers, 'default');
-  $font-sizes-no-default: map-remove($font-sizes, 'default');
-
-  // css variables for spacers != default
-  @if (list.length($spacers-no-default) > 0) {
-    @each $screen-size, $size-map in $spacers-no-default {
-      @include mq($screen-size) {
-        @each $size-name, $size-value in $size-map {
-          // @debug $screen-size, $size-name, $size-value;
-
-          --#{$prefix}#{$spacer-prefix}#{$size-name}: #{$size-value};
-        }
-      }
-    }
-  }
-
-  // css variables for font-sizes != default
-  @if (list.length($font-sizes-no-default) > 0) {
-    @each $screen-size, $size-map in $font-sizes-no-default {
-      @include mq($screen-size) {
-        @each $size-name, $size-value in $size-map {
-          --#{$prefix}#{$font-prefix}#{$size-name}: #{$size-value};
-        }
-      }
-    }
-  }
+  //generate responsive CSS vars
+  @include generate-vars-res($sizes-res, $sizes-prefix);
 
   // @if ($enable-media-query-dark-mode) {
   //   @media (prefers-color-scheme: dark) {
@@ -103,31 +39,6 @@ $color-theme-rgb: map-loop($active-theme, to-rgb, '$value');
   //     }
   //   }
   // }
-}
-
-// css variables for utilities
-
-:root {
-  @each $key, $utility in $utilities {
-    $global-vars: if(
-      map.get($utility, global-vars),
-      map.get($utility, global-vars),
-      ()
-    );
-    @each $breakpoint in map.keys($global-vars) {
-      @debug $breakpoint;
-
-      @include media-breakpoint-up($breakpoint) {
-        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-
-        @each $variable-name, $value in map.get($global-vars, $breakpoint) {
-          @debug name $variable-name, value $value;
-
-          --#{$variable-name}: #{$value};
-        }
-      }
-    }
-  }
 }
 
 // css variables for other color themes

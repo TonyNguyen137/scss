@@ -16,6 +16,17 @@ $clr-dark: var(--clr-dark);
 $clr-black: var(--clr-black);
 $clr-white: var(--clr-white);
 
+// font-weight
+$fw-thin: 100;
+$fw-extra-light: 200;
+$fw-light: 300;
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semi-bold: 600;
+$fw-bold: 700;
+$fw-extra-bold: 800;
+$fw-black: 900;
+
 // general
 $prefix: '';
 $selected-theme: default;
@@ -25,10 +36,6 @@ $enable-negative-margins-irregular: false;
 $enable-media-query-dark-mode: false;
 $focus-ring: 2px dashed $clr-primary;
 $focus-ring-offset: 1px;
-
-// font
-$font-family-base: sans-serif;
-$font-family-accent: serif;
 
 // bootstrap grid-system and container
 $bs-prefix: bs-;

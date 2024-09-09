@@ -12,6 +12,8 @@
 
     // Loop over each utility property
     @each $key, $utility in $utilities {
+      // @debug $key, $utility;
+
       // @debug type-of($utility) == 'map' and
       //   (map-get($utility, responsive) or $infix == '');
       // The utility can be disabled with `false`, thus check if the utility is a map first
@@ -20,61 +22,60 @@
         'map' and
         (map.get($utility, responsive) or $infix == '')
       {
-        @debug infix $infix;
         @include generate-utility($utility, $infix, $key);
       }
     }
   }
 }
 
-$fs-default: map.get($font-sizes, default);
-// css class for font-size
+// $fs-default: map.get($font-sizes, default);
+// // css class for font-size
 
-@each $size-name, $size-value in $fs-default {
-  .#{$prefix}#{$font-prefix}#{$size-name} {
-    font-size: var(--#{$prefix}#{$font-prefix}#{$size-name});
-  }
-}
+// @each $size-name, $size-value in $fs-default {
+//   .#{$prefix}#{$font-prefix}#{$size-name} {
+//     font-size: var(--#{$prefix}#{$font-prefix}#{$size-name});
+//   }
+// }
 
-$spacers-default: map.get($spacers, default);
+// $spacers-default: map.get($sizes-vars, default);
 // css class for spacers != default
 
-@each $size-name, $size-value in $spacers-default {
-  .#{$prefix}#{$spacer-prefix}#{$size-name}-mt {
-    margin-top: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
-  }
-  .#{$prefix}#{$size-name}-mb {
-    margin-bottom: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
-  }
-  .#{$prefix}#{$size-name}-ms {
-    margin-left: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
-  }
-  .#{$prefix}#{$size-name}-me {
-    margin-right: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
-  }
-  .#{$prefix}#{$size-name}-mx {
-    margin-inline: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
-  }
-  .#{$prefix}#{$size-name}-my {
-    margin-block: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
-  }
+// @each $size-name, $size-value in $spacers-default {
+//   .#{$prefix}#{$spacer-prefix}#{$size-name}-mt {
+//     margin-top: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+//   }
+//   .#{$prefix}#{$size-name}-mb {
+//     margin-bottom: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+//   }
+//   .#{$prefix}#{$size-name}-ms {
+//     margin-left: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+//   }
+//   .#{$prefix}#{$size-name}-me {
+//     margin-right: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+//   }
+//   .#{$prefix}#{$size-name}-mx {
+//     margin-inline: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+//   }
+//   .#{$prefix}#{$size-name}-my {
+//     margin-block: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+//   }
 
-  .#{$prefix}#{$size-name}-pt {
-    padding-top: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
-  }
-  .#{$prefix}#{$size-name}-pb {
-    padding-bottom: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
-  }
-  .#{$prefix}#{$size-name}-ps {
-    padding-left: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
-  }
-  .#{$prefix}#{$size-name}-pe {
-    padding-right: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
-  }
-  .#{$prefix}#{$size-name}-px {
-    padding-inline: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
-  }
-  .#{$prefix}#{$size-name}-my {
-    padding-block: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
-  }
-}
+//   .#{$prefix}#{$size-name}-pt {
+//     padding-top: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+//   }
+//   .#{$prefix}#{$size-name}-pb {
+//     padding-bottom: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+//   }
+//   .#{$prefix}#{$size-name}-ps {
+//     padding-left: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+//   }
+//   .#{$prefix}#{$size-name}-pe {
+//     padding-right: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+//   }
+//   .#{$prefix}#{$size-name}-px {
+//     padding-inline: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+//   }
+//   .#{$prefix}#{$size-name}-my {
+//     padding-block: var(--#{$prefix}#{$spacer-prefix}#{$size-name});
+//   }
+// }

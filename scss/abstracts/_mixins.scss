@@ -288,9 +288,13 @@
     //   }
     // }
 
+    @debug TEST;
+
     $is-css-var: map.get($utility, css-var);
     $is-local-vars: map.get($utility, local-vars);
+    $is-global-vars: map.get($utility, global-vars);
     $is-rtl: map.get($utility, rtl);
+    @debug global $is-global-vars;
 
     @if $value != null {
       @if $is-rtl == false {
@@ -346,217 +350,72 @@
   }
 }
 
-// @mixin generate-utility($utility, $key) {
-//   $class: if(
-//     map.get($utility, 'class') == null,
-//     $key,
-//     map.get($utility, 'class')
-//   );
-//   $property: map.get($utility, 'property');
-//   $values: map.get($utility, 'values');
-//   $values-type: meta.type-of($values);
-//   $is-responsive: map.get($utility, 'responsive');
-//   $is-important: map.get($utility, 'important');
+@mixin generate-vars($map, $property-prefix) {
+  @each $variable-name, $value in $map {
+    // @debug $variable-name, $value;
 
-//   $css-var: map.get($utility, 'css-var');
-//   $local-vars: map.get($utility, 'local-vars');
+    --#{$prefix}#{$property-prefix}#{$variable-name}: #{$value};
+  }
+}
 
-//   @if $is-responsive {
-//     @each $breakpoint in map.keys($grid-breakpoints) {
-//       $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+@mixin generate-vars-res($map, $property-prefix) {
+  @debug mappp $map;
 
-//       @include media-breakpoint-up($breakpoint) {
-//         @if ($values-type == 'map') {
-//           @each $suffix, $value in $values {
-//             @if meta.type-of($value) == 'map' {
-//               @if $is-important {
-//                 @each $k, $v in $value {
-//                   .#{$class}#{$infix}-#{$suffix}-#{$k} {
-//                     #{$property}: $v !important;
-//                   }
-//                 }
-//               } @else {
-//                 @each $k, $v in $value {
-//                   .#{$class}#{$infix}-#{$suffix}-#{$k} {
-//                     #{$property}: $v;
-//                   }
-//                 }
-//               }
-//             } @else {
-//               @if $is-important {
-//                 .#{$class}#{$infix}-#{$suffix} {
-//                   #{$property}: $value !important;
-//                 }
-//               } @else {
-//                 .#{$class}#{$infix}-#{$suffix} {
-//                   #{$property}: $value;
-//                 }
-//               }
-//             }
-//           }
-//         } @else if($values-type == 'list') {
-//           @each $value in $values {
-//             @if $is-important {
-//               .#{$class}#{$infix}-#{$value} {
-//                 #{$property}: $value !important;
-//               }
-//             } @else {
-//               .#{$class}#{$infix}-#{$value} {
-//                 #{$property}: $value;
-//               }
-//             }
-//           }
-//         } @else if(
-//           $values-type ==
-//             'number' or
-//             $values-type ==
-//             'color'
-//             $values-type ==
-//             'string'
-//         )
-//         {
-//           @each $value in $values {
-//             @if $is-important {
-//               .#{$class}#{$infix} {
-//                 #{$property}: $value !important;
-//               }
-//             } @else {
-//               .#{$class}#{$infix} {
-//                 #{$property}: $value;
-//               }
-//             }
-//           }
-//         } @else {
-//           @error "Something went wrong. Check your inputs in utilites map!";
-//         }
-//       }
-//     }
-//   } @else {
-//     @if $values-type ==
-//       'number' or
-//       $values-type ==
-//       'string' or
-//       $values-type ==
-//       'color'
-//     {
-//       @each $value in $values {
-//         @if $is-important {
-//           .#{$class} {
-//             #{$property}: $value !important;
-//           }
-//         } @else {
-//           .#{$class} {
-//             #{$property}: $value;
-//           }
-//         }
-//       }
-//     } @else if $values-type == 'map' {
-//       @each $suffix, $value in $values {
-//         @if meta.type-of($value) == 'map' {
-//           @if $is-important {
-//             @each $k, $v in $value {
-//               .#{$class}-#{$suffix}-#{$k} {
-//                 #{$property}: $v !important;
-//               }
-//             }
-//           } @else {
-//             @each $k, $v in $value {
-//               .#{$class}-#{$suffix}-#{$k} {
-//                 #{$property}: $v;
-//               }
-//             }
-//           }
-//         } @else {
-//           @if $is-important {
-//             .#{$class}-#{$suffix} {
-//               #{$property}: $value !important;
-//             }
-//           } @else {
-//             .#{$class}-#{$suffix} {
-//               #{$property}: $value;
-//             }
-//           }
-//         }
-//       }
-//     } @else if $values-type == 'list' {
-//       @each $value in $values {
-//         @if $imporant {
-//           .#{$class}-#{$value} {
-//             #{$property}: $value !important;
-//           }
-//         } @else {
-//           .#{$class}-#{$value} {
-//             #{$property}: $value;
-//           }
-//         }
-//       }
-//     } @else {
-//       @error "Something went wrong. Check your inputs in utilites map!";
-//     }
-//   }
-// }
-
-@mixin generate-colors($utility, $key) {
-  // @debug utility $utility key $key;
-  $class: if(
-    map.get($utility, 'class') == null,
-    $key,
-    map.get($utility, 'class')
-  );
-  $property: map.get($utility, 'property');
-  $values: map.get($utility, 'values');
-  $values-type: meta.type-of($values);
-  $is-responsive: map.get($utility, 'responsive');
-  $is-important: map.get($utility, 'important');
-  $is-css-var: map.get($utility, 'css-var');
-  $is-local-vars: map.get($utility, 'local-vars');
-
-  @if $is-responsive {
-    @each $breakpoint in map.keys($grid-breakpoints) {
-      $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-
+  @each $breakpoint in map.keys($map) {
+    $_map: map.get($map, $breakpoint);
+    // @debug _map $_map;
+    @if $_map != null {
       @include media-breakpoint-up($breakpoint) {
-        @each $key, $value in $values {
-          @if meta.type-of($value) != 'map' {
-            .#{$class}#{$infix}-#{$key} {
-              #{$property}: rgba(
-                var(--#{$prefix}#{$color-variable-prefix}#{$key}),
-                var(--bg-opacity, 1)
-              );
-            }
-          } @else {
-            @each $k, $v in $value {
-              .#{$class}#{$infix}-#{$key}-#{$k} {
-                #{$property}: rgba(
-                  var(--#{$prefix}#{$color-variable-prefix}#{$key}-#{$k}),
-                  var(--bg-opacity, 1)
-                );
-              }
-            }
-          }
+        @each $variable-name, $value in map.get($map, $breakpoint) {
+          // @debug name $variable-name, value $value;
+
+          --#{$prefix}#{$property-prefix}#{$variable-name}: #{$value};
         }
       }
     }
-  } @else {
-    @each $key, $value in $values {
-      // @debug value $value != 'map';
-      @if meta.type-of($value) != 'map' {
-        .#{$class}-#{$key} {
-          #{$property}: rgba(
-            var(--#{$prefix}#{$color-variable-prefix}#{$key}),
-            var(--bg-opacity, 1)
-          );
-        }
-      } @else {
-        @each $k, $v in $value {
-          .#{$class}-#{$key}-#{$k} {
-            #{$property}: rgba(
-              var(--#{$prefix}#{$color-variable-prefix}#{$key}-#{$k}),
-              var(--bg-opacity, 1)
-            );
-          }
-        }
-      }
+  }
+}
+
+@mixin generate-clamp-vars($clamp-map, $clamp-prefix: 'clamp-') {
+  @each $key, $map in $clamp-map {
+    $threshold: map.keys($map);
+    $sizeMin: map.get($map, list.nth($threshold, 1));
+    $sizeMax: map.get($map, list.nth($threshold, 2));
+
+    $viewportMin: remove-unit-and-convert(
+      map.get($grid-breakpoints, list.nth($threshold, 1))
+    );
+    $viewportMax: remove-unit-and-convert(
+      map.get($grid-breakpoints, list.nth($threshold, 2))
+    );
+
+    $deltaSize: $sizeMax - $sizeMin;
+    $deltaViewport: $viewportMax - $viewportMin;
+    $change: math.div($deltaSize, $deltaViewport);
+
+    $preferred: px-to-rem($sizeMax - ($viewportMax * $change));
+
+    $rateOfChange: 100vw * $change;
+
+    $sizeMin: px-to-rem($sizeMin);
+    $sizeMax: px-to-rem($sizeMax);
+
+    --#{$prefix}#{$clamp-prefix}#{$key}: clamp(
+      #{$sizeMin},
+      #{$preferred} + #{$rateOfChange},
+      #{$sizeMax}
+    );
+  }
+}
+
+@mixin generate-color-vars-rgb($color-theme, $color-prefix: 'clr-') {
+  @each $color, $rgb-value in $color-theme {
+    $type: meta.type-of($rgb-value);
+
+    @if ($type == 'list') {
+      --#{$prefix}#{$color-prefix}#{$color}: rgb(#{$rgb-value});
+    } @else {
+      @error 'the color input is not correct';
     }
   }
 }

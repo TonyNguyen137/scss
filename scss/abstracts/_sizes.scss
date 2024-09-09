@@ -29,15 +29,21 @@ $sizes-irregular: ();
 }
 
 /*
-  map for css spacer variables
+  map for css size variables
 */
 
-$spacer-prefix: sc-;
-$spacers: (
-  'default': (),
+$sizes-prefix: sz-;
+$sizes-vars: (
+  'default': (
+    nav-header: 100px,
+  ),
   'md': (),
-  'lg': (),
-  'xl': (),
+  'lg': (
+    nav-header: 150px,
+  ),
+  'xl': (
+    nav-header: 200px,
+  ),
   'xxl': (),
 );
 
