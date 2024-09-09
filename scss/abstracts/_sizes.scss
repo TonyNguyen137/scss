@@ -3,7 +3,7 @@
 
 $factor: 0.25rem;
 $sizes-list: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-  19, 20, 24;
+  19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30;
 
 $sizes-regular: ();
 $sizes-irregular: ();
@@ -29,21 +29,15 @@ $sizes-irregular: ();
 }
 
 /*
-  map for css size variables
+  map for css size variables, it's generated in base/_root.scss
 */
 
 $sizes-prefix: sz-;
 $sizes-vars: (
-  'default': (
-    nav-header: 100px,
-  ),
+  'xs': (),
   'md': (),
-  'lg': (
-    nav-header: 150px,
-  ),
-  'xl': (
-    nav-header: 200px,
-  ),
+  'lg': (),
+  'xl': (),
   'xxl': (),
 );
 
@@ -52,7 +46,7 @@ $sizes-vars: (
 */
 
 $clamp-prefix: clamp-;
-$spacer-clamp: (
+$size-clamp: (
   card-font: (
     sm: 16,
     md: 48,

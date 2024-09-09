@@ -223,7 +223,8 @@
   $is-rfs-media-query: false
 ) {
   $values: map.get($utility, values);
-  // @debug key $key 'valuesss' $values;
+  // @debug utility $utility;
+  // @debug values $values;
 
   // Check if the list is not empty before accessing the first element
   @if list.length($values) > 0 {
@@ -244,6 +245,7 @@
     @if type-of($properties) == 'string' {
       $properties: list.append((), $properties);
     }
+    // @debug $properties;
 
     // Use custom class if present
     $property-class: if(
@@ -260,6 +262,7 @@
       map.get($utility, class)
     );
 
+    // @debug css name $css-variable-name;
     // State params to generate pseudo-classes
     $state: if(map.has-key($utility, state), map.get($utility, state), ());
 
@@ -288,14 +291,26 @@
     //   }
     // }
 
-    @debug TEST;
+    // @debug TEST;
 
     $is-css-var: map.get($utility, css-var);
     $is-local-vars: map.get($utility, local-vars);
-    $is-global-vars: map.get($utility, global-vars);
     $is-rtl: map.get($utility, rtl);
-    @debug global $is-global-vars;
 
+    // @debug is_css $is-css-var;
+
+    // @debug global $is-global-vars;
+    @if $value == null and map.has-key($utility, css-variable-name) {
+      $class: map.get($utility, class);
+      $property: map.get($utility, property);
+      $variable: map.get($utility, css-variable-name);
+
+      // @debug $property $class $variable;
+
+      .#{$class + $infix} {
+        #{$property}: var(--#{$variable});
+      }
+    }
     @if $value != null {
       @if $is-rtl == false {
         /* rtl:begin:remove */
@@ -316,14 +331,23 @@
       } @else {
         $is-important: if(map.get($utility, important), true, false);
 
-        .#{$property-class + $infix + $property-class-modifier} {
-          @each $property in $properties {
-            @if $is-local-vars {
-              @each $local-var, $variable in $is-local-vars {
-                --#{$prefix}#{$local-var}: #{$variable};
-              }
+        @if ($value == transparent) {
+          .#{$property-class + $infix + $property-class-modifier} {
+            @each $property in $properties {
+              #{$property}: $value if($is-important, !important, null);
             }
-            #{$property}: $value if($is-important, !important, null);
+          }
+        } @else {
+          .#{$property-class + $infix + $property-class-modifier} {
+            @each $property in $properties {
+              @if $is-local-vars {
+                @each $local-var, $variable in $is-local-vars {
+                  --#{$prefix}#{$local-var}: #{$variable};
+                }
+              }
+
+              #{$property}: $value if($is-important, !important, null);
+            }
           }
         }
 
@@ -359,8 +383,6 @@
 }
 
 @mixin generate-vars-res($map, $property-prefix) {
-  @debug mappp $map;
-
   @each $breakpoint in map.keys($map) {
     $_map: map.get($map, $breakpoint);
     // @debug _map $_map;
@@ -408,12 +430,22 @@
   }
 }
 
+@mixin generate-color-vars($color-theme, $color-prefix: 'clr-') {
+  @each $color-name, $value in $color-theme {
+    @if (meta.type-of($value) == 'color') {
+      --#{$prefix}#{$color-prefix}#{$color-name}: #{$value};
+    } @else {
+      @error 'the color input is not correct';
+    }
+  }
+}
+
 @mixin generate-color-vars-rgb($color-theme, $color-prefix: 'clr-') {
   @each $color, $rgb-value in $color-theme {
     $type: meta.type-of($rgb-value);
 
     @if ($type == 'list') {
-      --#{$prefix}#{$color-prefix}#{$color}: rgb(#{$rgb-value});
+      --#{$prefix}#{$color-prefix}#{$color}-rgb: #{$rgb-value};
     } @else {
       @error 'the color input is not correct';
     }

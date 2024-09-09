@@ -31,6 +31,8 @@ $fw-black: 900;
 $prefix: '';
 $selected-theme: default;
 $active-theme: map.get($color-theme-flat, $selected-theme);
+$active-theme-rgb: map-loop($active-theme, to-rgb, '$value');
+
 $enable-negative-margins: false;
 $enable-negative-margins-irregular: false;
 $enable-media-query-dark-mode: false;
@@ -67,4 +69,6 @@ $body-background-color: null;
 $body-min-height: null;
 
 //header
-$nav-height: (--nav-height);
+$nav-header: var(--sz-nav-header);
+
+@debug nav-height in variables calc(500px - $nav-header);

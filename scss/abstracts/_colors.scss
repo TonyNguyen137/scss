@@ -62,19 +62,3 @@ $color-theme-flat: ();
     )
   );
 }
-
-// $color-theme-rgb: ();
-
-// @each $theme-name, $map in $color-theme {
-//   @debug theme-name $theme-name;
-//   @debug map $map;
-//   $color-theme-rgb: map.merge(
-//     $color-theme-rgb,
-//     (
-//       $theme-name: map-loop(deep-loop($map), to-rgb, '$value'),
-//     )
-//   );
-// }
-// @debug theme $color-theme-rgb;
-// $color-theme-rgb: map-loop($color-theme-flat, to-rgb, '$value');
-// map-loop($color-theme-rgb, rgba-css-var, '$key', 'bg', $color-variable-prefix);

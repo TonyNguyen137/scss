@@ -7,18 +7,16 @@
 $color-theme-rgb: map-loop($active-theme, to-rgb, '$value');
 $clamp-map: map.merge($font-size-clamp, $spacer-clamp);
 $sizes-default: if(
-  map.get($sizes-vars, default) == null,
+  map.get($sizes-vars, xs) == null,
   (),
-  map.get($sizes-vars, default)
+  map.get($sizes-vars, xs)
 );
 
 $sizes-res: map-remove($sizes-vars, 'default');
 
-@debug sizes-default $sizes-default;
-@debug sizes-res $sizes-res;
-
 :root {
   // css variables for default color theme
+  @include generate-color-vars($active-theme, $color-prefix);
   @include generate-color-vars-rgb($color-theme-rgb, $color-prefix);
 
   // generates CSS vars from $size-vars default;
@@ -45,15 +43,10 @@ $sizes-res: map-remove($sizes-vars, 'default');
 @each $theme, $colors in $color-theme-flat {
   @if ($theme != 'default') {
     [data-theme='#{$theme}'] {
-      $color-rgb: map-loop($colors, to-rgb, '$value');
-      @each $color, $rgb-value in $color-rgb {
-        $type: meta.type-of($rgb-value);
-        @if ($type == 'list') {
-          --#{$prefix}#{$color-prefix}#{$color}: rgb(#{$rgb-value});
-        } @else {
-          @error 'the color input is not correct';
-        }
-      }
+      $colors-rgb: map-loop($colors, to-rgb, '$value');
+
+      @include generate-color-vars($colors, $color-prefix);
+      @include generate-color-vars-rgb($colors-rgb, $color-prefix);
     }
   }
 }

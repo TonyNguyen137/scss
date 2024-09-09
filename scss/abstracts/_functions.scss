@@ -124,7 +124,7 @@
     );
   } @else {
     @return rgba(
-      var(--#{$prefix}#{$color-prefix}#{$identifier}),
+      var(--#{$prefix}#{$color-prefix}#{$identifier}-rgb),
       var(--#{$target})
     );
   }
