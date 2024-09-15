@@ -5,7 +5,7 @@
 @use 'sass:math';
 
 $color-theme-rgb: map-loop($active-theme, to-rgb, '$value');
-$clamp-map: map.merge($font-size-clamp, $spacer-clamp);
+$clamp-map: map.merge($font-size-clamp, $size-clamp);
 $sizes-default: if(
   map.get($sizes-vars, xs) == null,
   (),
