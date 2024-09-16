@@ -92,11 +92,8 @@ export class Accordion {
   _onMenuTransitionEnd() {
     if (this._isExpanded) {
       console.log('display: none');
-
-      //   this._collapseEl.setAttribute('data-state', 'closed');
     } else {
       this._collapseEl.removeAttribute('data-state');
-      //   this._collapseEl.removeAttribute('style');
     }
   }
 }

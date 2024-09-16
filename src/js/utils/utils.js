@@ -24,9 +24,15 @@ export function select(selector) {
   }
 }
 
-// sets multiple attributes
+// sets and removes multiple attributes at once
 export function setAttributes(element, attributes) {
   Object.entries(attributes).forEach(([key, value]) => {
     element.setAttribute(key, value);
+  });
+}
+
+export function removeAttributes(element, ...attributes) {
+  attributes.forEach((attribute) => {
+    element.removeAttribute(attribute);
   });
 }

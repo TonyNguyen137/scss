@@ -3,11 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="scss/style.scss" />
-    <script type="module" src="index.js"></script>
+    <link rel="stylesheet" href="./scss/style.scss" />
+    <script type="module" src="./js/index.js"></script>
     <title>Document</title>
   </head>
   <body>
+    <header class="py-4">
+      <div class="container">
+        <nav class="navbar" data-extended="lg">
+          <a href=""> LOGO </a>
+          <button
+            class="navbar__btn navbar__btn--open"
+            aria-controls="offcanvas"
+            aria-label="open menu"
+            aria-expanded="false"
+          >
+            <svg width="24" height="20" xmlns="http://www.w3.org/2000/svg">
+              <g fill="#1D1C1E" fill-rule="evenodd">
+                <path d="M0 0h24v4H0zM0 8h24v4H0zM0 16h24v4H0z" />
+              </g>
+            </svg>
+          </button>
+          <div
+            class="navbar__offcanvas navbar__offcanvas--end"
+            id="offcanvas"
+            aria-label="offcanvas"
+          >
+            <button class="navbar__btn navbar__btn--close" aria-label="close">
+              <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M17.071.1L19.9 2.93l-7.071 7.07 7.071 7.072-2.828 2.828L10 12.828l-7.071 7.071L.1 17.071 7.17 10 .102 2.929 2.929.1l7.07 7.07 7.072-7.07z"
+                  fill="#1D1C1E"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <div class="navbar__offcanvas-body">
+              <ul class="navbar__list">
+                <li class="navbar__item">
+                  <a class="navbar__link" href="">home</a>
+                </li>
+                <li class="navbar__item">
+                  <a class="navbar__link" href="">about us</a>
+                </li>
+                <li class="navbar__item">
+                  <a class="navbar__link" href="">pricing</a>
+                </li>
+                <li class="navbar__item">
+                  <a class="navbar__link" href="">F&Q</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
     <div class="container">
       <h1>accordion</h1>
       <div class="accordion">
