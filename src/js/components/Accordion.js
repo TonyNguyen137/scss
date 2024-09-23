@@ -1,5 +1,6 @@
 import { $ } from '../utils';
 
+/*
 export class Accordion {
   constructor(selector, transitionDuration = 300) {
     this._accordionEl = typeof selector === 'string' ? $(selector) : selector;
@@ -14,7 +15,7 @@ export class Accordion {
   }
 
   _initEventHandlers() {
-    this._accordionEl.addEventListener('click', this._toggler.bind(this));
+    this._accordionEl.addEventListener('Toggle', this._toggler.bind(this));
     this._accordionEl.addEventListener(
       'transitionend',
       this._onMenuTransitionEnd.bind(this)
@@ -94,6 +95,104 @@ export class Accordion {
       console.log('display: none');
     } else {
       this._collapseEl.removeAttribute('data-state');
+    }
+  }
+}
+
+*/
+
+export class Accordion {
+  constructor(selector, config = {}) {
+    // Define a set of valid configuration properties
+    const validProperties = new Set(['transitionDuration', 'type']);
+
+    // Check for any invalid properties in the config object
+    for (const key in config) {
+      if (!validProperties.has(key)) {
+        throw new Error(`Invalid configuration property: '${key}'.`);
+      }
+    }
+
+    // Destructure config object with defaults after validation
+    const { transitionDuration = 300, type = 'open-one' } = config;
+
+    if (type !== 'open-all' && type !== 'open-one') {
+      throw new Error('Invalid type. Must be either "open-all" or "open-one".');
+    }
+
+    this._accordionEl = typeof selector === 'string' ? $(selector) : selector;
+    this._accordionType = type; // 'open-one' or 'open-all'
+    this._transitionDuration = transitionDuration;
+    this._accordionEl.style.setProperty(
+      '--transition-duration',
+      `${transitionDuration}ms`
+    );
+    this._isTransitioning = false;
+    this._initEventHandlers();
+  }
+
+  _initEventHandlers() {
+    this._accordionEl.addEventListener('click', this._toggler.bind(this));
+  }
+
+  _blockToggle() {
+    // block toggle during transition
+    this._isTransitioning = true;
+
+    setTimeout(() => {
+      this._isTransitioning = false;
+    }, this._transitionDuration);
+  }
+
+  _open() {
+    this._currentToggleEl.setAttribute('aria-expanded', !this._isExpanded);
+    this._currentGridEl.setAttribute('aria-hidden', this._isExpanded);
+    this._blockToggle();
+  }
+
+  _close(accordionItem) {
+    if (accordionItem) {
+      accordionItem
+        .querySelector('.accordion__toggle')
+        .setAttribute('aria-expanded', this._isExpanded);
+      accordionItem
+        .querySelector('.accordion__grid')
+        .setAttribute('aria-hidden', !this._isExpanded);
+    } else {
+      this._currentToggleEl.setAttribute('aria-expanded', !this._isExpanded);
+      this._currentGridEl.setAttribute('aria-hidden', this._isExpanded);
+    }
+    this._blockToggle();
+  }
+
+  // Event handlers
+  _toggler(e) {
+    const clickedToggleEl = e.target.closest('.accordion__toggle');
+
+    if (!clickedToggleEl || this._isTransitioning) return;
+
+    if (this._currentToggleEl !== clickedToggleEl) {
+      this._currentToggleEl = clickedToggleEl;
+      this._currentGridEl = this._currentToggleEl
+        .closest('.accordion__item')
+        .querySelector('.accordion__grid');
+    }
+
+    this._isExpanded =
+      this._currentToggleEl.getAttribute('aria-expanded') !== 'false';
+
+    if (this._isExpanded) {
+      this._close();
+    } else {
+      let activeItem = this._accordionEl
+        .querySelector('[aria-expanded=true]')
+        ?.closest('.accordion__item');
+
+      if (this._accordionType === 'open-one' && activeItem) {
+        this._close(activeItem);
+      }
+
+      this._open();
     }
   }
 }

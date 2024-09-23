@@ -1,0 +1,29 @@
+.grabber {
+  cursor: grab;
+  overflow-x: hidden;
+
+  &__slider {
+    overflow-x: auto;
+    // IE and Edge
+    -ms-overflow-style: none;
+    // Firefox
+    scrollbar-width: none;
+    // Chrome, Safari and Opera
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  }
+}

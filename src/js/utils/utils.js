@@ -36,3 +36,27 @@ export function removeAttributes(element, ...attributes) {
     element.removeAttribute(attribute);
   });
 }
+
+export class Util {
+  static $() {
+    return document.querySelector(selector);
+  }
+
+  static $$() {
+    return document.querySelectorAll(selector);
+  }
+
+  static select() {
+    let element = document.querySelectorAll(selector);
+
+    if (element.length > 1) {
+      return element;
+    } else {
+      return element[0];
+    }
+  }
+
+  static toArray(arrayLikeEl) {
+    return Array.from(arrayLikeEl);
+  }
+}

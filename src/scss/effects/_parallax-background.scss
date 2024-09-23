@@ -1,0 +1,27 @@
+@use '../abstracts' as *;
+
+.parallax-background {
+  background-image: var(--bg_750);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+  perspective: 1px;
+  transform-style: preserve-3d;
+
+  @include mq(2000px) {
+    background-image: var(--bg_2560);
+  }
+
+  @include mq(xxl) {
+    background-image: var(--bg_1920);
+  }
+
+  @include mq(xl) {
+    background-image: var(--bg_1400);
+  }
+
+  @include mq(lg) {
+    background-image: var(--bg_1200);
+  }
+}
