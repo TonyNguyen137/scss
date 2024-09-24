@@ -1,7 +1,17 @@
-import { $, breakPoints, setAttributes, removeAttributes } from '../utils';
+import {
+  $,
+  breakPoints,
+  setAttributesTo,
+  removeAttributesFrom,
+  validatePropertiesOf,
+} from '../utils';
 import { BodyLocker, Backdrop, FocusTrapper } from '../modules';
 export class Navbar {
-  constructor(selector, { transDur = 300 } = {}) {
+  constructor(selector, config = {}) {
+    validatePropertiesOf(config, 'transitionDuration');
+
+    const { transitionDuration = 300 } = config;
+
     this._navbarEl = typeof selector === 'string' ? $(selector) : selector;
     this._offcanvasEl = this._navbarEl.querySelector('.navbar__offcanvas');
     this._btnOpenEl = this._navbarEl.querySelector('.navbar__btn--open');
@@ -10,13 +20,12 @@ export class Navbar {
     this._lastTabbableEl = Array.from(
       this._navbarEl.querySelectorAll('.navbar__link')
     ).at(-1);
-    this._translateDuration = transDur;
+    this._transitionDuration = transitionDuration;
+    this._isTransitioning = false;
     this._navbarEl.style.setProperty(
       '--transDur',
-      `${this._translateDuration}ms`
+      `${this._transitionDuration}ms`
     );
-
-    this._isExpanded = false;
     this._media = window.matchMedia(
       `(min-width: ${
         breakPoints[this._navbarEl.getAttribute('data-extended')]
@@ -24,10 +33,10 @@ export class Navbar {
     );
 
     this._setupMedia(this._media);
-    this._init();
+    this._setEventListeners();
   }
 
-  _init() {
+  _setEventListeners() {
     this._btnOpenEl.addEventListener('click', this._openMenu.bind(this));
     this._btnCloseEl.addEventListener('click', this._closeMenu.bind(this));
     this._media.addEventListener('change', this._setupMedia.bind(this));
@@ -36,21 +45,29 @@ export class Navbar {
       document.addEventListener(eventListener, (e) => {
         let condition =
           eventListener === 'click'
-            ? this._isExpanded && e.target.classList.contains('backdrop')
-            : this._isExpanded && e.key === 'Escape';
-        if (condition) {
-          this._closeMenu();
-        }
+            ? this._getExtendedState() &&
+              !this._isTransitioning &&
+              !e.target.closest('.navbar__offcanvas')
+            : this._getExtendedState() &&
+              !this._isTransitioning &&
+              e.key === 'Escape';
+
+        if (!condition) return;
+        console.log('passed return');
+
+        this._closeMenu();
       });
     });
   }
   _setupMedia(e) {
+    this._offcanvasEl.style.transition = 'none';
+    this._isTransitioning = false;
     if (e.matches) {
       // extended menu
-      removeAttributes(
+      removeAttributesFrom(
         this._offcanvasEl,
         'inert',
-        'dialog',
+        'role',
         'tabindex',
         'aria-modal'
       );
@@ -61,7 +78,7 @@ export class Navbar {
       this._focusTrapper = null;
     } else {
       // off canvas
-      setAttributes(this._offcanvasEl, {
+      setAttributesTo(this._offcanvasEl, {
         inert: '',
         tabindex: -1,
         role: 'dialog',
@@ -71,28 +88,44 @@ export class Navbar {
         first: this._firstTabbableEl,
         last: this._lastTabbableEl,
       });
-      this._offcanvasEl.style.transition = 'none';
     }
   }
 
+  _getExtendedState() {
+    return this._btnOpenEl.getAttribute('aria-expanded') === 'true';
+  }
+
+  // block mouse click and keydown handlers while transitioning
+  _blockInteraction() {
+    this._isTransitioning = true;
+
+    setTimeout(() => {
+      this._isTransitioning = false;
+    }, this._transitionDuration);
+  }
+
+  // event handlers
   _openMenu() {
     this._btnOpenEl.setAttribute('aria-expanded', 'true');
-    this._isExpanded = true;
-    removeAttributes(this._offcanvasEl, 'inert', 'style');
+    this._blockInteraction();
+    removeAttributesFrom(this._offcanvasEl, 'inert', 'style');
     BodyLocker.lock();
-    Backdrop.insertTo(this._navbarEl, { transDur: this._translateDuration });
+    Backdrop.insertTo(this._navbarEl, { transDur: this._transitionDuration });
     this._offcanvasEl.focus();
   }
 
   _closeMenu() {
     this._btnOpenEl.setAttribute('aria-expanded', 'false');
-    this._isExpanded = false;
+    this._blockInteraction();
+
+    this._isTransitioning = true;
     this._offcanvasEl.setAttribute('inert', '');
-    this._btnOpenEl.focus();
     Backdrop.remove();
+
     setTimeout(() => {
-      this._offcanvasEl.style.transition = 'none';
       BodyLocker.release();
-    }, this._translateDuration);
+      this._btnOpenEl.focus();
+      console.log('focus done');
+    }, this._transitionDuration);
   }
 }

@@ -25,16 +25,29 @@ export function select(selector) {
 }
 
 // sets and removes multiple attributes at once
-export function setAttributes(element, attributes) {
+export function setAttributesTo(element, attributes) {
   Object.entries(attributes).forEach(([key, value]) => {
     element.setAttribute(key, value);
   });
 }
 
-export function removeAttributes(element, ...attributes) {
+export function removeAttributesFrom(element, ...attributes) {
   attributes.forEach((attribute) => {
     element.removeAttribute(attribute);
   });
+}
+
+export function validatePropertiesOf(config, ...properties) {
+  if (Object.keys(config).length === 0) return;
+
+  let validProperties = new Set(properties);
+
+  // Check for any invalid properties in the config object
+  for (const key in config) {
+    if (!validProperties.has(key)) {
+      throw new Error(`Invalid configuration property: '${key}'.`);
+    }
+  }
 }
 
 export class Util {

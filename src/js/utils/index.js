@@ -1,3 +1,15 @@
-import { $, setAttributes, removeAttributes, breakPoints } from './utils.js';
+import {
+  $,
+  setAttributesTo,
+  removeAttributesFrom,
+  validatePropertiesOf,
+  breakPoints,
+} from './utils.js';
 
-export { $, setAttributes, removeAttributes, breakPoints };
+export {
+  $,
+  setAttributesTo,
+  removeAttributesFrom,
+  validatePropertiesOf,
+  breakPoints,
+};

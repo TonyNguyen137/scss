@@ -1,4 +1,4 @@
-import { $ } from '../utils';
+import { $, validatePropertiesOf } from '../utils';
 
 /*
 export class Accordion {
@@ -103,15 +103,7 @@ export class Accordion {
 
 export class Accordion {
   constructor(selector, config = {}) {
-    // Define a set of valid configuration properties
-    const validProperties = new Set(['transitionDuration', 'type']);
-
-    // Check for any invalid properties in the config object
-    for (const key in config) {
-      if (!validProperties.has(key)) {
-        throw new Error(`Invalid configuration property: '${key}'.`);
-      }
-    }
+    validatePropertiesOf(config, 'transidionDuration', 'type');
 
     // Destructure config object with defaults after validation
     const { transitionDuration = 300, type = 'open-one' } = config;
@@ -184,11 +176,11 @@ export class Accordion {
     if (this._isExpanded) {
       this._close();
     } else {
-      let activeItem = this._accordionEl
-        .querySelector('[aria-expanded=true]')
-        ?.closest('.accordion__item');
-
-      if (this._accordionType === 'open-one' && activeItem) {
+      if (this._accordionType === 'open-one') {
+        // Close the currently open accordion item before opening a new one.
+        let activeItem = this._accordionEl
+          .querySelector('[aria-expanded=true]')
+          ?.closest('.accordion__item');
         this._close(activeItem);
       }
 

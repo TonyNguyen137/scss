@@ -19,6 +19,15 @@ $negative-sizes-irregular: if(
   null
 ) !default;
 
+$order-values: (
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3,
+  4: 4,
+  5: 5,
+);
+
 // - z-index values
 $zindex-levels: (
   n1: -1,
@@ -46,6 +55,7 @@ $opacity: (
 $fixed-values: (
   200: 200px,
 );
+
 /* 
   MAIN UTILITIES MAP
   syntax of a utility class: $class-$value, 
@@ -93,10 +103,21 @@ $fixed-values: (
 $utilities: ();
 $utilities: map-merge(
   (
+    'border-radius': (
+      property: border-radius,
+      class: radius,
+      values: $sizes-regular,
+    ),
+    'border-solid-black': (
+      property: border,
+      class: border-solid,
+      values: (
+        black: 1px solid black,
+      ),
+    ),
     'overlay': (
       property: border-image,
       class: overlay,
-      important: true,
       values: (
         dark: fill 0 linear-gradient(#0003, #000),
       ),
@@ -104,7 +125,17 @@ $utilities: map-merge(
     'overflow': (
       property: overflow,
       class: oveflow,
-      values: hidden visible auto,
+      values: hidden visible auto scroll,
+    ),
+    'overflow-x': (
+      property: overflow,
+      class: oveflow,
+      values: hidden visible auto scroll clip,
+    ),
+    'overflow-y': (
+      property: overflow,
+      class: oveflow,
+      values: hidden visible auto scroll clip,
     ),
 
     'width': (
@@ -472,6 +503,7 @@ $utilities: map-merge(
       values: $sizes-irregular,
       responsive: true,
     ),
+
     'display': (
       property: display,
       class: d,
@@ -536,14 +568,15 @@ $utilities: map-merge(
       property: align-self,
       values: start center end,
     ),
+    'justify-self': (
+      responsive: true,
+      property: justify-self,
+      values: start center end,
+    ),
     'flex-grow': (
       property: flex-grow,
       class: flex-grow,
-      values: (
-        1: 1,
-        2: 2,
-        3: 3,
-      ),
+      values: $order-values,
     ),
     'gap': (
       property: gap,

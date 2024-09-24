@@ -3,7 +3,6 @@
 
 .navbar {
   $offcanvas-z: 3;
-  $offcanvas-transition: transform 0.3s ease-in-out;
   $offcanvas-width: px-to-rem(400);
   $offcanvas-bg: white;
   $offcanvas-border-width: 1px;
@@ -22,6 +21,12 @@
     }
     &--close {
       align-self: end;
+    }
+
+    &:focus-visible,
+    &:focus {
+      outline: 0;
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
     }
   }
 
@@ -62,7 +67,7 @@
     flex-direction: column;
     row-gap: 32px;
 
-    transition: $offcanvas-transition;
+    transition: transform var(--transDur, 300ms) ease;
 
     &--end {
       top: 0;
@@ -92,24 +97,6 @@
       border-bottom: $offcanvas-border-width solid $offcanvas-border-color;
       transform: translateY(-100%);
     }
-  }
-
-  &__test {
-    background-color: red;
-  }
-
-  &[data-extended='lg'] {
-    .navbar__offcanvas {
-      background-color: yellow;
-    }
-  }
-
-  &[aria-checked='true'] {
-    background-color: salmon;
-  }
-
-  &[aria-checked='false'] {
-    background-color: skyblue;
   }
 
   // extended
