@@ -24,7 +24,7 @@ export function select(selector) {
   }
 }
 
-// sets and removes multiple attributes at once
+// sets and removes multiple attributes of an Element
 export function setAttributesTo(element, attributes) {
   Object.entries(attributes).forEach(([key, value]) => {
     element.setAttribute(key, value);
@@ -37,10 +37,10 @@ export function removeAttributesFrom(element, ...attributes) {
   });
 }
 
-export function validatePropertiesOf(config, ...properties) {
+export function validatePropertiesOf(config, ...allowedProperties) {
   if (Object.keys(config).length === 0) return;
 
-  let validProperties = new Set(properties);
+  let validProperties = new Set(allowedProperties);
 
   // Check for any invalid properties in the config object
   for (const key in config) {

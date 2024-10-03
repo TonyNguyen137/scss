@@ -27,28 +27,3 @@ $sizes-irregular: ();
     )
   );
 }
-
-/*
-  map for css size variables, it's generated in base/_root.scss
-*/
-
-$sizes-prefix: sz-;
-$sizes-vars: (
-  'xs': (),
-  'md': (),
-  'lg': (),
-  'xl': (),
-  'xxl': (),
-);
-
-/*
-  map for css clamp variables
-*/
-
-$clamp-prefix: clamp-;
-$size-clamp: (
-  card-font: (
-    sm: 16,
-    md: 48,
-  ),
-);

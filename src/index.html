@@ -10,7 +10,6 @@
       crossorigin="anonymous"
     />
     <script
-      defer
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
@@ -20,9 +19,9 @@
     <title>Document</title>
   </head>
   <body>
-    <header class="py-4">
+    <header class="py-4 position-sticky top-0 z-1 bg-primary">
       <div class="container">
-        <nav class="navbar" data-extended="lg">
+        <nav class="navbar" data-extended="xl">
           <a href=""> LOGO </a>
           <button
             class="navbar__btn navbar__btn--open"
@@ -52,23 +51,25 @@
             </button>
             <ul class="navbar__list">
               <li class="navbar__item">
-                <a class="navbar__link" href="">home</a>
+                <a class="navbar__link" href="html-templates/navbar.html"
+                  >navbar</a
+                >
               </li>
               <li class="navbar__item">
-                <a class="navbar__link" href="">about us</a>
+                <a class="navbar__link" href="/about">about us</a>
               </li>
               <li class="navbar__item">
-                <a class="navbar__link" href="">pricing</a>
+                <a class="navbar__link" href="/pricing">pricing</a>
               </li>
               <li class="navbar__item">
-                <a class="navbar__link" href="">F&Q</a>
+                <a class="navbar__link" href="/questions">F&Q</a>
               </li>
             </ul>
           </div>
         </nav>
       </div>
     </header>
-    <div class="container">
+    <div class="container" style="padding-top: 88px">
       <!-- Accordion height 
       <h1>accordion height</h1>
 
@@ -330,5 +331,21 @@
         </div>
       </div>
     </div>
+
+    <section style="height: 100vh; background-color: lightcoral">
+      this is section 1
+    </section>
+
+    <section style="height: 100vh; background-color: lightblue">
+      this is section 2
+    </section>
+
+    <section style="height: 100vh; background-color: lightskyblue">
+      this is section 3
+    </section>
+
+    <section style="height: 100vh; background-color: lightgoldenrodyellow">
+      this is section 4
+    </section>
   </body>
 </html>

@@ -1,5 +1,5 @@
-import {BodyLocker} from "./BodyLocker.js";
-import {Backdrop} from "./Backdrop.js";
-import {FocusTrapper} from "./FocusTrapper.js";
+import { BodyScrollLocker } from './BodyScrollLocker.js';
+import { Backdrop } from './Backdrop.js';
+import { FocusTrapper } from './FocusTrapper.js';
 
-export {BodyLocker, Backdrop, FocusTrapper};
+export { BodyScrollLocker, Backdrop, FocusTrapper };

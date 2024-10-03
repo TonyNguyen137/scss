@@ -2,7 +2,6 @@
 @use 'sass:map';
 @use 'sizes' as *;
 @use 'colors' as *;
-@use 'fonts' as *;
 @use 'variables' as *;
 
 // Utilities
@@ -35,12 +34,44 @@ $zindex-levels: (
   1: 1,
   2: 2,
   3: 3,
+  first: 999,
+  second: 998,
+  third: 997,
 );
 
 $percentage-values: (
   0: 0,
+  10: 10%,
+  15: 15%,
+  20: 20%,
+  25: 25%,
+  30: 30%,
+  35: 35%,
+  40: 40%,
+  45: 45%,
   50: 50%,
+  55: 55%,
+  60: 60%,
+  65: 65%,
+  70: 70%,
+  75: 75%,
+  80: 80%,
+  85: 85%,
+  90: 90%,
+  95: 95%,
   100: 100%,
+);
+
+$font-weight: (
+  'thin': 100,
+  'extra-light': 200,
+  'light': 300,
+  'regular': 400,
+  'medium': 500,
+  'semi-bold': 600,
+  'bold': 700,
+  'extra-bold': 800,
+  'black': 900,
 );
 
 $opacity: (
@@ -103,6 +134,147 @@ $fixed-values: (
 $utilities: ();
 $utilities: map-merge(
   (
+    'z-highest': (
+      property: z-index,
+      css-variable-name: z-level-1,
+      class: z-level-1,
+    ),
+    'z-2nd-highest': (
+      property: z-index,
+      css-variable-name: z-level-2,
+      class: z-level-2,
+    ),
+    'z-3rd-highest': (
+      property: z-index,
+      css-variable-name: z-level-3,
+      class: z-level-3,
+    ),
+    'z-4th-highest': (
+      property: z-index,
+      css-variable-name: z-level-4,
+      class: z-level-4,
+    ),
+    'translate-negative-center': (
+      property: transform,
+      class: translate-n,
+      values: (
+        center: translate(-50%, -50%),
+      ),
+    ),
+    'translate-center': (
+      property: transform,
+      class: translate,
+      values: (
+        center: translate(50%, 50%),
+      ),
+    ),
+    'translate-y': (
+      property: transform,
+      class: translate-y,
+      values: (
+        0: translateY(0),
+        10: translateY(10%),
+        15: translateY(15%),
+        20: translateY(20%),
+        25: translateY(25%),
+        30: translateY(30%),
+        35: translateY(35%),
+        40: translateY(40%),
+        45: translateY(45%),
+        50: translateY(50%),
+        55: translateY(55%),
+        60: translateY(60%),
+        65: translateY(65%),
+        70: translateY(70%),
+        75: translateY(75%),
+        80: translateY(80%),
+        85: translateY(85%),
+        90: translateY(90%),
+        95: translateY(95%),
+        100: translateY(100%),
+      ),
+    ),
+
+    'translate-negative-y': (
+      property: transform,
+      class: translate-n-y,
+      values: (
+        10: translateY(-10%),
+        15: translateY(-15%),
+        20: translateY(-20%),
+        25: translateY(-25%),
+        30: translateY(-30%),
+        35: translateY(-35%),
+        40: translateY(-40%),
+        45: translateY(-45%),
+        50: translateY(-50%),
+        55: translateY(-55%),
+        60: translateY(-60%),
+        65: translateY(-65%),
+        70: translateY(-70%),
+        75: translateY(-75%),
+        80: translateY(-80%),
+        85: translateY(-85%),
+        90: translateY(-90%),
+        95: translateY(-95%),
+        100: translateY(-100%),
+      ),
+      responsive: true,
+    ),
+    'translate-negative-x': (
+      property: transform,
+      class: translate-n-x,
+      values: (
+        10: translateX(-10%),
+        15: translateX(-15%),
+        20: translateX(-20%),
+        25: translateX(-25%),
+        30: translateX(-30%),
+        35: translateX(-35%),
+        40: translateX(-40%),
+        45: translateX(-45%),
+        50: translateX(-50%),
+        55: translateX(-55%),
+        60: translateX(-60%),
+        65: translateX(-65%),
+        70: translateX(-70%),
+        75: translateX(-75%),
+        80: translateX(-80%),
+        85: translateX(-85%),
+        90: translateX(-90%),
+        95: translateX(-95%),
+        100: translateX(-100%),
+      ),
+      responsive: true,
+    ),
+    'translate-x': (
+      property: transform,
+      class: translate-x,
+      values: (
+        0: translateX(0),
+        10: translateX(10%),
+        15: translateX(15%),
+        20: translateX(20%),
+        25: translateX(25%),
+        30: translateX(30%),
+        35: translateX(35%),
+        40: translateX(40%),
+        45: translateX(45%),
+        50: translateX(50%),
+        55: translateX(55%),
+        60: translateX(60%),
+        65: translateX(65%),
+        70: translateX(70%),
+        75: translateX(75%),
+        80: translateX(80%),
+        85: translateX(85%),
+        90: translateX(90%),
+        95: translateX(95%),
+        100: translateX(100%),
+      ),
+      responsive: true,
+    ),
+
     'border-radius': (
       property: border-radius,
       class: radius,

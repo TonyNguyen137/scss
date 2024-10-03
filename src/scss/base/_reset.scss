@@ -2,6 +2,9 @@
 
 html {
   box-sizing: border-box;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
   @media screen and (prefers-reduced-motion: no-preference) {
     scroll-behavior: smooth;
   }
@@ -16,23 +19,8 @@ html {
 }
 
 body {
-  font-family: $body-font-family;
-  font-size: $body-font-size;
-  line-height: $body-line-height;
-
-  @if $body-text-color {
-    color: $body-text-color;
-  }
-
-  @if $body-font-weight {
-    font-weight: $body-font-weight;
-  }
-  @if $body-background-color {
-    background-color: $body-background-color;
-  }
-  @if $body-min-height {
-    min-height: $body-min-height;
-  }
+  font-family: sans-serif;
+  line-height: 1.5;
 }
 
 img {
@@ -44,7 +32,7 @@ img {
   background-size: cover;
 }
 
-a,
+a[class],
 select,
 input,
 button,
@@ -53,22 +41,34 @@ textarea {
   color: inherit;
 }
 
-address {
-  font-style: normal;
+h1,
+h2,
+h3,
+h4,
+button,
+input,
+label {
+  line-height: 1.1;
 }
 
-@if ($focus-ring) {
-  :focus-visible {
-    outline: 0;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-  }
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
 
-  button:focus {
-    outline: $focus-ring;
-    outline-offset: $focus-ring-offset;
-  }
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
 }
 
 svg {
   display: block;
+}
+
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 5ex;
 }

@@ -6,12 +6,17 @@
 
 @function px-to-rem($pixels) {
   $base-font-size: 16;
-  @return math.div($pixels, 16) * 1rem;
+  @return round-to(math.div($pixels, $base-font-size)) * 1rem;
 }
 
 @function px-to-em($pixels) {
   $base-font-size: 16;
   @return math.div($pixels, 16) * 1em;
+}
+
+@function round-to($number, $precision: 4) {
+  $factor: math.pow(10, $precision);
+  @return math.div(math.round($number * $factor), $factor);
 }
 
 // Removes 'em, rem', multiply with 16 and returns the unitless value

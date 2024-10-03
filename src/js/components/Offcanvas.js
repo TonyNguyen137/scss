@@ -5,7 +5,8 @@ import {
   removeAttributesFrom,
   validatePropertiesOf,
 } from '../utils';
-import { BodyLocker, Backdrop, FocusTrapper } from '../modules';
+import { BodyScrollLocker, Backdrop, FocusTrapper } from '../modules';
+
 export class Navbar {
   constructor(selector, config = {}) {
     validatePropertiesOf(config, 'transitionDuration');
@@ -53,7 +54,6 @@ export class Navbar {
               e.key === 'Escape';
 
         if (!condition) return;
-        console.log('passed return');
 
         this._closeMenu();
       });
@@ -62,6 +62,7 @@ export class Navbar {
   _setupMedia(e) {
     this._offcanvasEl.style.transition = 'none';
     this._isTransitioning = false;
+
     if (e.matches) {
       // extended menu
       removeAttributesFrom(
@@ -72,7 +73,7 @@ export class Navbar {
         'aria-modal'
       );
       this._btnOpenEl.setAttribute('aria-expanded', 'false');
-      BodyLocker.release();
+      BodyScrollLocker.release();
       Backdrop.kill();
       this._focusTrapper && this._focusTrapper._kill();
       this._focusTrapper = null;
@@ -95,37 +96,37 @@ export class Navbar {
     return this._btnOpenEl.getAttribute('aria-expanded') === 'true';
   }
 
-  // block mouse click and keydown handlers while transitioning
-  _blockInteraction() {
+  // block mouse click and keydown handlers of document while transitioning
+  _blockInteraction(onTransitionEndCallBack) {
     this._isTransitioning = true;
 
     setTimeout(() => {
       this._isTransitioning = false;
+
+      if (typeof onTransitionEndCallBack === 'function') {
+        onTransitionEndCallBack();
+      }
     }, this._transitionDuration);
   }
 
   // event handlers
   _openMenu() {
+    // changing aria-expanded value from btnOpenEl triggers the offcanvas menu
     this._btnOpenEl.setAttribute('aria-expanded', 'true');
     this._blockInteraction();
     removeAttributesFrom(this._offcanvasEl, 'inert', 'style');
-    BodyLocker.lock();
+    BodyScrollLocker.lock();
     Backdrop.insertTo(this._navbarEl, { transDur: this._transitionDuration });
     this._offcanvasEl.focus();
   }
 
   _closeMenu() {
     this._btnOpenEl.setAttribute('aria-expanded', 'false');
-    this._blockInteraction();
-
-    this._isTransitioning = true;
+    this._blockInteraction(() => {
+      BodyScrollLocker.release();
+      this._btnOpenEl.focus();
+    });
     this._offcanvasEl.setAttribute('inert', '');
     Backdrop.remove();
-
-    setTimeout(() => {
-      BodyLocker.release();
-      this._btnOpenEl.focus();
-      console.log('focus done');
-    }, this._transitionDuration);
   }
 }

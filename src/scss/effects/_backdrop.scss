@@ -5,20 +5,17 @@
   z-index: var(--z, 3);
   width: 100vw;
   height: 100vh;
-  background-color: #000;
+  background-color: var(--backgroundColor, #000);
 
   &.fade {
-    opacity:0
+    opacity: 0;
   }
 
   &.show {
     opacity: var(--opacity, 0.5);
   }
-
 }
 
-
 .fade {
-  transition: opacity var(--transDur, 150ms) linear;
-
+  transition: opacity var(--transitionDuration, 150ms) linear;
 }

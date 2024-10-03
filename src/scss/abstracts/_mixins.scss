@@ -9,18 +9,6 @@
 @use 'variables' as *;
 @use 'colors' as *;
 
-@mixin add-root-css-variables($variables) {
-  // Loop through the map of variables
-  @each $name, $value in $variables {
-    // Use @at-root to ensure this is at the top level of CSS
-    @at-root {
-      :root {
-        --#{$name}: #{$value};
-      }
-    }
-  }
-}
-
 // media query
 @mixin mq($size) {
   @if map.has-key($grid-breakpoints, $size) {
@@ -85,7 +73,8 @@
 @mixin make-col-ready() {
   // Add box sizing if only the grid is loaded
   box-sizing: if(
-    variable-exists(include-column-box-sizing) and $include-column-box-sizing,
+    meta.variable-exists(include-column-box-sizing) and
+      $include-column-box-sizing,
     border-box,
     null
   );
@@ -374,31 +363,27 @@
   }
 }
 
-@mixin generate-vars($map, $property-prefix) {
-  @each $variable-name, $value in $map {
-    // @debug $variable-name, $value;
+// @mixin generate-vars($map, $property-prefix: '') {
+//   @each $variable-name, $value in $map {
+//     // @debug $variable-name, $value;
 
-    --#{$prefix}#{$property-prefix}#{$variable-name}: #{$value};
-  }
-}
+//     --#{$prefix}#{$property-prefix}#{$variable-name}: #{$value};
+//   }
+// }
 
-@mixin generate-vars-res($map, $property-prefix) {
+@mixin generate-vars($map, $property-prefix: '') {
   @each $breakpoint in map.keys($map) {
-    $_map: map.get($map, $breakpoint);
-    // @debug _map $_map;
-    @if $_map != null {
-      @include media-breakpoint-up($breakpoint) {
-        @each $variable-name, $value in map.get($map, $breakpoint) {
-          // @debug name $variable-name, value $value;
+    @include media-breakpoint-up($breakpoint) {
+      @each $variable-name, $value in map.get($map, $breakpoint) {
+        // @debug name $variable-name, value $value;
 
-          --#{$prefix}#{$property-prefix}#{$variable-name}: #{$value};
-        }
+        --#{$prefix}#{$property-prefix}#{$variable-name}: #{$value};
       }
     }
   }
 }
 
-@mixin generate-clamp-vars($clamp-map, $clamp-prefix: 'clamp-') {
+@mixin generate-clamp-vars($clamp-map, $clamp-prefix: '') {
   @each $key, $map in $clamp-map {
     $threshold: map.keys($map);
     $sizeMin: map.get($map, list.nth($threshold, 1));
@@ -413,7 +398,7 @@
 
     $deltaSize: $sizeMax - $sizeMin;
     $deltaViewport: $viewportMax - $viewportMin;
-    $change: math.div($deltaSize, $deltaViewport);
+    $change: round-to(math.div($deltaSize, $deltaViewport));
 
     $preferred: px-to-rem($sizeMax - ($viewportMax * $change));
 
@@ -427,6 +412,19 @@
       #{$preferred} + #{$rateOfChange},
       #{$sizeMax}
     );
+  }
+}
+
+@mixin generate-color-themes($color-theme, $removed-theme: '') {
+  $_theme-map: map.remove($color-theme, $removed-theme);
+
+  @each $theme, $colors in $_theme-map {
+    [data-theme='#{$theme}'] {
+      $colors-rgb: map-loop($colors, to-rgb, '$value');
+
+      @include generate-color-vars($colors, $color-prefix);
+      @include generate-color-vars-rgb($colors-rgb, $color-prefix);
+    }
   }
 }
 

@@ -1,0 +1,100 @@
+@use '../abstracts' as *;
+@use 'sass:map';
+.navbar {
+  --navbar-z: 99;
+  background-color: $clr-primary;
+  z-index: var(--navbar-z, auto);
+  outline: 1px solid $clr-primary;
+  position: relative;
+  margin-inline: auto;
+  padding-block: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+
+  &__hamburger-svg {
+    display: inline;
+  }
+  &__close-svg {
+    display: none;
+  }
+
+  &__toggle {
+    display: block;
+    line-height: 1;
+
+    svg {
+      vertical-align: baseline;
+    }
+
+    &[aria-expanded='true'] .navbar__hamburger-svg {
+      display: none;
+    }
+    &[aria-expanded='true'] .navbar__hamburger-svg {
+      display: inline;
+    }
+  }
+
+  &__collapse {
+    width: 100%;
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    transform: translateY(100%);
+
+    background-color: $clr-white;
+
+    &[data-state='collapsed'] {
+      display: none;
+    }
+
+    &[data-state='collapsing'] {
+      overflow: hidden;
+      height: 0;
+      transition: height var(--transition-duration, 0ms) linear;
+    }
+  }
+
+  &__list {
+    padding: 1rem;
+    list-style: none;
+    align-items: center;
+    column-gap: 1rem;
+
+    display: grid;
+    row-gap: 1rem;
+  }
+
+  &__link {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  @each $bp in map.keys($grid-breakpoints) {
+    &[data-expanded='#{$bp}'] {
+      @include mq(#{$bp}) {
+        .navbar__toggle {
+          display: none;
+        }
+
+        .navbar__collapse {
+          width: revert;
+          height: revert;
+          position: static;
+          transform: none;
+
+          &[data-state='collapsed'] {
+            display: block;
+          }
+        }
+
+        .navbar__list {
+          display: flex;
+        }
+      }
+    }
+  }
+}

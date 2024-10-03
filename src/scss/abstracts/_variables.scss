@@ -1,42 +1,16 @@
 @use 'colors' as *;
-@use 'fonts' as *;
 @use 'functions' as *;
 @use 'sizes' as *;
 @use 'sass:map';
 
-// colors
-$clr-primary: var(--clr-primary);
-$clr-secondary: var(--clr-secondary);
-$clr-success: var(--clr-success);
-$clr-info: var(--clr-info);
-$clr-warning: var(--clr-warning);
-$clr-danger: var(--clr-danger);
-$clr-light: var(--clr-light);
-$clr-dark: var(--clr-dark);
-$clr-black: var(--clr-black);
-$clr-white: var(--clr-white);
-// font-weight
-$fw-thin: 100;
-$fw-extra-light: 200;
-$fw-light: 300;
-$fw-regular: 400;
-$fw-medium: 500;
-$fw-semi-bold: 600;
-$fw-bold: 700;
-$fw-extra-bold: 800;
-$fw-black: 900;
-
 // general
 $prefix: '';
-$selected-theme: default;
-$active-theme: map.get($color-theme-flat, $selected-theme);
+$active-theme: map.get($color-theme-map, default);
 $active-theme-rgb: map-loop($active-theme, to-rgb, '$value');
-
 $enable-negative-margins: false;
 $enable-negative-margins-irregular: false;
 $enable-media-query-dark-mode: false;
-$focus-ring: 2px dashed $clr-primary;
-$focus-ring-offset: 1px;
+$enable-color-themes: true;
 
 // bootstrap grid-system and container
 $bs-prefix: bs-;
@@ -58,16 +32,43 @@ $grid-even-row-gap: $grid-gutter-width;
 $enable-container-classes: true;
 $container-padding-x: 12px;
 
-// body
-$body-font-family: $font-family-base;
-$body-font-size: px-to-rem(16);
-$body-line-height: 1.5;
-$body-font-weight: null;
-$body-text-color: null;
-$body-background-color: null;
-$body-min-height: null;
+// colors
+$clr-primary: var(--clr-primary);
+$clr-secondary: var(--clr-secondary);
+$clr-success: var(--clr-success);
+$clr-info: var(--clr-info);
+$clr-warning: var(--clr-warning);
+$clr-danger: var(--clr-danger);
+$clr-light: var(--clr-light);
+$clr-dark: var(--clr-dark);
+$clr-black: var(--clr-black);
+$clr-white: var(--clr-white);
 
-//header
-$nav-header: var(--sz-nav-header);
+// font-weight
+$fw-thin: 100;
+$fw-extra-light: 200;
+$fw-light: 300;
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semi-bold: 600;
+$fw-bold: 700;
+$fw-extra-bold: 800;
+$fw-black: 900;
 
-@debug nav-height in variables calc(500px - $nav-header);
+// Z-index master list
+//
+// Warning: Avoid customizing these values. They're used for a bird's eye view
+// of components dependent on the z-axis and are designed to all work together.
+
+// scss-docs-start zindex-stack
+$zindex-dropdown: 1000 !default;
+$zindex-sticky: 1020 !default;
+$zindex-fixed: 1030 !default;
+$zindex-offcanvas-backdrop: 1040 !default;
+$zindex-offcanvas: 1045 !default;
+$zindex-modal-backdrop: 1050 !default;
+$zindex-modal: 1055 !default;
+$zindex-popover: 1070 !default;
+$zindex-tooltip: 1080 !default;
+$zindex-toast: 1090 !default;
+// scss-docs-end zindex-stack

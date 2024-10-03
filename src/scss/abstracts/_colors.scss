@@ -52,11 +52,11 @@ $color-theme: (
   ),
 );
 
-$color-theme-flat: ();
+$color-theme-map: ();
 
 @each $theme-name, $map in $color-theme {
-  $color-theme-flat: map.merge(
-    $color-theme-flat,
+  $color-theme-map: map.merge(
+    $color-theme-map,
     (
       $theme-name: deep-loop($map),
     )
