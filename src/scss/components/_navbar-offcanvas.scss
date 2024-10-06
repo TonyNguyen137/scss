@@ -102,7 +102,7 @@
   // extended
   @each $bp in map.keys($grid-breakpoints) {
     &[data-extended='#{$bp}'] {
-      @include mq(#{$bp}) {
+      @include mq($bp, true) {
         .navbar__offcanvas {
           position: static;
 

@@ -10,11 +10,23 @@
 @use 'colors' as *;
 
 // media query
-@mixin mq($size) {
+
+@mixin mq($size, $add-media-hover: false) {
+  // @debug $size;
+  // @debug $add-media-hover;
+
   @if map.has-key($grid-breakpoints, $size) {
-    $breakpoint: map.get($grid-breakpoints, $size);
-    @media screen and (min-width: $breakpoint) {
-      @content;
+    @if $size != 'xs' {
+      $breakpoint: map.get($grid-breakpoints, $size);
+
+      @if ($add-media-hover == true) {
+        @debug HERE;
+        @media screen and (min-width: $breakpoint) and (hover: hover) {
+          @content;
+        }
+      } @else {
+        @debug Wrong;
+      }
     }
   } @else if meta.type-of($size) == number {
     @if math.is-unitless($size) {

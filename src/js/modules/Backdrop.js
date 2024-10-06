@@ -3,49 +3,41 @@ export class Backdrop {
   static element = null;
   static config = null;
 
-  static insertTo(element, config = {}) {
-    Backdrop.targetElement = element;
+  static init(config = {}) {
+    Backdrop.targetElement = config.insertBackdropTo || document.body;
     Backdrop.element = document.createElement('div');
-    Backdrop.element.classList.add('backdrop', 'fade');
+    Backdrop.element.classList.add('backdrop', 'backdrop--fade');
     Backdrop.config = {
-      transitionDuration: config.transitionDuration || null,
-      backgroundColor: config.backgroundColor || null,
-      opacity: config.opacity || null,
-      z: config.z || null,
+      transitionDuration: config.fadeinTransition ?? config.transitionDuration,
     };
 
     for (let key in Backdrop.config) {
-      Backdrop.config[key] &&
-        Backdrop.element.setAttribute(
-          'style',
-          `--${key}: ${Backdrop.config[key]}${
-            key === 'transitionDuration' ? 'ms' : ''
-          };`
+      Backdrop.config[key] !== undefined &&
+        Backdrop.config[key] !== null &&
+        Backdrop.element.style.setProperty(
+          `--${key}`,
+          `${Backdrop.config[key]}${key === 'transitionDuration' ? 'ms' : ''}`
         );
-
-      // Backdrop.element.setAttribute(
-      //     'style',
-      //     `--z: ${z}; --opacity: ${opacity}; --backgroundColor: ${backgroundColor}, --transDur: ${Backdrop.transDur}ms`
-      //   );
     }
 
     Backdrop.targetElement.append(Backdrop.element);
+
+    // this code makes that transition possible
     setTimeout((_) => {
-      Backdrop.element.classList.add('show');
-    });
+      Backdrop.element.classList.add('backdrop--show');
+    }, 5);
   }
 
   // fadeout and then remove
-  static remove() {
-    Backdrop.element.classList.remove('show');
+  static kill({ fadeoutTransition = Backdrop.config.transitionDuration }) {
+    if (!Backdrop.element) return;
+    Backdrop.element.style.setProperty(
+      '--transitionDuration',
+      fadeoutTransition + 'ms'
+    );
+    Backdrop.element.classList.remove('backdrop--show');
     setTimeout((_) => {
       Backdrop.element.remove();
-    }, Backdrop.config.transitionDuration);
-  }
-  // remove immediately
-  static kill() {
-    if (Backdrop.element) {
-      Backdrop.element.remove();
-    }
+    }, fadeoutTransition);
   }
 }

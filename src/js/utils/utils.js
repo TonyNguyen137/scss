@@ -1,9 +1,10 @@
 export const breakPoints = {
-  sm: '576px',
-  md: '768px',
-  lg: '992px',
-  xl: '1200px',
-  xxl: '1400px',
+  xs: '0',
+  sm: '36rem', // 576px
+  md: '48rem', // 768ox
+  lg: '62rem', // 992px
+  xl: '75rem', // 1200px
+  xxl: '87.5rem', // 1400px
 };
 
 // selectors
@@ -38,6 +39,11 @@ export function removeAttributesFrom(element, ...attributes) {
 }
 
 export function validatePropertiesOf(config, ...allowedProperties) {
+  if (typeof config !== 'object' || config === null) {
+    throw new Error(
+      `Invalid argument: ${config}. The argument passed must be an object.`
+    );
+  }
   if (Object.keys(config).length === 0) return;
 
   let validProperties = new Set(allowedProperties);
@@ -45,7 +51,42 @@ export function validatePropertiesOf(config, ...allowedProperties) {
   // Check for any invalid properties in the config object
   for (const key in config) {
     if (!validProperties.has(key)) {
-      throw new Error(`Invalid configuration property: '${key}'.`);
+      throw new Error(`Invalid property: '${key}'.`);
+    }
+  }
+}
+
+export function validatePropertiesOf2(config, rule) {
+  // Iterate through each key in the rule object
+  for (let key in rule) {
+    // Check if the config object has the key
+    if (!config.hasOwnProperty(key)) {
+      console.warn(`Missing property: ${key}`);
+      continue;
+    }
+
+    const value = config[key];
+    const ruleValue = rule[key];
+
+    // If rule is an array, we assume it defines the allowed values
+    if (Array.isArray(ruleValue)) {
+      if (!ruleValue.includes(value)) {
+        console.warn(
+          `Invalid value for ${key}. Expected one of ${ruleValue}, defaulting to '${ruleValue[0]}'.`
+        );
+        config[key] = ruleValue[0]; // Set to default value
+      }
+    }
+    // If rule is a function, it defines the type (e.g., String, Number)
+    else if (typeof ruleValue === 'function') {
+      if (!(value instanceof ruleValue)) {
+        console.warn(
+          `Invalid type for ${key}. Expected ${
+            ruleValue.name
+          }, defaulting to '${ruleValue()}'`
+        );
+        config[key] = ruleValue(); // Set to a default of the expected type
+      }
     }
   }
 }
@@ -72,4 +113,21 @@ export class Util {
   static toArray(arrayLikeEl) {
     return Array.from(arrayLikeEl);
   }
+}
+
+export function CSSsupports(property, value) {
+  const element = document.createElement('div');
+  element.style[property] = value;
+  return element.style[property] === 'fixed';
+}
+
+export function isIosDevice() {
+  return (
+    typeof window !== 'undefined' &&
+    window.navigator &&
+    window.navigator.platform &&
+    (/iP(ad|hone|od)/.test(window.navigator.platform) ||
+      (window.navigator.platform === 'MacIntel' &&
+        window.navigator.maxTouchPoints > 1))
+  );
 }

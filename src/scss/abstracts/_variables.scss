@@ -72,3 +72,8 @@ $zindex-popover: 1070 !default;
 $zindex-tooltip: 1080 !default;
 $zindex-toast: 1090 !default;
 // scss-docs-end zindex-stack
+
+$zindex-level-1: var(--z-level-1);
+$zindex-level-2: var(--z-level-2);
+$zindex-level-3: var(--z-level-3);
+$zindex-level-4: var(--z-level-4);

@@ -1,0 +1,20 @@
+[data-modal-active='true'],
+[data-modal-active='true'] body {
+  // touch-action: none;
+  // -ms-scroll-chaining: none;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: auto;
+}
+
+.scroll-behavior-auto {
+  scroll-behavior: auto !important;
+}
+
+.is-locked {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  // Allow the main content to be scrolled,
+  // so we can adjust the scroll position with JS.
+  overflow: auto;
+}

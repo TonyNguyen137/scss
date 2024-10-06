@@ -1,7 +1,10 @@
 @use '../abstracts' as *;
 
 .btn {
+  background-color: transparent;
+  border: none;
   border-radius: 8px;
+  cursor: pointer;
 
   &--link {
     background-color: $clr-white;
