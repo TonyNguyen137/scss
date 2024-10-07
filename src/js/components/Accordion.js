@@ -101,48 +101,55 @@ export class Accordion {
 
 */
 
+// accordion-grid
 export class Accordion {
   constructor(selector, config = {}) {
-    validatePropertiesOf(config, 'transidionDuration', 'type');
-
-    // Destructure config object with defaults after validation
-    const { transitionDuration = 300, type = 'open-one' } = config;
-
-    if (type !== 'open-all' && type !== 'open-one') {
-      throw new Error('Invalid type. Must be either "open-all" or "open-one".');
-    }
-
     this._accordionEl = typeof selector === 'string' ? $(selector) : selector;
-    this._accordionType = type; // 'open-one' or 'open-all'
-    this._transitionDuration = transitionDuration;
-    this._accordionEl.style.setProperty(
-      '--transition-duration',
-      `${transitionDuration}ms`
-    );
+    this._config = {
+      transition: {
+        transitionDuration: config.transitionDuration,
+        transitionOpen: config.transitionOpen,
+        transitionClose: config.transitionClose,
+      },
+      type: config.type || 'open-one', // 'open-one' or 'open-all'
+    };
     this._isTransitioning = false;
+
+    for (let key in this._config.transition) {
+      // if value exist - set css variable for transition duration
+      this._config.transition[key] !== undefined &&
+        this._accordionEl.style.setProperty(
+          `--${key}`,
+          `${Math.abs(this._config.transition[key])}ms`
+        );
+    }
     this._initEventHandlers();
   }
 
   _initEventHandlers() {
-    this._accordionEl.addEventListener('click', this._toggler.bind(this));
-  }
-
-  _blockToggle() {
-    // block toggle during transition
-    this._isTransitioning = true;
-
-    setTimeout(() => {
-      this._isTransitioning = false;
-    }, this._transitionDuration);
+    this._accordionEl.addEventListener('click', this._toggle.bind(this));
+    this._accordionEl.addEventListener(
+      'transitionend',
+      this._onTransitionend.bind(this)
+    );
   }
 
   _open() {
+    console.log('open');
+
     this._currentToggleEl.setAttribute('aria-expanded', !this._isExpanded);
     this._currentGridEl.setAttribute('aria-hidden', this._isExpanded);
-    this._blockToggle();
+
+    if (this._config.transition.transitionOpen == 0) {
+      console.log('open Fired');
+
+      this._isTransitioning = false;
+    }
   }
 
   _close(accordionItem) {
+    console.log('close');
+
     if (accordionItem) {
       accordionItem
         .querySelector('.accordion__toggle')
@@ -154,12 +161,21 @@ export class Accordion {
       this._currentToggleEl.setAttribute('aria-expanded', !this._isExpanded);
       this._currentGridEl.setAttribute('aria-hidden', this._isExpanded);
     }
-    this._blockToggle();
+
+    if (this._config.transition.transitionClose == 0) {
+      console.log('close Fired');
+
+      // this._isTransitioning = false;
+    }
   }
 
   // Event handlers
-  _toggler(e) {
+  _toggle(e) {
     const clickedToggleEl = e.target.closest('.accordion__toggle');
+    console.log('before clickedToggleEl: ', !clickedToggleEl);
+    console.log('before isTransitioning: ', this._isTransitioning);
+
+    console.log(!clickedToggleEl || this._isTransitioning);
 
     if (!clickedToggleEl || this._isTransitioning) return;
 
@@ -173,10 +189,14 @@ export class Accordion {
     this._isExpanded =
       this._currentToggleEl.getAttribute('aria-expanded') !== 'false';
 
+    this._isTransitioning = true;
+    console.log('after: ', this._isTransitioning);
+    console.log('--------------------');
+
     if (this._isExpanded) {
       this._close();
     } else {
-      if (this._accordionType === 'open-one') {
+      if (this._config.type === 'open-one') {
         // Close the currently open accordion item before opening a new one.
         let activeItem = this._accordionEl
           .querySelector('[aria-expanded=true]')
@@ -185,6 +205,12 @@ export class Accordion {
       }
 
       this._open();
+    }
+  }
+
+  _onTransitionend(e) {
+    if (e.propertyName === 'grid-template-rows') {
+      this._isTransitioning = false;
     }
   }
 }

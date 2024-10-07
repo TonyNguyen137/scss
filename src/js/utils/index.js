@@ -1,5 +1,6 @@
 import {
   $,
+  $$,
   setAttributesTo,
   removeAttributesFrom,
   validatePropertiesOf,
@@ -8,6 +9,7 @@ import {
 
 export {
   $,
+  $$,
   setAttributesTo,
   removeAttributesFrom,
   validatePropertiesOf,
