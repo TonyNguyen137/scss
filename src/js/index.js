@@ -4,25 +4,24 @@ import { $$ } from './utils';
 
 let content = document.querySelector('.content');
 
+// Capture the start time
+const startTime = performance.now();
+
 $$('.accordion').forEach((accordion) => {
-  new Accordion(accordion, {});
+  new Accordion(accordion);
 });
 
-// new Accordion('.accordion');
 // new OffcanvasNavbar('.navbar');
-let config = {
-  modules: [Backdrop],
-  transitionDuration: 0,
-  isFullHeight: true,
-};
+// let config = {
+//   modules: [Backdrop],
+//   transitionDuration: 0,
+//   isFullHeight: true,
+// };
 
 // let height = document.querySelector('.height');
 // height.addEventListener('click', () => {
 //   console.log('current: ', window.innerHeight);
 // });
-
-// Capture the start time
-const startTime = performance.now();
 
 // Instantiate the class
 // const navbar = new Navbar('.navbar', config);
@@ -34,7 +33,7 @@ const endTime = performance.now();
 const timeTaken = endTime - startTime;
 
 // content.textContent = `miliseconds: ${timeTaken}ms`;
-// console.log(`Navbar instantiation took ${timeTaken} milliseconds`);
+console.log(`instantiation took ${timeTaken} milliseconds`);
 
 // class Click {
 //   constructor(selector) {

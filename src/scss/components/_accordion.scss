@@ -74,9 +74,9 @@ $accordion-transition-type: 'grid'; // grid or height
 @if $accordion-transition-type == 'grid' {
   .accordion {
     --_radius: 5px;
-    --transitionDuration: 300ms;
-    --transitionOpen: unset;
-    --transitionClose: unset;
+    --transition-duration-default: 300ms;
+    --transition-duration-open: unset;
+    --transition-duration-close: unset;
 
     &__item {
       margin-bottom: 10px;
@@ -86,12 +86,12 @@ $accordion-transition-type: 'grid'; // grid or height
       display: grid;
       grid-template-rows: 0fr;
       transition: grid-template-rows
-        var(--transitionClose, var(--transitionDuration));
+        var(--transition-duration-close, var(--transition-duration-default));
     }
 
     &__grid[aria-hidden='false'] {
       transition: grid-template-rows
-        var(--transitionOpen, var(--transitionDuration));
+        var(--transition-duration-open, var(--transition-duration-default));
       grid-template-rows: 1fr;
     }
 
@@ -104,7 +104,7 @@ $accordion-transition-type: 'grid'; // grid or height
 
       background-color: $clr-primary;
       transition: background-color
-        var(--transitionClose, var(--transitionDuration));
+        var(--transition-duration-close, var(--transition-duration-default));
 
       color: $clr-white;
       display: flex;
@@ -117,15 +117,17 @@ $accordion-transition-type: 'grid'; // grid or height
       &[aria-expanded='true'] {
         background-color: $clr-success;
         transition: background-color
-          var(--transitionOpen, var(--transitionDuration));
+          var(--transition-duration-open, var(--transition-duration-default));
       }
 
       svg {
-        transition: transform var(--transitionClose, var(--transitionDuration));
+        transition: transform
+          var(--transition-duration-close, var(--transition-duration-default));
       }
 
       &[aria-expanded='true'] svg {
-        transition: transform var(--transitionOpen, var(--transitionDuration));
+        transition: transform
+          var(--transition-duration-open, var(--transition-duration-default));
         transform: rotate(180deg);
       }
 
@@ -143,6 +145,13 @@ $accordion-transition-type: 'grid'; // grid or height
       margin-top: 10px;
       background-color: $clr-warning;
       padding: 20px 15px;
+    }
+
+    // only needed for accordion type: one-in-group
+    &--block-interaction {
+      .accordion__toggle {
+        pointer-events: none;
+      }
     }
   }
 }
