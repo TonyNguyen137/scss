@@ -86,7 +86,10 @@ export class Accordion {
   }
 
   _isDefaultType() {
-    return this._config.type !== 'one-in-group' && this._config.type !== 'free';
+    return (
+      this._config.type !== 'one-in-group' &&
+      this._config.type !== 'always-open'
+    );
   }
 
   // prevent double clicks
@@ -139,7 +142,8 @@ export class Accordion {
       });
     } else {
       switch (this._config.type) {
-        // only one item can be opened in a group of accordions at the same time, class .accordion-group is required on the group element
+        // close accordion item when another item is opened inside a group element
+        // class .accordion-group is required on the group element
         case 'one-in-group':
           const accordionGroup = document.querySelector('.accordion-group');
 
@@ -158,8 +162,6 @@ export class Accordion {
             gridEl,
           };
 
-          console.log('activ: ', activeAccordionItemInGroup);
-
           this._close({
             accordionItem: activeAccordionItemInGroup,
             blockClick: false,
@@ -167,11 +169,11 @@ export class Accordion {
 
           break;
 
-        // multiple accordion__items can be expanded
-        case 'free':
+        // make accordion item stay open when another item is opened.
+        case 'alway-open':
           break;
 
-        // close the opened accordion__item of the entity before opening a new one
+        // close accordion item when another item is opened.
         default:
           if (this._prevToggleEl) {
             const activeAccordionItemLocal = {

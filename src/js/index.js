@@ -1,4 +1,4 @@
-import { Accordion, Navbar, OffcanvasNavbar } from './components';
+import { Accordion, Navbar, NavbarOffcanvas } from './components';
 import { Backdrop, BodyScrollLocker, ScrollLocker } from './modules';
 import { $$ } from './utils';
 
@@ -8,7 +8,7 @@ let content = document.querySelector('.content');
 const startTime = performance.now();
 
 $$('.accordion').forEach((accordion) => {
-  new Accordion(accordion);
+  new Accordion(accordion, { type: 'one-in-group' });
 });
 
 // new OffcanvasNavbar('.navbar');
