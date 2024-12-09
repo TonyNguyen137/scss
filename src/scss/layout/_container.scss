@@ -1,9 +1,6 @@
 @use '../abstracts' as *;
 @use 'sass:map';
-
-// Container widths
-//
-// Set the container width, and override it for fixed navbars in media queries.
+@use 'sass:list';
 
 @if $enable-container-classes {
   // Single container class with breakpoint max-widths
@@ -19,15 +16,21 @@
       @extend .container-fluid;
     }
 
-    @if ($enable-max-container-classes) {
+    // @debug last Element;
+    // @debug $breakpoint != list.nth(map-keys($container-max-widths), -1);
+
+    // The max-container for the last breakpoint is redundant because it matches the default container's size.
+    $last-breakpoint: list.nth(map-keys($container-max-widths), -1);
+    @if ($enable-max-container-classes and $breakpoint != $last-breakpoint) {
       .container-max-#{$breakpoint} {
         @extend .container-fluid;
       }
     }
 
-    @debug breakpoint $breakpoint;
-    @debug container-max-width $container-max-width;
+    // @debug breakpoint $breakpoint;
+    // @debug container-max-width $container-max-width;
 
+    // Single fluid container class with max-widths
     .container-fluid-#{$breakpoint} {
       @include make-container-fluid($container-max-width);
     }
@@ -42,17 +45,15 @@
       $extend-breakpoint: true;
 
       @each $name, $width in $grid-breakpoints {
-        @debug '----start------';
-        @debug ChildBreakpoint $name;
-        @debug width $width;
-        @debug infix breakpoint-infix($name, $grid-breakpoints);
-        @debug parentBreakpoint $breakpoint;
-        @debug '-----end-----';
-        @debug '-------------';
+        // @debug '----start------';
+        // @debug ChildBreakpoint $name;
+        // @debug width $width;
+        // @debug infix breakpoint-infix($name, $grid-breakpoints);
+        // @debug parentBreakpoint $breakpoint;
+        // @debug '-----end-----';
+        // @debug '-------------';
 
         @if ($extend-breakpoint) {
-          @debug inside if;
-
           .container#{breakpoint-infix($name, $grid-breakpoints)} {
             @extend %responsive-container-#{$breakpoint};
           }
@@ -63,8 +64,6 @@
 
           //Once the current breakpoint is reached, stop extending
           @if ($breakpoint == $name) {
-            @debug extend false;
-
             $extend-breakpoint: false;
           }
         }
@@ -72,12 +71,16 @@
         // create max containers up to their breakpoint
         @if ($enable-max-container-classes) {
           @if (breakpoint-infix($name, $grid-breakpoints) != '') {
-            @debug breakpoint-infix($name, $grid-breakpoints);
-            @debug yes;
+            // @debug breakpoint-infix($name, $grid-breakpoints);
 
             $condition: map.get($grid-breakpoints, $name) >=
-              map.get($grid-breakpoints, $breakpoint);
+              map.get($grid-breakpoints, $breakpoint) and
+              $name !=
+              $last-breakpoint;
 
+            @debug condition;
+            @debug $name, $last-breakpoint;
+            @debug $name != $last-breakpoint;
             @if ($condition) {
               .container-max#{breakpoint-infix($name, $grid-breakpoints)} {
                 @extend %responsive-container-#{$breakpoint};
