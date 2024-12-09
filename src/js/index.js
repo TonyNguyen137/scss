@@ -1,4 +1,4 @@
-import { Accordion, Navbar, NavbarOffcanvas } from './components';
+import { Accordion, Navbar, NavbarOffcanvas, NavbarLight } from './components';
 import { Backdrop, BodyScrollLocker, ScrollLocker } from './modules';
 import { $$ } from './utils';
 
@@ -11,6 +11,7 @@ $$('.accordion').forEach((accordion) => {
   new Accordion(accordion, { type: 'one-in-group' });
 });
 
+new NavbarLight('.navbar');
 // new OffcanvasNavbar('.navbar');
 // let config = {
 //   modules: [Backdrop],

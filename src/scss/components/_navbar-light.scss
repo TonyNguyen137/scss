@@ -1,16 +1,13 @@
 @use '../abstracts' as *;
 @use 'sass:map';
 .navbar {
-  --transition-duration-default: 300ms;
-  --transition-duration-open: unset;
-  --transition-duration-close: unset;
-
+  --_navbar-height: 56px;
   background-color: $clr-primary;
   z-index: var(--z-level-1, 3);
-
   position: relative;
   margin-inline: auto;
   padding-block: 0.5rem;
+  position: relative;
 
   &__container {
     display: flex;
@@ -48,13 +45,12 @@
 
   &__collapse {
     width: 100%;
-    // position: absolute;
-    // left: 0;
-    // bottom: 0;
-    // transform: translateY(100%);
-
     background-color: $clr-white;
     overflow-y: auto;
+
+    position: absolute;
+    top: var(--_navbar-height);
+    left: 0;
 
     &[data-state='collapsed'] {
       display: none;
@@ -63,7 +59,7 @@
     &[data-state='collapsing'] {
       overflow: hidden;
       height: 0;
-      transition: height var(--transition-duration, 0ms) linear;
+      transition: height 300ms linear;
     }
 
     &[data-state='show'] {
@@ -78,6 +74,8 @@
 
     display: grid;
     row-gap: 1rem;
+
+    background-color: orange;
   }
 
   &__link {

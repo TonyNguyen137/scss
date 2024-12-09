@@ -5,9 +5,7 @@
 @use 'sass:string';
 @use 'sass:selector';
 @use 'functions' as *;
-@use 'breakpoints' as *;
 @use 'variables' as *;
-@use 'colors' as *;
 
 // media query
 
@@ -176,15 +174,17 @@
       // Gutters
       //
       // Make use of `.g-*`, `.gx-*` or `.gy-*` utilities to change spacing between the columns.
-      @each $key, $value in $gutters {
-        .g#{$infix}-#{$key},
-        .gx#{$infix}-#{$key} {
-          --#{$bs-prefix}gutter-x: #{$value};
-        }
+      @if ($enable-gutters) {
+        @each $key, $value in $gutters {
+          .g#{$infix}-#{$key},
+          .gx#{$infix}-#{$key} {
+            --#{$bs-prefix}gutter-x: #{$value};
+          }
 
-        .g#{$infix}-#{$key},
-        .gy#{$infix}-#{$key} {
-          --#{$bs-prefix}gutter-y: #{$value};
+          .g#{$infix}-#{$key},
+          .gy#{$infix}-#{$key} {
+            --#{$bs-prefix}gutter-y: #{$value};
+          }
         }
       }
     }

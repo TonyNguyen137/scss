@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../scss/navbar-light.scss" />
+    <script type="module" src="../js/index.js"></script>
+    <style>
+ 
+    </style>
+  </head>
+  <body>
+
+    <header>
+      <nav class="navbar navbar-light" data-expanded="xl">
+        <div class="container navbar__container">
+          <a class="navbar__brand">
+            <img src="/svg/logo.svg" alt="">
+          </a>
+          <button
+            class="navbar__toggle btn"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+            aria-controls="collapse"
+          >
+          <svg class="navbar__toggle-svg navbar__hamburger-svg">
+            <use xlink:href="/sprite.svg#hamburger"></use>
+          </svg>
+          <svg class="navbar__toggle-svg navbar__close-svg">
+            <use xlink:href="/sprite.svg#close"></use>
+          </svg>
+
+          
+          </button>
+          <div class="navbar__collapse" id="collapse" data-state="collapsed">
+            <div class="container">
+                <ul class="navbar__list" >
+                    <li><a class="navbar__link" href="/">Our company</a></li>
+                    <li><a class="navbar__link" >Locations </a></li>
+                    <li><a class="navbar__link">Pricing </a></li>
+                    <li><a class="navbar__link">Contact </a></li>
+                    <li>
+                      <a class="navbar__link">Locations 2 </a>
+                    </li>
+                    <li><a class="navbar__link">Contact 2 </a></li>
+                    <li>
+                      <a class="navbar__link">Our Company 2</a>
+                    </li>
+                    <li>
+                      <a class="navbar__link" >Locations 3 </a>
+                    </li>
+      
+                    <li><a class="navbar__link" href="/">Last Item</a></li>
+      
+                  </ul>
+            </div>
+            
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="main">
+      <div class="section" style="height: 100vh">
+        <h1 style="font-size: 4rem">this is a heading with rem</h1>
+        <h1 style="font-size: 64px">this is a heading with px</h1>
+        <div class="content"></div>
+        <a href="">click me</a>
+        <button>focus me</button>
+        <button class="height" style="position:absolute; bottom:0;">get height</button>
+      </div>
+      <div class="section" style="height: 100vh; background-color: blue;">
+        <h1 style="font-size: 4rem">this is a heading with rem</h1>
+        <h1 style="font-size: 64px">this is a heading with px</h1>
+        <div class="content"></div>
+        <a href="">click me</a>
+        <button>focus me</button>
+      </div>
+
+    </div>
+  </main>
+
+  </body>
+</html>

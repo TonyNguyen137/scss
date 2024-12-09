@@ -1,12 +1,12 @@
 @use '../abstracts' as *;
 @use 'sass:map';
-// Shorthand
+
 .fixed-top {
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
-  z-index: $zindex-level-1;
+  z-index: $z-level-1;
 }
 
 .fixed-bottom {
@@ -14,7 +14,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: $zindex-level-1;
+  z-index: $z-level-1;
 }
 
 // Responsive sticky top and bottom
@@ -25,13 +25,27 @@
     .sticky#{$infix}-top {
       position: sticky;
       top: 0;
-      z-index: $zindex-level-1;
+      z-index: $z-level-1;
     }
 
     .sticky#{$infix}-bottom {
       position: sticky;
       bottom: 0;
-      z-index: $zindex-sticky;
+      z-index: $z-level-1;
     }
+  }
+}
+
+.flow > *:where(:not(:first-child)) {
+  margin-top: var(--flow-spacer, 1rem);
+}
+
+.lead {
+  color: black;
+  text-transform: uppercase;
+  font-weight: 400;
+
+  & + p {
+    margin-top: 0;
   }
 }

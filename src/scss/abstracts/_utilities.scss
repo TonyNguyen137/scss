@@ -1,132 +1,12 @@
 @use 'functions' as *;
 @use 'sass:map';
-@use 'sizes' as *;
-@use 'colors' as *;
 @use 'variables' as *;
-
-// Utilities
 
 $negative-sizes: if(
   $enable-negative-margins,
-  negativify-map($sizes-regular),
+  negativify-map(map.merge($sizes-regular, $sizes-irregular)),
   null
 ) !default;
-
-$negative-sizes-irregular: if(
-  $enable-negative-margins-irregular,
-  negativify-map($sizes-irregular),
-  null
-) !default;
-
-$order-values: (
-  0: 0,
-  1: 1,
-  2: 2,
-  3: 3,
-  4: 4,
-  5: 5,
-);
-
-// - z-index values
-$zindex-levels: (
-  n1: -1,
-  0: 0,
-  1: 1,
-  2: 2,
-  3: 3,
-);
-
-$percentage-values: (
-  0: 0,
-  10: 10%,
-  15: 15%,
-  20: 20%,
-  25: 25%,
-  30: 30%,
-  35: 35%,
-  40: 40%,
-  45: 45%,
-  50: 50%,
-  55: 55%,
-  60: 60%,
-  65: 65%,
-  70: 70%,
-  75: 75%,
-  80: 80%,
-  85: 85%,
-  90: 90%,
-  95: 95%,
-  100: 100%,
-);
-
-$font-weight: (
-  'thin': 100,
-  'extra-light': 200,
-  'light': 300,
-  'regular': 400,
-  'medium': 500,
-  'semi-bold': 600,
-  'bold': 700,
-  'extra-bold': 800,
-  'black': 900,
-);
-
-$opacity: (
-  0: 0,
-  10: 0.1,
-  25: 0.25,
-  50: 0.5,
-  75: 0.75,
-  100: 1,
-);
-
-$fixed-values: (
-  200: 200px,
-);
-
-/* 
-  MAIN UTILITIES MAP
-  syntax of a utility class: $class-$value, 
-  syntax of a utility class with responsivness; $class-$breakpoint-$value
-
-  example 1: 
-  (
-    class: z,
-    property: z-index,
-    values: (
-      1: 1, 
-      2: 2, 
-      3: 3, 
-      4: 4
-    )
-    responsive: true,
-  )
-  output: .z-1, .z-2, .z-3, .z-4;
-  output responsive: .z-sm-1, z-md-1, z-lg-1 etc.
-
-  example 2:
-  (
-    class: d,
-    property: display,
-    values: grid
-  )
-  output: .d-grid
-
-
-  example 3:
-  (
-    class: justify,
-    property: justify-content,
-    value: (
-      between: space-between,
-      even: space-evenly,
-    )
-  )
-  output: 
-  .justify-content-between
-  .justify-content-even
-
-*/
 
 $utilities: ();
 $utilities: map-merge(
@@ -275,7 +155,7 @@ $utilities: map-merge(
     'border-radius': (
       property: border-radius,
       class: radius,
-      values: $sizes-regular,
+      values: map.merge($sizes-regular, ($sizes-irregular)),
     ),
     'border-solid-black': (
       property: border,
@@ -393,117 +273,94 @@ $utilities: map-merge(
     'margin': (
       property: margin,
       class: m,
-      values: $sizes-regular,
+      values:
+        map.merge(
+          map.merge($sizes-regular, $sizes-irregular),
+          (
+            'auto': auto,
+          )
+        ),
       responsive: true,
     ),
-    'margin-i': (
-      property: margin,
-      class: m-i,
-      values: $sizes-irregular,
-      responsive: true,
-    ),
+
     'margin-top': (
       property: margin-top,
       class: mt,
       values:
-        map-merge(
-          $sizes-regular,
+        map.merge(
+          map.merge($sizes-regular, $sizes-irregular),
           (
-            auto: auto,
+            'auto': auto,
           )
         ),
       responsive: true,
     ),
-    'margin-top-irregular': (
-      property: margin-top,
-      class: mt-i,
-      values: $sizes-irregular,
-      responsive: true,
-    ),
+
     'margin-bot': (
       property: margin-bottom,
       class: mb,
       values:
-        map-merge(
-          $sizes-regular,
+        map.merge(
+          map.merge($sizes-regular, $sizes-irregular),
           (
-            auto: auto,
+            'auto': auto,
           )
         ),
       responsive: true,
     ),
-    'margin-bot-irregular': (
-      property: margin-bottom,
-      class: mb-i,
-      values: $sizes-irregular,
-      responsive: true,
-    ),
+
     'margin-left': (
       property: margin-left,
       class: ms,
       responsive: true,
       values:
-        map-merge(
-          $sizes-regular,
+        map.merge(
+          map.merge($sizes-regular, $sizes-irregular),
           (
-            auto: auto,
+            'auto': auto,
           )
         ),
     ),
-    'margin-left-irregular': (
-      property: margin-left,
-      class: ms-i,
-      values: $sizes-irregular,
-      responsive: true,
-    ),
+
     'margin-right': (
       property: margin-right,
       class: me,
       values:
-        map-merge(
-          $sizes-regular,
+        map.merge(
+          map.merge($sizes-regular, $sizes-irregular),
           (
-            auto: auto,
+            'auto': auto,
           )
         ),
       responsive: true,
     ),
-    'margin-right-irregular': (
-      property: margin-right,
-      class: me-i,
-      values: $sizes-irregular,
-      responsive: true,
-    ),
+
     'margin-inline': (
       property: margin-inline,
       class: mx,
       responsive: true,
       values:
-        map-merge(
-          $sizes-regular,
+        map.merge(
+          map.merge($sizes-regular, $sizes-irregular),
           (
-            auto: auto,
+            'auto': auto,
           )
         ),
     ),
-    'margin-inline-irregular': (
-      property: margin-inline,
-      class: mx-i,
-      values: $sizes-irregular,
-      responsive: true,
-    ),
+
     'margin-block': (
       property: margin-block,
       class: my,
-      values: $sizes-regular,
+      values:
+        map.merge(
+          map.merge($sizes-regular, $sizes-irregular),
+          (
+            'auto': auto,
+          )
+        ),
       responsive: true,
     ),
-    'margin-block-irregular': (
-      property: margin-block,
-      class: my-i,
-      values: $sizes-irregular,
-      responsive: true,
-    ),
+
     'negative-margin': (
       property: margin,
       class: m,
@@ -546,130 +403,53 @@ $utilities: map-merge(
       values: $negative-sizes,
       responsive: true,
     ),
-    'negative-margin-irregular': (
-      property: margin,
-      class: m-i,
-      values: $negative-sizes-irregular,
-      responsive: true,
-    ),
-    'negative-margin-top-irregular': (
-      property: margin-top,
-      class: mt-i,
-      values: $negative-sizes-irregular,
-      responsive: true,
-    ),
-    'negative-margin-bottom-irregular': (
-      property: margin-bottom,
-      class: mb-i,
-      values: $negative-sizes-irregular,
-      responsive: true,
-    ),
-    'negative-margin-left-irregular': (
-      property: margin-left,
-      class: ms-i,
-      values: $negative-sizes-irregular,
-      responsive: true,
-    ),
-    'negative-margin-right-irregular': (
-      property: margin-right,
-      class: me-i,
-      values: $negative-sizes-irregular,
-      responsive: true,
-    ),
-    'negative-margin-block-irregular': (
-      property: margin-block,
-      class: my-i,
-      values: $negative-sizes-irregular,
-      responsive: true,
-    ),
-    'negative-margin-inline-irregular': (
-      property: margin-inline,
-      class: mx-i,
-      values: $negative-sizes-irregular,
-      responsive: true,
-    ),
+
     'padding': (
       property: padding,
       class: p,
-      values: $sizes-regular,
+      values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
-    'padding-irregular': (
-      property: padding,
-      class: p-i,
-      values: $sizes-irregular,
-      responsive: true,
-    ),
+
     'padding-top': (
       property: padding-top,
       class: pt,
-      values: $sizes-regular,
+      values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
-    'padding-top-irregular': (
-      property: padding-top,
-      class: pt-i,
-      values: $sizes-irregular,
-      responsive: true,
-    ),
+
     'padding-bottom': (
       property: padding-bottom,
       class: pb,
-      values: $sizes-regular,
+      values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
-    'padding-bottom-irregular': (
-      property: padding-bottom,
-      class: pb-i,
-      values: $sizes-irregular,
-      responsive: true,
-    ),
+
     'padding-left': (
       property: padding-left,
       class: ps,
-      values: $sizes-regular,
+      values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
-    'padding-left-irregular': (
-      property: padding-left,
-      class: ps-i,
-      values: $sizes-irregular,
-      responsive: true,
-    ),
+
     'padding-right': (
       property: padding-right,
       class: pe,
-      values: $sizes-regular,
+      values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
-    'padding-right-irregular': (
-      property: padding-right,
-      class: pe,
-      values: $sizes-irregular,
-      responsive: true,
-    ),
+
     'padding-block': (
       property: padding-block,
       class: py,
-      values: $sizes-regular,
+      values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
-    'padding-block-irregular': (
-      property: padding-block,
-      class: py-i,
-      values: $sizes-irregular,
-      responsive: true,
-    ),
+
     'padding-inline': (
       property: padding-inline,
       class: px,
-      values: $sizes-regular,
-      responsive: true,
-    ),
-    'padding-inline-irregular': (
-      property: padding-inline,
-      class: px-i,
-      values: $sizes-irregular,
+      values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
 
@@ -750,43 +530,27 @@ $utilities: map-merge(
     'gap': (
       property: gap,
       class: gap,
-      values: $sizes-regular,
+      values: map.merge($sizes-regular, ($sizes-irregular)),
     ),
-    'gap-irregular': (
-      property: gap,
-      class: gap-i,
-      values: $sizes-irregular,
-    ),
+
     'column-gap': (
       property: column-gap,
       class: col-gap,
-      values: $sizes-regular,
+      values: map.merge($sizes-regular, ($sizes-irregular)),
     ),
-    'column-gap-irregular': (
-      property: column-gap,
-      class: col-gap,
-      values: $sizes-irregular,
-    ),
+
     'row-gap': (
       property: row-gap,
       class: row-gap,
-      values: $sizes-regular,
+      values: map.merge($sizes-regular, ($sizes-irregular)),
     ),
-    'row-gap-irregular': (
-      property: row-gap,
-      class: row-gap,
-      values: $sizes-irregular,
-    ),
+
     'font-size': (
       property: font-size,
       class: fs,
-      values: $sizes-regular,
+      values: map.merge($sizes-regular, ($sizes-irregular)),
     ),
-    'font-size-irregular': (
-      property: font-size,
-      class: fs-i,
-      values: $sizes-irregular,
-    ),
+
     'font-weight': (
       property: font-weight,
       class: fw,

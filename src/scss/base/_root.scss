@@ -28,21 +28,6 @@ $color-theme-rgb: map-loop($active-theme, to-rgb, '$value');
   // }
 }
 
-/* 
-
-custom properties for other color themes
-the mixin will create [data-theme=${theme}] class like this:
-
-[data-theme='grimson'] {
-  --clr-primary: #198754;
-  --clr-secondary: #0d6efd;
-  --clr-success: #6c757d;
-  --clr-primary-rgb: 25, 135, 84;
-  --clr-secondary-rgb: 13, 110, 253;
-  --clr-success-rgb: 108, 117, 125;
-}
-*/
-
 @if $enable-color-themes {
   @include generate-color-themes($color-theme-map, 'default');
 }

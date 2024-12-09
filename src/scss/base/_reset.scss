@@ -5,10 +5,6 @@ html {
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
-
-  @media screen and (prefers-reduced-motion: no-preference) {
-    scroll-behavior: smooth;
-  }
 }
 
 *,
@@ -33,7 +29,6 @@ img {
   background-size: cover;
 }
 
-a[class],
 select,
 input,
 button,
@@ -59,14 +54,11 @@ h4 {
   text-wrap: balance;
 }
 
-/* A elements that don't have a class get default styles */
-a:not([class]) {
-  text-decoration-skip-ink: auto;
-  color: currentColor;
-}
-
-svg {
-  display: block;
+.list-none {
+  list-style: none;
+  a {
+    text-decoration: none;
+  }
 }
 
 /* Anything that has been anchored to should have extra scroll margin */

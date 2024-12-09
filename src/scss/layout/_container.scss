@@ -19,6 +19,15 @@
       @extend .container-fluid;
     }
 
+    @if ($enable-max-container-classes) {
+      .container-max-#{$breakpoint} {
+        @extend .container-fluid;
+      }
+    }
+
+    @debug breakpoint $breakpoint;
+    @debug container-max-width $container-max-width;
+
     .container-fluid-#{$breakpoint} {
       @include make-container-fluid($container-max-width);
     }
@@ -27,12 +36,23 @@
       %responsive-container-#{$breakpoint} {
         max-width: $container-max-width;
       }
+      @debug breakpoint inside media $breakpoint;
 
       // Extend each breakpoint which is smaller or equal to the current breakpoint
       $extend-breakpoint: true;
 
       @each $name, $width in $grid-breakpoints {
+        @debug '----start------';
+        @debug ChildBreakpoint $name;
+        @debug width $width;
+        @debug infix breakpoint-infix($name, $grid-breakpoints);
+        @debug parentBreakpoint $breakpoint;
+        @debug '-----end-----';
+        @debug '-------------';
+
         @if ($extend-breakpoint) {
+          @debug inside if;
+
           .container#{breakpoint-infix($name, $grid-breakpoints)} {
             @extend %responsive-container-#{$breakpoint};
           }
@@ -41,9 +61,28 @@
             @extend %responsive-container-#{$breakpoint};
           }
 
-          // Once the current breakpoint is reached, stop extending
+          //Once the current breakpoint is reached, stop extending
           @if ($breakpoint == $name) {
+            @debug extend false;
+
             $extend-breakpoint: false;
+          }
+        }
+
+        // create max containers up to their breakpoint
+        @if ($enable-max-container-classes) {
+          @if (breakpoint-infix($name, $grid-breakpoints) != '') {
+            @debug breakpoint-infix($name, $grid-breakpoints);
+            @debug yes;
+
+            $condition: map.get($grid-breakpoints, $name) >=
+              map.get($grid-breakpoints, $breakpoint);
+
+            @if ($condition) {
+              .container-max#{breakpoint-infix($name, $grid-breakpoints)} {
+                @extend %responsive-container-#{$breakpoint};
+              }
+            }
           }
         }
       }
