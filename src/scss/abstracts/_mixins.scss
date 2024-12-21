@@ -18,7 +18,7 @@
       $breakpoint: map.get($grid-breakpoints, $size);
 
       @if ($add-media-hover == true) {
-        @debug HERE;
+        // @debug HERE;
         @media screen and (min-width: $breakpoint) and (hover: hover) {
           @content;
         }
@@ -243,7 +243,7 @@
     $properties: map.get($utility, property);
 
     // Multiple properties are possible, for example with vertical or horizontal margins or paddings
-    @if type-of($properties) == 'string' {
+    @if meta.type-of($properties) == 'string' {
       $properties: list.append((), $properties);
     }
     // @debug $properties;
@@ -323,6 +323,7 @@
         }
 
         @each $pseudo in $state {
+          @debug pseudo $pseudo;
           .#{$property-class
             + $infix
             + $property-class-modifier}-#{$pseudo}:#{$pseudo} {
@@ -353,9 +354,9 @@
         }
 
         @each $pseudo in $state {
-          .#{$property-class
-            + $infix
-            + $property-class-modifier}-#{$pseudo}:#{$pseudo} {
+          // @debug pseudo2 $pseudo;
+
+          .#{$property-class + $infix + $property-class-modifier}:#{$pseudo} {
             @each $property in $properties {
               @if $is-local-vars {
                 @each $local-var, $variable in $is-local-vars {
@@ -427,20 +428,37 @@
   }
 }
 
-@mixin generate-color-themes($color-theme, $removed-theme: '') {
-  $_theme-map: map.remove($color-theme, $removed-theme);
+@mixin generate-color-themes($color-theme, $removed-theme: 'default') {
+  // @debug color-theme $color-theme;
+  // @debug meta.type-of($color-theme);
 
-  @each $theme, $colors in $_theme-map {
+  $_theme-map: map.remove($color-theme, $removed-theme);
+  // @debug _theme-map $_theme-map;
+  // @debug meta meta.type-of($_theme-map);
+
+  @each $theme, $color-map, $color-hover in $_theme-map {
+    $colors: map.get($color-map, color);
+    $colors-hover: if(
+      map.get($color-map, hover) != null,
+      map.get($color-map, hover),
+      ()
+    );
+    // @debug theme $theme;
+    // @debug color $colors;
+    // @debug color-hover $colors-hover;
+
     [data-theme='#{$theme}'] {
       $colors-rgb: map-loop($colors, to-rgb, '$value');
-
       @include generate-color-vars($colors, $color-prefix);
       @include generate-color-vars-rgb($colors-rgb, $color-prefix);
+      @include generate-color-vars($colors-hover, $hover-prefix);
     }
   }
 }
 
 @mixin generate-color-vars($color-theme, $color-prefix: 'clr-') {
+  // @debug meta.type-of($color-theme);
+
   @each $color-name, $value in $color-theme {
     @if (meta.type-of($value) == 'color') {
       --#{$prefix}#{$color-prefix}#{$color-name}: #{$value};

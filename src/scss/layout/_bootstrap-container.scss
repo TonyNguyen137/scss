@@ -20,7 +20,7 @@
     // @debug $breakpoint != list.nth(map-keys($container-max-widths), -1);
 
     // The max-container for the last breakpoint is redundant because it matches the default container's size.
-    $last-breakpoint: list.nth(map-keys($container-max-widths), -1);
+    $last-breakpoint: list.nth(map.keys($container-max-widths), -1);
     @if ($enable-max-container-classes and $breakpoint != $last-breakpoint) {
       .container-max-#{$breakpoint} {
         @extend .container-fluid;
@@ -39,7 +39,7 @@
       %responsive-container-#{$breakpoint} {
         max-width: $container-max-width;
       }
-      @debug breakpoint inside media $breakpoint;
+      // @debug breakpoint inside media $breakpoint;
 
       // Extend each breakpoint which is smaller or equal to the current breakpoint
       $extend-breakpoint: true;
@@ -78,9 +78,9 @@
               $name !=
               $last-breakpoint;
 
-            @debug condition;
-            @debug $name, $last-breakpoint;
-            @debug $name != $last-breakpoint;
+            // @debug condition;
+            // @debug $name, $last-breakpoint;
+            // @debug $name != $last-breakpoint;
             @if ($condition) {
               .container-max#{breakpoint-infix($name, $grid-breakpoints)} {
                 @extend %responsive-container-#{$breakpoint};

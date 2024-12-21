@@ -36,7 +36,6 @@ $grid-breakpoints: (
 // );
 
 /* rem values */
-
 // $grid-breakpoints: (
 //   xs: 0,
 //   sm: px-to-rem(576),
@@ -52,31 +51,22 @@ $grid-breakpoints: (
 /* container max-widths
 /* ****************************************************** */
 
-/* rem values */
 $container-max-widths: (
-  sm: px-to-rem(540),
-  md: px-to-rem(720),
-  lg: px-to-rem(960),
-  xl: px-to-rem(1140),
-  xxl: px-to-rem(1320),
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px,
 );
-
-/* px values */
-// $container-max-widths: (
-//   sm: 540px,
-//   md: 720px,
-//   lg: 960px,
-//   xl: 1140px,
-//   xxl: 1320px,
-// );
 
 // ------------------------------------------------------
 
 /* ****************************************************** */
-/* Color Theme
+/* color Theme
 /* ****************************************************** */
 
 $color-prefix: clr-;
+$hover-prefix: hover-;
 
 $primary: #0d6efd;
 $secondary: #6c757d;
@@ -89,26 +79,23 @@ $dark: #212529;
 
 $color-theme: (
   default: (
-    'primary': $primary,
-    'secondary': $secondary,
-    'success': $success,
-    'info': $info,
-    'warning': $warning,
-    'danger': $danger,
-    'light': $light,
-    'dark': $dark,
-    'black': #000,
-    'white': #fff,
+    color: (
+      'primary': $primary,
+      'secondary': $secondary,
+      'success': $success,
+      'info': $info,
+      'warning': $warning,
+      'danger': $danger,
+      'light': $light,
+      'dark': $dark,
+      'black': #000,
+      'white': #fff,
+    ),
+    hover: (
+      'primary': #c5e0d4,
+      'secondary': #ffc107,
+    ),
   ),
-  grimson: (
-    'primary': $success,
-    'secondary': $primary,
-    'success': $secondary,
-  ),
-);
-
-$hover-color: (
-  'primary': #130792,
 );
 
 $clr-primary: var(--clr-primary);
@@ -123,17 +110,17 @@ $clr-black: var(--clr-black);
 $clr-white: var(--clr-white);
 
 // The loop reduces the structure of $color-theme from nesting greater than 2 levels to a 2-level hierarchy.
-$color-theme-map: ();
-@each $theme-name, $map in $color-theme {
-  $color-theme-map: map.merge(
-    $color-theme-map,
-    (
-      $theme-name: deep-loop($map),
-    )
-  );
-}
+// $color-theme-map: ();
+// @each $theme-name, $map in $color-theme {
+//   $color-theme-map: map.merge(
+//     $color-theme-map,
+//     (
+//       $theme-name: deep-loop($map),
+//     )
+//   );
+// }
 
-$active-theme: map.get($color-theme-map, default);
+$active-theme: map.get($color-theme, default, color);
 $active-theme-rgb: map-loop($active-theme, to-rgb, '$value');
 
 // ------------------------------------------------------
@@ -210,7 +197,7 @@ $z--1: -1;
 // ------------------------------------------------------
 
 /* ****************************************************** */
-/* responsive Custom Properties
+/* responsive custom Properties - xs is default
 /* ****************************************************** */
 $custom-properties: (
   'xs': (
@@ -218,14 +205,11 @@ $custom-properties: (
     'z-level-2': 998,
     'z-level-3': 997,
     'z-level-4': 996,
-    'heading-1': 50px,
   ),
   'md': (),
   'lg': (),
   'xl': (),
-  'xxl': (
-    'heading-1': 120px,
-  ),
+  'xxl': (),
 );
 
 // ------------------------------------------------------

@@ -9,7 +9,7 @@ $negative-sizes: if(
 ) !default;
 
 $utilities: ();
-$utilities: map-merge(
+$utilities: map.merge(
   (
     'z-highest': (
       property: z-index,
@@ -43,6 +43,7 @@ $utilities: map-merge(
       class: translate,
       values: (
         center: translate(50%, 50%),
+        center-n: translate(-50%, -50%),
       ),
     ),
     'translate-y': (
@@ -71,7 +72,6 @@ $utilities: map-merge(
         100: translateY(100%),
       ),
     ),
-
     'translate-negative-y': (
       property: transform,
       class: translate-n-y,
@@ -151,7 +151,6 @@ $utilities: map-merge(
       ),
       responsive: true,
     ),
-
     'border-radius': (
       property: border-radius,
       class: radius,
@@ -186,7 +185,6 @@ $utilities: map-merge(
       class: oveflow,
       values: hidden visible auto scroll clip,
     ),
-
     'width': (
       property: width,
       class: w,
@@ -262,12 +260,7 @@ $utilities: map-merge(
     'order': (
       property: order,
       class: order,
-      values: (
-        0: 0,
-        1: 1,
-        2: 2,
-        3: 3,
-      ),
+      values: $order-values,
       responsive: true,
     ),
     'margin': (
@@ -282,7 +275,6 @@ $utilities: map-merge(
         ),
       responsive: true,
     ),
-
     'margin-top': (
       property: margin-top,
       class: mt,
@@ -295,7 +287,6 @@ $utilities: map-merge(
         ),
       responsive: true,
     ),
-
     'margin-bot': (
       property: margin-bottom,
       class: mb,
@@ -308,7 +299,6 @@ $utilities: map-merge(
         ),
       responsive: true,
     ),
-
     'margin-left': (
       property: margin-left,
       class: ms,
@@ -321,7 +311,6 @@ $utilities: map-merge(
           )
         ),
     ),
-
     'margin-right': (
       property: margin-right,
       class: me,
@@ -334,7 +323,6 @@ $utilities: map-merge(
         ),
       responsive: true,
     ),
-
     'margin-inline': (
       property: margin-inline,
       class: mx,
@@ -347,7 +335,6 @@ $utilities: map-merge(
           )
         ),
     ),
-
     'margin-block': (
       property: margin-block,
       class: my,
@@ -360,7 +347,6 @@ $utilities: map-merge(
         ),
       responsive: true,
     ),
-
     'negative-margin': (
       property: margin,
       class: m,
@@ -403,77 +389,60 @@ $utilities: map-merge(
       values: $negative-sizes,
       responsive: true,
     ),
-
     'padding': (
       property: padding,
       class: p,
       values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
-
     'padding-top': (
       property: padding-top,
       class: pt,
       values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
-
     'padding-bottom': (
       property: padding-bottom,
       class: pb,
       values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
-
     'padding-left': (
       property: padding-left,
       class: ps,
       values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
-
     'padding-right': (
       property: padding-right,
       class: pe,
       values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
-
     'padding-block': (
       property: padding-block,
       class: py,
       values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
-
     'padding-inline': (
       property: padding-inline,
       class: px,
       values: map.merge($sizes-regular, ($sizes-irregular)),
       responsive: true,
     ),
-
     'display': (
       property: display,
       class: d,
-      values: (
-        flex: flex,
-        grid: grid,
-        block: block,
-        inline-block: inline-block,
-        inline: inline,
-        contents: contents,
-      ),
+      values: flex grid inline-block block inline contents none table table-row
+        table-cell,
       responsive: true,
       important: true,
     ),
     'flex-direction': (
       property: flex-direction,
       class: flex,
-      values: (
-        column: column,
-        row: row,
-      ),
+      values: column row,
     ),
     'flex-wrap': (
       property: flex-wrap,
@@ -522,6 +491,11 @@ $utilities: map-merge(
       property: justify-self,
       values: start center end,
     ),
+    'flex': (
+      property: flex,
+      class: flex,
+      values: revert 1 2 3,
+    ),
     'flex-grow': (
       property: flex-grow,
       class: flex-grow,
@@ -532,25 +506,46 @@ $utilities: map-merge(
       class: gap,
       values: map.merge($sizes-regular, ($sizes-irregular)),
     ),
-
     'column-gap': (
       property: column-gap,
       class: col-gap,
       values: map.merge($sizes-regular, ($sizes-irregular)),
     ),
-
     'row-gap': (
       property: row-gap,
       class: row-gap,
       values: map.merge($sizes-regular, ($sizes-irregular)),
     ),
-
+    'object-fit': (
+      responsive: true,
+      property: object-fit,
+      values: (
+        contain: contain,
+        cover: cover,
+        fill: fill,
+        scale: scale-down,
+        none: none,
+      ),
+    ),
+    'float': (
+      property: float,
+      class: float,
+      values: (
+        start: left,
+        end: right,
+        none: none,
+      ),
+    ),
+    'clear': (
+      property: clear,
+      class: clear,
+      values: left right both,
+    ),
     'font-size': (
       property: font-size,
       class: fs,
       values: map.merge($sizes-regular, ($sizes-irregular)),
     ),
-
     'font-weight': (
       property: font-weight,
       class: fw,
@@ -559,9 +554,7 @@ $utilities: map-merge(
     'text-decoration': (
       property: text-decoration,
       class: decoration,
-      values: (
-        none: none,
-      ),
+      values: none underline,
     ),
     'text-align': (
       property: text-align,
@@ -577,12 +570,65 @@ $utilities: map-merge(
       class: opacity,
       values: $opacity,
     ),
-    'background-colors': (
+    'transition': (
+      property: transition,
+      class: transition,
+      values: (
+        bg: background-color 0.3s,
+      ),
+    ),
+    'background-colors-hover': (
+      property: background-color,
+      class: bg-hover,
+      state: hover,
+      values:
+        map-loop(
+          map.get($color-theme, default, hover),
+          hover-color,
+          '$key',
+          'alpha',
+          $hover-prefix
+        ),
+    ),
+    'background-colors-alpha': (
       property: background-color,
       local-vars: (
         'alpha': 1,
       ),
+      class: bga,
+      values:
+        map.merge(
+          map-loop(
+            $active-theme-rgb,
+            rgba-css-var,
+            '$key',
+            'alpha',
+            $color-prefix
+          ),
+          (
+            'transparent': transparent,
+          )
+        ),
+      responsive: true,
+    ),
+    'background-colors': (
+      property: background-color,
       class: bg,
+      values:
+        map.merge(
+          $active-theme,
+          (
+            'transparent': transparent,
+          )
+        ),
+      responsive: true,
+    ),
+    'text-colors-alpha': (
+      property: color,
+      local-vars: (
+        'alpha': 1,
+      ),
+      class: texta,
       values:
         map.merge(
           map-loop(
@@ -600,19 +646,10 @@ $utilities: map-merge(
     ),
     'text-colors': (
       property: color,
-      local-vars: (
-        'alpha': 1,
-      ),
       class: text,
       values:
         map.merge(
-          map-loop(
-            $active-theme-rgb,
-            rgba-css-var,
-            '$key',
-            'alpha',
-            $color-prefix
-          ),
+          $active-theme,
           (
             'transparent': transparent,
           )

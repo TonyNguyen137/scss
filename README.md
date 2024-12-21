@@ -1,14 +1,5 @@
-# Use with Sass
+# My SCSS Template
 
-In order to build that boilerplate, one needs to:
+It's partially built using functions and styles from [Bootstrap](https://getbootstrap.com/).
 
-install sass if not yet installed:
-
-npm install -g sass
-more information here: https://sass-lang.com/install/
-
-run build command from command line:
-
-sass stylesheets/main.scss dist/main.css
-
-more information about sass guidelines: https://sass-guidelin.es/
+Bootstrap is an open-source CSS framework licensed under the MIT License. See the LICENSE file for details.

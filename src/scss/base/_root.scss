@@ -4,14 +4,18 @@
 @use 'sass:list';
 @use 'sass:math';
 
-$color-theme-rgb: map-loop($active-theme, to-rgb, '$value');
-
 :root {
-  // css variables for default color theme
+  // custom properties for default color theme
   @include generate-color-vars($active-theme, $color-prefix);
-  @include generate-color-vars-rgb($color-theme-rgb, $color-prefix);
+  @include generate-color-vars-rgb($active-theme-rgb, $color-prefix);
 
-  // generates CSS vars with clamp() values derived from the font-size-clamp and spacer-clamp maps in fonts.scss and spacing.scss
+  // custom properties for default hover color
+  @include generate-color-vars(
+    map.get($color-theme, default, hover),
+    $hover-prefix
+  );
+
+  // generates custom properties with clamp() values
   @include generate-clamp-vars($size-clamp, $clamp-prefix);
 
   //generate custom properties
@@ -29,5 +33,5 @@ $color-theme-rgb: map-loop($active-theme, to-rgb, '$value');
 }
 
 @if $enable-color-themes {
-  @include generate-color-themes($color-theme-map, 'default');
+  @include generate-color-themes($color-theme);
 }

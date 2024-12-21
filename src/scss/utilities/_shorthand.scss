@@ -49,3 +49,14 @@
     margin-top: 0;
   }
 }
+
+%list-style-noe {
+  list-style: none;
+
+  a {
+    text-decoration: none;
+  }
+}
+.list-style-none {
+  @extend %list-style-noe;
+}
