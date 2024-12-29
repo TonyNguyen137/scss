@@ -619,9 +619,6 @@ $utilities: map.merge(
     ),
     'background-colors-alpha': (
       property: background-color,
-      local-vars: (
-        'alpha': 1,
-      ),
       class: bga,
       values:
         map.merge(

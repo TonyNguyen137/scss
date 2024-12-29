@@ -147,7 +147,7 @@ Modifications may have been made to the original functions.
   } @else {
     @return rgba(
       var(--#{$prefix}#{$color-prefix}#{$identifier}-rgb),
-      var(--#{$target})
+      var(--#{$target}, 1)
     );
   }
 }
