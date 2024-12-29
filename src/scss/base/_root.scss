@@ -6,20 +6,20 @@
 
 :root {
   // custom properties for default color theme
-  // @include generate-color-vars($active-theme, $color-prefix);
-  // @include generate-color-vars-rgb($active-theme-rgb, $color-prefix);
+  @include generate-color-vars($active-theme, $color-prefix);
+  @include generate-color-vars-rgb($active-theme-rgb, $color-prefix);
 
   // custom properties for default hover color
-  // @include generate-color-vars(
-  //   map.get($color-theme, default, hover),
-  //   $hover-prefix
-  // );
+  @include generate-color-vars(
+    map.get($color-theme, default, hover),
+    $hover-prefix
+  );
 
   // generates custom properties with clamp() values
-  // @include generate-clamp-vars($size-clamp, $clamp-prefix);
+  @include generate-clamp-vars($size-clamp, $clamp-prefix);
 
   //generate custom properties
-  // @include generate-vars($custom-properties);
+  @include generate-vars($custom-properties);
 
   // @if ($enable-media-query-dark-mode) {
   //   @media (prefers-color-scheme: dark) {
@@ -32,6 +32,6 @@
   // }
 }
 
-// @if $enable-color-themes {
-//   @include generate-color-themes($color-theme);
-// }
+@if $enable-color-themes {
+  @include generate-color-themes($color-theme);
+}
