@@ -279,13 +279,13 @@ Modifications may have been made to the original mixins.
     $property-class: if($property-class == null, '', $property-class);
 
     // Use custom CSS variable name if present, otherwise default to `class`
-    $css-variable-name: if(
-      map.has-key($utility, css-variable-name),
-      map.get($utility, css-variable-name),
+    $custom-property-value: if(
+      map.has-key($utility, custom-property-value),
+      map.get($utility, custom-property-value),
       map.get($utility, class)
     );
 
-    // @debug css name $css-variable-name;
+    // @debug css name $custom-property-value;
     // State params to generate pseudo-classes
     $state: if(map.has-key($utility, state), map.get($utility, state), ());
 
@@ -323,10 +323,10 @@ Modifications may have been made to the original mixins.
     // @debug is_css $is-css-var;
 
     // @debug global $is-global-vars;
-    @if $value == null and map.has-key($utility, css-variable-name) {
+    @if $value == null and map.has-key($utility, custom-property-value) {
       $class: map.get($utility, class);
       $property: map.get($utility, property);
-      $variable: map.get($utility, css-variable-name);
+      $variable: map.get($utility, custom-property-value);
 
       // @debug $property $class $variable;
 
@@ -349,7 +349,7 @@ Modifications may have been made to the original mixins.
           .#{$property-class
             + $infix
             + $property-class-modifier}-#{$pseudo}:#{$pseudo} {
-            --#{$prefix}#{$css-variable-name}: #{$value};
+            --#{$prefix}#{$custom-property-value}: #{$value};
           }
         }
       } @else {

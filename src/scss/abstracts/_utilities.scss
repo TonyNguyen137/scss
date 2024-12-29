@@ -40,22 +40,22 @@ $utilities: map.merge(
     ),
     'z-highest': (
       property: z-index,
-      css-variable-name: z-level-1,
+      custom-property-value: z-level-1,
       class: z-level-1,
     ),
     'z-2nd-highest': (
       property: z-index,
-      css-variable-name: z-level-2,
+      custom-property-value: z-level-2,
       class: z-level-2,
     ),
     'z-3rd-highest': (
       property: z-index,
-      css-variable-name: z-level-3,
+      custom-property-value: z-level-3,
       class: z-level-3,
     ),
     'z-4th-highest': (
       property: z-index,
-      css-variable-name: z-level-4,
+      custom-property-value: z-level-4,
       class: z-level-4,
     ),
     'translate-negative-center': (
