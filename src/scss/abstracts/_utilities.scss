@@ -204,12 +204,12 @@ $utilities: map.merge(
     ),
     'overflow-x': (
       property: overflow,
-      class: overflow,
+      class: overflow-x,
       values: hidden visible auto scroll clip,
     ),
     'overflow-y': (
       property: overflow,
-      class: overflow,
+      class: overflow-y,
       values: hidden visible auto scroll clip,
     ),
     'width': (
