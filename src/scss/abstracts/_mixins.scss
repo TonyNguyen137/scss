@@ -1,3 +1,9 @@
+/* 
+This file contains SCSS mixins sourced from the Bootstrap framework.
+Source: https://github.com/twbs/bootstrap/tree/main/scss/mixins
+These mixins are used in accordance with Bootstrap's open-source license (MIT).
+Modifications may have been made to the original mixins.
+*/
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:map';
@@ -7,32 +13,48 @@
 @use 'functions' as *;
 @use 'variables' as *;
 
+@mixin transition($transition...) {
+  @if length($transition) == 0 {
+    $transition: $transition-base;
+  }
+
+  @if length($transition) > 1 {
+    @each $value in $transition {
+      @if $value == null or $value == none {
+        @warn "The keyword 'none' or 'null' must be used as a single argument.";
+      }
+    }
+  }
+
+  @if $enable-transitions {
+    @if nth($transition, 1) != null {
+      transition: $transition;
+    }
+
+    @if $enable-reduced-motion and
+      nth($transition, 1) !=
+      null and
+      nth($transition, 1) !=
+      none
+    {
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+    }
+  }
+}
+
 // media query
 
 @mixin mq($size, $add-media-hover: false) {
   // @debug $size;
   // @debug $add-media-hover;
 
-  @if map.has-key($grid-breakpoints, $size) {
-    @if $size != 'xs' {
-      $breakpoint: map.get($grid-breakpoints, $size);
+  @if map.has-key($grid-breakpoints, $size) and $size != 'xs' {
+    $breakpoint: map.get($grid-breakpoints, $size);
 
-      @if ($add-media-hover == true) {
-        // @debug HERE;
-        @media screen and (min-width: $breakpoint) and (hover: hover) {
-          @content;
-        }
-      } @else {
-        @debug Wrong;
-      }
-    }
-  } @else if meta.type-of($size) == number {
-    @if math.is-unitless($size) {
-      @error 'when using a number with @mq() make sure to include a unit';
-    } @else {
-      @media screen and (min-width: $size) {
-        @content;
-      }
+    @media screen and (min-width: $breakpoint) {
+      @content;
     }
   } @else {
     @error 'the keyword #{$size} is not in the $breakpoints map';
@@ -323,7 +345,7 @@
         }
 
         @each $pseudo in $state {
-          @debug pseudo $pseudo;
+          // @debug pseudo $pseudo;
           .#{$property-class
             + $infix
             + $property-class-modifier}-#{$pseudo}:#{$pseudo} {
@@ -350,6 +372,18 @@
 
               #{$property}: $value if($is-important, !important, null);
             }
+          }
+        }
+
+        .#{$property-class + $infix + $property-class-modifier} {
+          @each $property in $properties {
+            @if $is-local-vars {
+              @each $local-var, $variable in $is-local-vars {
+                --#{$prefix}#{$local-var}: #{$variable};
+              }
+            }
+
+            #{$property}: $value if($is-important, !important, null);
           }
         }
 

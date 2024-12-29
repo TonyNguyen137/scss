@@ -1,0 +1,34 @@
+/* 
+This file contains SCSS mixins sourced from the Bootstrap framework.
+Source: https://github.com/twbs/bootstrap/blob/main/scss/_transitions.scss
+These mixins are used in accordance with Bootstrap's open-source license (MIT).
+Modifications may have been made to the original mixins.
+*/
+
+@use '../abstracts' as *;
+.fade {
+  @include transition($transition-fade);
+
+  &:not(.show) {
+    opacity: 0;
+  }
+}
+
+// scss-docs-start collapse-classes
+.collapse {
+  &:not(.show) {
+    display: none;
+  }
+}
+
+.collapsing {
+  height: 0;
+  overflow: hidden;
+  @include transition($transition-collapse);
+
+  &.collapse-horizontal {
+    width: 0;
+    height: auto;
+    @include transition($transition-collapse-width);
+  }
+}

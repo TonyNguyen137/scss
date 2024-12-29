@@ -115,6 +115,13 @@ export class Util {
   }
 }
 
+export function toArray(nodeList) {
+  if (typeof nodeList === 'string') {
+    return Array.from(document.querySelectorAll(nodeList));
+  }
+  return Array.from(nodeList);
+}
+
 export function CSSsupports(property, value) {
   const element = document.createElement('div');
   element.style[property] = value;
