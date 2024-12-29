@@ -8,26 +8,6 @@ Modifications may have been made to the original code.
 @use '../abstracts' as *;
 @use 'sass:map';
 
-.bottom-right-0 {
-  bottom: 0;
-  right: 0;
-}
-
-.bottom-left-0 {
-  bottom: 0;
-  left: 0;
-}
-
-.top-right-0 {
-  top: 0;
-  right: 0;
-}
-
-.top-left-0 {
-  top: 0;
-  left: 0;
-}
-
 .fixed-top {
   position: fixed;
   top: 0;

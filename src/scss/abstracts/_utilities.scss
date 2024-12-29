@@ -18,6 +18,26 @@ $negative-sizes: if(
 $utilities: ();
 $utilities: map.merge(
   (
+    'bottom-right': (
+      property: bottom right,
+      class: bottom-right,
+      values: 0,
+    ),
+    'bottom-left': (
+      property: bottom left,
+      class: bottom-left,
+      values: 0,
+    ),
+    'top-right': (
+      property: top right,
+      class: top-right,
+      values: 0,
+    ),
+    'top-left': (
+      property: top left,
+      class: top-left,
+      values: 0,
+    ),
     'z-highest': (
       property: z-index,
       css-variable-name: z-level-1,
