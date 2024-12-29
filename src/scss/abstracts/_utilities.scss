@@ -640,7 +640,7 @@ $utilities: map.merge(
     'background-colors-hover': (
       property: background-color,
       class: bg-hover,
-      state: hover,
+      state: ':hover',
       values:
         map-loop(
           map.get($color-theme, default, hover),
@@ -680,7 +680,13 @@ $utilities: map.merge(
         ),
       responsive: true,
     ),
-    'text-colors-alpha': (
+    'text-color-hover': (
+      property: color,
+      class: text-hover,
+      state: ':hover',
+      values: $active-theme,
+    ),
+    'text-color-alpha': (
       property: color,
       class: texta,
       values:
@@ -698,7 +704,7 @@ $utilities: map.merge(
         ),
       responsive: true,
     ),
-    'text-colors': (
+    'text-color': (
       property: color,
       class: text,
       values:
