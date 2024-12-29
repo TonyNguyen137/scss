@@ -8,41 +8,6 @@ Modifications may have been made to the original code.
 @use '../abstracts' as *;
 @use 'sass:map';
 
-.fixed-top {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: $z-level-1;
-}
-
-.fixed-bottom {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: $z-level-1;
-}
-
-// Responsive sticky top and bottom
-@each $breakpoint in map.keys($grid-breakpoints) {
-  @include media-breakpoint-up($breakpoint) {
-    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-
-    .sticky#{$infix}-top {
-      position: sticky;
-      top: 0;
-      z-index: $z-level-1;
-    }
-
-    .sticky#{$infix}-bottom {
-      position: sticky;
-      bottom: 0;
-      z-index: $z-level-1;
-    }
-  }
-}
-
 .flow > *:where(:not(:first-child)) {
   margin-top: var(--flow-spacer, 1rem);
 }

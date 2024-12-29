@@ -236,10 +236,229 @@ Modifications may have been made to the original mixins.
     }
   }
 }
+@mixin generate-utility(
+  $utility,
+  $infix: '',
+  $key,
+  $is-rfs-media-query: false
+) {
+  $values: map.get($utility, values);
+
+  // Check if the list is not empty before accessing the first element
+  @if list.length($values) > 0 {
+    // If the values are a list or string, convert it into a map
+    @if meta.type-of($values) ==
+      'string' or
+      meta.type-of(list.nth($values, 1)) !=
+      'list'
+    {
+      $values: list.zip($values, $values);
+    }
+  }
+
+  $is-important: if(map.get($utility, important), true, false);
+  $properties: map.get($utility, property);
+
+  $custom-property-value: if(
+    map.has-key($utility, custom-property-value),
+    map.get($utility, custom-property-value),
+    null
+  );
+  $state: if(map.has-key($utility, state), map.get($utility, state), null);
+
+  // Multiple properties are possible, for example with vertical or horizontal margins or paddings
+  @if meta.type-of($properties) == 'string' {
+    $properties: list.append((), $properties);
+  }
+
+  $css-var: map.get($utility, css-var);
+  $is-local-vars: map.get($utility, local-vars);
+  $is-rtl: map.get($utility, rtl);
+
+  // maps $custom-property as value to a property
+  @if $custom-property-value {
+    $property-class: if(
+      map.has-key($utility, class),
+      map.get($utility, class),
+      ''
+    );
+
+    $infix: if(
+      $property-class == '' and string.slice($infix, 1, 1) == '-',
+      string.slice($infix, 2),
+      $infix
+    );
+
+    @each $property in $properties {
+      .#{$property-class + $infix} {
+        #{$property}: var(--#{$custom-property-value})
+          if($is-important, !important, null);
+      }
+    }
+  }
+
+  @if meta.type-of($properties) == 'map' {
+    $property-class: if(
+      map.has-key($utility, class),
+      map.get($utility, class),
+      ''
+    );
+    $prefix-class: null;
+    $suffix-class: null;
+    $dash-index: string.index($property-class, '-');
+
+    @if $dash-index {
+      $prefix-class: string.slice($property-class, 1, $dash-index - 1);
+      $suffix-class: string.slice($property-class, $dash-index + 1);
+
+      @debug $prefix-class;
+      @debug $suffix-class;
+    }
+
+    // $prefix-class: string.slice('Helvetica Neue', 11); // "Neue"
+    // @debug class $property-class;
+
+    $infix: if(
+      $property-class == '' and string.slice($infix, 1, 1) == '-',
+      string.slice($infix, 2),
+      $infix
+    );
+
+    .#{if($prefix-class, $prefix-class,$property-class)
+      + $infix
+      + if($suffix-class, -$suffix-class,'')
+      } {
+      @each $property, $value in $properties {
+        #{$property}: $value if($is-important, !important, null);
+      }
+    }
+  }
+  @if $state {
+    @each $key, $value in $values {
+      // Use custom class if present
+      $property-class: if(
+        map.has-key($utility, class),
+        map.get($utility, class),
+        list.nth($properties, 1)
+      );
+
+      // @debug property-class $property-class;
+      $property-class: if($property-class == null, '', $property-class);
+
+      $infix: if(
+        $property-class == '' and string.slice($infix, 1, 1) == '-',
+        string.slice($infix, 2),
+        $infix
+      );
+
+      // Don't prefix if value key is null (e.g. with shadow class)
+      $property-class-modifier: if(
+        $key,
+        if($property-class == '' and $infix == '', '', '-') + $key,
+        ''
+      );
+
+      // @debug infix $infix;
+      @if $state == ':hover' {
+        @media (hover: hover) and (pointer: fine) {
+          .#{$property-class + $infix + $property-class-modifier}#{$state} {
+            @each $property in $properties {
+              #{$property}: $value if($is-important, !important, null);
+            }
+          }
+        }
+      } @else {
+        .#{$property-class + $infix + $property-class-modifier}#{$state} {
+          @each $property in $properties {
+            #{$property}: $value if($is-important, !important, null);
+          }
+        }
+      }
+    }
+  }
+
+  // map values to $custom-property
+  @if $properties == null and $css-var {
+    @each $key, $value in $values {
+      // Use custom class if present
+      $property-class: if(
+        map.has-key($utility, class),
+        map.get($utility, class),
+        list.nth($properties, 1)
+      );
+
+      // @debug property-class $property-class;
+      $property-class: if($property-class == null, '', $property-class);
+
+      $infix: if(
+        $property-class == '' and string.slice($infix, 1, 1) == '-',
+        string.slice($infix, 2),
+        $infix
+      );
+
+      // Don't prefix if value key is null (e.g. with shadow class)
+      $property-class-modifier: if(
+        $key,
+        if($property-class == '' and $infix == '', '', '-') + $key,
+        ''
+      );
+
+      .#{$property-class + $infix + $property-class-modifier} {
+        --#{$css-var}: #{$value};
+      }
+    }
+  }
+
+  @if meta.type-of($properties) ==
+    'list' and
+    $custom-property-value ==
+    null and
+    $state ==
+    null
+  {
+    @each $key, $value in $values {
+      // @debug key $key value $value;
+
+      // Use custom class if present
+      $property-class: if(
+        map.has-key($utility, class),
+        map.get($utility, class),
+        list.nth($properties, 1)
+      );
+
+      // @debug property-class $property-class;
+      $property-class: if($property-class == null, '', $property-class);
+
+      $infix: if(
+        $property-class == '' and string.slice($infix, 1, 1) == '-',
+        string.slice($infix, 2),
+        $infix
+      );
+
+      // Don't prefix if value key is null (e.g. with shadow class)
+      $property-class-modifier: if(
+        $key,
+        if($property-class == '' and $infix == '', '', '-') + $key,
+        ''
+      );
+
+      .#{$property-class + $infix + $property-class-modifier} {
+        @each $property in $properties {
+          @if $is-local-vars {
+            @each $local-var, $variable in $is-local-vars {
+              --#{$prefix}#{$local-var}: #{$variable};
+            }
+          }
+          #{$property}: $value if($is-important, !important, null);
+        }
+      }
+    }
+  }
+}
 
 // Utility generator
 // Used to generate utilities & print utilities
-@mixin generate-utility(
+@mixin generate-utilit-2(
   $utility,
   $infix: '',
   $key,
@@ -410,7 +629,7 @@ Modifications may have been made to the original mixins.
   }
 }
 
-// @mixin generate-vars($map, $property-prefix: '') {
+// @mixin generate-custom-properties($map, $property-prefix: '') {
 //   @each $variable-name, $value in $map {
 //     // @debug $variable-name, $value;
 
@@ -418,7 +637,7 @@ Modifications may have been made to the original mixins.
 //   }
 // }
 
-@mixin generate-vars($map, $property-prefix: '') {
+@mixin generate-custom-properties($map, $property-prefix: '') {
   @each $breakpoint in map.keys($map) {
     @include media-breakpoint-up($breakpoint) {
       @each $variable-name, $value in map.get($map, $breakpoint) {
@@ -430,7 +649,7 @@ Modifications may have been made to the original mixins.
   }
 }
 
-@mixin generate-clamp-vars($clamp-map, $clamp-prefix: '') {
+@mixin generate-clamp-custom-properties($clamp-map, $clamp-prefix: '') {
   @each $key, $map in $clamp-map {
     $threshold: map.keys($map);
     $sizeMin: map.get($map, list.nth($threshold, 1));
@@ -483,14 +702,14 @@ Modifications may have been made to the original mixins.
 
     [data-theme='#{$theme}'] {
       $colors-rgb: map-loop($colors, to-rgb, '$value');
-      @include generate-color-vars($colors, $color-prefix);
-      @include generate-color-vars-rgb($colors-rgb, $color-prefix);
-      @include generate-color-vars($colors-hover, $hover-prefix);
+      @include generate-color-custom-properties($colors, $color-prefix);
+      @include generate-color-custom-properties-rgb($colors-rgb, $color-prefix);
+      @include generate-color-custom-properties($colors-hover, $hover-prefix);
     }
   }
 }
 
-@mixin generate-color-vars($color-theme, $color-prefix: 'clr-') {
+@mixin generate-color-custom-properties($color-theme, $color-prefix: 'clr-') {
   // @debug meta.type-of($color-theme);
 
   @each $color-name, $value in $color-theme {
@@ -502,7 +721,10 @@ Modifications may have been made to the original mixins.
   }
 }
 
-@mixin generate-color-vars-rgb($color-theme, $color-prefix: 'clr-') {
+@mixin generate-color-custom-properties-rgb(
+  $color-theme,
+  $color-prefix: 'clr-'
+) {
   @each $color, $rgb-value in $color-theme {
     $type: meta.type-of($rgb-value);
 

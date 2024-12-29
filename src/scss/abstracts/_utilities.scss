@@ -18,6 +18,44 @@ $negative-sizes: if(
 $utilities: ();
 $utilities: map.merge(
   (
+    'sticky-top': (
+      class: sticky-top,
+      property: (
+        position: sticky,
+        top: 0,
+        z-index: $z-level-1,
+      ),
+      // responsive: true,
+    ),
+    'sticky-bottom': (
+      class: sticky-bottom,
+      property: (
+        position: sticky,
+        bottom: 0,
+        z-index: $z-level-1,
+      ),
+      responsive: true,
+    ),
+    'fixed-top': (
+      class: fixed-top,
+      property: (
+        position: fixed,
+        top: 0,
+        right: 0,
+        left: 0,
+        z-index: $z-level-1,
+      ),
+    ),
+    'fixed-bottom': (
+      class: fixed-bottom,
+      property: (
+        position: fixed,
+        bottom: 0,
+        right: 0,
+        left: 0,
+        z-index: $z-level-1,
+      ),
+    ),
     'bottom-right': (
       property: bottom right,
       class: bottom-right,

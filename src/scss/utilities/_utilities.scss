@@ -19,10 +19,6 @@ Modifications may have been made to the original code.
 
     // Loop over each utility property
     @each $key, $utility in $utilities {
-      // @debug $key, $utility;
-
-      // @debug type-of($utility) == 'map' and
-      //   (map-get($utility, responsive) or $infix == '');
       // The utility can be disabled with `false`, thus check if the utility is a map first
       // Only proceed if responsive media queries are enabled or if it's the base media query
       @if meta.type-of($utility) ==
