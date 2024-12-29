@@ -139,3 +139,9 @@ Modifications may have been made to the original code.
   width: auto !important;
   white-space: normal !important;
 }
+
+.clear-fix::after {
+  content: '';
+  display: block;
+  clear: both;
+}

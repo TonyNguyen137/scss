@@ -474,10 +474,7 @@ $utilities: map.merge(
     'flex-wrap': (
       property: flex-wrap,
       class: flex,
-      values: (
-        nowrap: nowrap,
-        wrap: wrap,
-      ),
+      values: nowrap wrap,
     ),
     'place-items': (
       property: place-items,
@@ -546,13 +543,7 @@ $utilities: map.merge(
     'object-fit': (
       responsive: true,
       property: object-fit,
-      values: (
-        contain: contain,
-        cover: cover,
-        fill: fill,
-        scale: scale-down,
-        none: none,
-      ),
+      values: contain cover fill scale-down none,
     ),
     'float': (
       property: float,
@@ -566,7 +557,11 @@ $utilities: map.merge(
     'clear': (
       property: clear,
       class: clear,
-      values: left right both,
+      values: (
+        start: left,
+        end: right,
+        none: none,
+      ),
     ),
     'font-size': (
       property: font-size,
