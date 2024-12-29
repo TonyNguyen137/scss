@@ -649,9 +649,6 @@ $utilities: map.merge(
     ),
     'text-colors-alpha': (
       property: color,
-      local-vars: (
-        'alpha': 1,
-      ),
       class: texta,
       values:
         map.merge(
