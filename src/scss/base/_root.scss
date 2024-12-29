@@ -21,7 +21,7 @@
   // generates custom properties with clamp() values
   @include generate-clamp-custom-properties($size-clamp, $clamp-prefix);
 
-  //generate custom properties
+  //generate (responsive) custom properties
   @include generate-custom-properties($custom-properties);
 
   // @if ($enable-media-query-dark-mode) {
