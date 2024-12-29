@@ -86,16 +86,8 @@ $dark: #212529;
 $color-theme: (
   default: (
     color: (
-      'primary': $primary,
+      'primary': #012345,
       'secondary': $secondary,
-      'success': $success,
-      'info': $info,
-      'warning': $warning,
-      'danger': $danger,
-      'light': $light,
-      'dark': $dark,
-      'black': #000,
-      'white': #fff,
     ),
     hover: (
       'primary': #c5e0d4,
@@ -104,19 +96,8 @@ $color-theme: (
   ),
 );
 
-$clr-primary: var(--clr-primary);
-$clr-secondary: var(--clr-secondary);
-$clr-success: var(--clr-success);
-$clr-info: var(--clr-info);
-$clr-warning: var(--clr-warning);
-$clr-danger: var(--clr-danger);
-$clr-light: var(--clr-light);
-$clr-dark: var(--clr-dark);
-$clr-black: var(--clr-black);
-$clr-white: var(--clr-white);
-
 // The loop reduces the structure of $color-theme from nesting greater than 2 levels to a 2-level hierarchy.
-// $color-theme-map: ();
+$color-theme-map: ();
 // @each $theme-name, $map in $color-theme {
 //   $color-theme-map: map.merge(
 //     $color-theme-map,
@@ -126,7 +107,11 @@ $clr-white: var(--clr-white);
 //   );
 // }
 
-$active-theme: map.get($color-theme, default, color);
+$active-theme: map.get(
+  if($color-theme-map == (), $color-theme, $color-theme-map),
+  default,
+  color
+);
 $active-theme-rgb: map-loop($active-theme, to-rgb, '$value');
 
 // ------------------------------------------------------
@@ -235,6 +220,18 @@ $size-clamp: (
     xxl: 128,
   ),
 );
+
+// ------------------------------------------------------
+
+/* ****************************************************** */
+/* transitions
+/* ****************************************************** */
+
+$transition-base: all 0.2s ease-in-out !default;
+$transition-fade: opacity 0.15s linear !default;
+// scss-docs-start collapse-transition
+$transition-collapse: height 0.35s ease !default;
+$transition-collapse-width: width 0.35s ease !default;
 
 // ------------------------------------------------------
 
