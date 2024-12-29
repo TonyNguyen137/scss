@@ -341,7 +341,7 @@ Modifications may have been made to the original mixins.
 
       @if $is-css-var {
         .#{$property-class + $infix + $property-class-modifier} {
-          --#{$prefix}#{$css-variable-name}: #{$value};
+          --#{$prefix}#{$is-css-var}: #{$value};
         }
 
         @each $pseudo in $state {

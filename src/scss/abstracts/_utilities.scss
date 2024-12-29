@@ -681,7 +681,7 @@ $utilities: map.merge(
       responsive: true,
     ),
     'alpha-channel': (
-      css-var: true,
+      css-var: alpha,
       class: alpha,
       responsive: true,
       values: $opacity,
