@@ -14,11 +14,11 @@ Modifications may have been made to the original mixins.
 @use 'variables' as *;
 
 @mixin transition($transition...) {
-  @if length($transition) == 0 {
+  @if list.length($transition) == 0 {
     $transition: $transition-base;
   }
 
-  @if length($transition) > 1 {
+  @if list.length($transition) > 1 {
     @each $value in $transition {
       @if $value == null or $value == none {
         @warn "The keyword 'none' or 'null' must be used as a single argument.";
@@ -27,14 +27,14 @@ Modifications may have been made to the original mixins.
   }
 
   @if $enable-transitions {
-    @if nth($transition, 1) != null {
+    @if list.nth($transition, 1) != null {
       transition: $transition;
     }
 
     @if $enable-reduced-motion and
-      nth($transition, 1) !=
+      list.nth($transition, 1) !=
       null and
-      nth($transition, 1) !=
+      list.nth($transition, 1) !=
       none
     {
       @media (prefers-reduced-motion: reduce) {
@@ -306,13 +306,10 @@ Modifications may have been made to the original mixins.
     $prefix-class: null;
     $suffix-class: null;
     $dash-index: string.index($property-class, '-');
-
+    $state: if(map.has-key($utility, state), map.get($utility, state), '');
     @if $dash-index {
       $prefix-class: string.slice($property-class, 1, $dash-index - 1);
       $suffix-class: string.slice($property-class, $dash-index + 1);
-
-      @debug $prefix-class;
-      @debug $suffix-class;
     }
 
     // $prefix-class: string.slice('Helvetica Neue', 11); // "Neue"
@@ -327,7 +324,7 @@ Modifications may have been made to the original mixins.
     .#{if($prefix-class, $prefix-class,$property-class)
       + $infix
       + if($suffix-class, -$suffix-class,'')
-      } {
+      + $state} {
       @each $property, $value in $properties {
         #{$property}: $value if($is-important, !important, null);
       }

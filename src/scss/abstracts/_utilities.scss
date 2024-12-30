@@ -18,6 +18,16 @@ $negative-sizes: if(
 $utilities: ();
 $utilities: map.merge(
   (
+    'clear-float': (
+      class: clear-float,
+      state: '::after',
+      property: (
+        content: '',
+        display: block,
+        clear: both,
+      ),
+      // responsive: true,
+    ),
     'sticky-top': (
       class: sticky-top,
       property: (

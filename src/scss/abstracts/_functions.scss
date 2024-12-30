@@ -119,8 +119,9 @@ Modifications may have been made to the original functions.
 
 @function to-rgb($value) {
   // @debug value $value;
-  @return color.channel($value, 'red'), color.channel($value, 'green'),
-    color.channel($value, 'blue');
+  $_value: if($value == null, #000, $value);
+  @return color.channel($_value, 'red'), color.channel($_value, 'green'),
+    color.channel($_value, 'blue');
 }
 
 @function hover-color($identifier, $target, $color-prefix, $prefix: '') {

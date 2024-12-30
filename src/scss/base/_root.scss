@@ -6,9 +6,16 @@
 
 :root {
   // custom properties for default color theme
-  @include generate-color-custom-properties($active-theme, $color-prefix);
+  @include generate-color-custom-properties(
+    if($active-theme == null or $active-theme == (), (), $active-theme),
+    $color-prefix
+  );
   @include generate-color-custom-properties-rgb(
-    $active-theme-rgb,
+    if(
+      $active-theme-rgb == null or $active-theme-rgb == (),
+      (),
+      $active-theme-rgb
+    ),
     $color-prefix
   );
 
