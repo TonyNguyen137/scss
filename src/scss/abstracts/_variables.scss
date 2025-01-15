@@ -323,7 +323,9 @@ $opacity: (
   75: 0.75,
   100: 1,
 );
-
+$translateXYValues: (
+  n50-n50: translate(-50%, -50%),
+);
 $fixed-values: (
-  200: 200px,
+  200px: 200px,
 );

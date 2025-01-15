@@ -3,10 +3,12 @@ import { Accordion } from './Accordion.js';
 import { Navbar as NavbarOffcanvas } from './Navbar-Offcanvas.js';
 import { Navbar } from './Navbar.js';
 import { Navbar as NavbarLight } from './Navbar-Light.js';
+import { Navbar as NavOffcanvas } from './Nav-Offcanvas.js';
 
 import { Grabber } from './Grabber.js';
 
 export {
+  NavOffcanvas,
   TopScroller,
   Accordion,
   NavbarOffcanvas,

@@ -13,6 +13,17 @@ Modifications may have been made to the original mixins.
 @use 'functions' as *;
 @use 'variables' as *;
 
+@mixin generate-breakpoints($grid-breakpoints) {
+  @each $bp in map.keys($grid-breakpoints) {
+    $value: map.get($grid-breakpoints, $bp);
+    $value: if($value != 0, $value, null);
+
+    @if $value {
+      --#{$bp}: #{$value};
+    }
+  }
+}
+
 @mixin transition($transition...) {
   @if list.length($transition) == 0 {
     $transition: $transition-base;

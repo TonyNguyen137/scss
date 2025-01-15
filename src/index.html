@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
+    <!-- <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
@@ -13,94 +13,50 @@
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
-    ></script>
+    ></script> -->
     <link rel="stylesheet" href="./scss/style.scss" />
     <script type="module" src="./js/index.js"></script>
     <title>Document</title>
   </head>
   <body>
-    <!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+    <div class="container" style="outline: 1px dashed red">
+      <nav class="navbar">
+        <img src="public/svg/logo.svg" alt="" />
         <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
+          class="navbar__openBtn"
           aria-expanded="false"
-          aria-label="Toggle navigation"
+          aria-controls="offcanvas"
+          aria-label="open menu"
         >
-          <span class="navbar-toggler-icon"></span>
+          <svg
+            class="navbar__hamburger-svg"
+            aria-hidden="true"
+            id="hamburger"
+            width="24"
+            height="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g fill="#1D1C1E" fill-rule="evenodd">
+              <path d="M0 0h24v4H0zM0 8h24v4H0zM0 16h24v4H0z" />
+            </g>
+          </svg>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+        <div
+          class="navbar__offcanvas offcanvas-end"
+          tabindex="-1"
+          id="offcanvas"
+          aria-label=""
+        >
+          <header class="navbar__offcanvas-header">
+            <button class="navbar__closeBtn" aria-label="close">
+              <svg
+                class="navbar__close-svg"
+                aria-hidden="true"
+                id="close"
+                width="20"
+                height="20"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
-        </div>
-      </div>
-    </nav> -->
-    <header class="py-4 position-sticky top-0 z-1 bg-primary">
-      <div class="container">
-        <nav class="navbar" data-extended="xl">
-          <a href=""> LOGO </a>
-          <button
-            class="navbar__btn navbar__btn--open"
-            aria-controls="offcanvas"
-            aria-label="open menu"
-            aria-expanded="false"
-          >
-            <svg width="24" height="20" xmlns="http://www.w3.org/2000/svg">
-              <g fill="#1D1C1E" fill-rule="evenodd">
-                <path d="M0 0h24v4H0zM0 8h24v4H0zM0 16h24v4H0z" />
-              </g>
-            </svg>
-          </button>
-          <div
-            class="navbar__offcanvas navbar__offcanvas--end"
-            id="offcanvas"
-            aria-label="offcanvas"
-          >
-            <button class="navbar__btn navbar__btn--close" aria-label="close">
-              <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M17.071.1L19.9 2.93l-7.071 7.07 7.071 7.072-2.828 2.828L10 12.828l-7.071 7.071L.1 17.071 7.17 10 .102 2.929 2.929.1l7.07 7.07 7.072-7.07z"
                   fill="#1D1C1E"
@@ -108,325 +64,21 @@
                 />
               </svg>
             </button>
+          </header>
+          <div class="navbar__offcanvas-body">
             <ul class="navbar__list">
               <li class="navbar__item">
-                <a class="navbar__link" href="html-templates/navbar.html"
-                  >navbar</a
+                <a class="navbar__link active" aria-current="page" href="#"
+                  >Home</a
                 >
               </li>
               <li class="navbar__item">
-                <a
-                  class="navbar__link"
-                  href="html-templates/accordion-grid.html"
-                  >accordion-grid</a
-                >
-              </li>
-              <li class="navbar__item">
-                <a class="navbar__link" href="html-templates/navbar-light.html"
-                  >navbar-light</a
-                >
-              </li>
-              <li class="navbar__item">
-                <a class="navbar__link" href="/questions">F&Q</a>
-              </li>
-              <li class="navbar__item">
-                <a class="navbar__link" href="/html-templates/offcanvas.html"
-                  >offcanvas</a
-                >
+                <a class="navbar__link" href="#">Link</a>
               </li>
             </ul>
           </div>
-        </nav>
-      </div>
-    </header>
-    <h1 style="font-size: 4rem">this is a heading with rem</h1>
-    <h1 style="font-size: 64px">this is a heading with px</h1>
-    <div class="container" style="padding-top: 88px">
-      <!-- Accordion height 
-      <h1>accordion height</h1>
-
-      <div class="accordion-height">
-        <div class="accordion__item text-start">
-          <h2 class="accordion__header" id="heading">
-            <button
-              class="accordion__toggler"
-              aria-expanded="false"
-              aria-controls="collapse"
-            >
-              this is a header
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="8"
-                viewBox="0 0 14 8"
-              >
-                <path
-                  d="M7.707,7.707a1,1,0,0,1-1.414,0l-6-6A1,1,0,0,1,1.707.293L7,5.586,12.293.293a1,1,0,0,1,1.414,1.414Z"
-                  fill="#fafafa"
-                />
-              </svg>
-            </button>
-          </h2>
-          <div
-            id="collapse"
-            class="accordion__collapse"
-            aria-labelledby="heading"
-            data-state="closed"
-          >
-            <div class="accordion__body-wrapper">
-              <div class="accordion__body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Perferendis explicabo, pariatur iste aliquid voluptatem deleniti
-                atque. Quo, perferendis iusto similique asperiores vitae
-                aperiam, sunt ad delectus explicabo nisi amet earum?
-              </div>
-            </div>
-          </div>
         </div>
-
-        <div class="accordion__item text-start">
-          <h2 class="accordion__header" id="heading">
-            <button
-              class="accordion__toggler"
-              aria-expanded="false"
-              aria-controls="collapse"
-            >
-              this is a header
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="8"
-                viewBox="0 0 14 8"
-              >
-                <path
-                  d="M7.707,7.707a1,1,0,0,1-1.414,0l-6-6A1,1,0,0,1,1.707.293L7,5.586,12.293.293a1,1,0,0,1,1.414,1.414Z"
-                  fill="#fafafa"
-                />
-              </svg>
-            </button>
-          </h2>
-          <div
-            id="collapse"
-            class="accordion__collapse"
-            aria-labelledby="heading"
-            data-state="closed"
-          >
-            <div class="accordion__body-wrapper">
-              <div class="accordion__body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Perferendis explicabo, pariatur iste aliquid voluptatem deleniti
-                atque. Quo, perferendis iusto similique asperiores vitae
-                aperiam, sunt ad delectus explicabo nisi amet earum?
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      -->
-
-      <a class="navbar__link" href="html-templates/navbar.html">navbar</a>
-      <!-- Accordion grid -->
-
-      <div class="accordion">
-        <div class="accordion__item text-start" data-state="closed">
-          <h2 class="accordion__header" id="heading">
-            <button
-              class="accordion__toggle"
-              aria-expanded="false"
-              aria-controls="accordion-grid"
-            >
-              this is a header 1
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="8"
-                viewBox="0 0 14 8"
-              >
-                <path
-                  d="M7.707,7.707a1,1,0,0,1-1.414,0l-6-6A1,1,0,0,1,1.707.293L7,5.586,12.293.293a1,1,0,0,1,1.414,1.414Z"
-                  fill="#fafafa"
-                />
-              </svg>
-            </button>
-          </h2>
-          <div
-            id="accordion-grid"
-            class="accordion__grid"
-            aria-labelledby="heading"
-            aria-hidden="true"
-          >
-            <div class="accordion__grid-row">
-              <div class="accordion__body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Perferendis explicabo, pariatur iste aliquid voluptatem deleniti
-                atque. Quo, perferendis iusto similique asperiores vitae
-                aperiam, sunt ad delectus explicabo nisi amet earum?
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="accordion__item text-start" data-state="closed">
-          <h2 class="accordion__header" id="heading">
-            <button
-              class="accordion__toggle"
-              aria-expanded="false"
-              aria-controls="accordion-grid-2"
-            >
-              this is a header 2
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="8"
-                viewBox="0 0 14 8"
-              >
-                <path
-                  d="M7.707,7.707a1,1,0,0,1-1.414,0l-6-6A1,1,0,0,1,1.707.293L7,5.586,12.293.293a1,1,0,0,1,1.414,1.414Z"
-                  fill="#fafafa"
-                />
-              </svg>
-            </button>
-          </h2>
-          <div
-            id="accordion-grid-2"
-            class="accordion__grid"
-            aria-labelledby="heading"
-            aria-hidden="true"
-          >
-            <div class="accordion__grid-row">
-              <div class="accordion__body">
-                lorem body 2 Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Perferendis explicabo, pariatur iste aliquid voluptatem
-                deleniti atque. Quo, perferendis iusto similique asperiores
-                vitae aperiam, sunt ad delectus explicabo nisi amet earum?
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <h1>Bootstrap Accordion</h1>
-    <div class="container">
-      <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button
-              class="accordion-button"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseOne"
-              aria-expanded="true"
-              aria-controls="collapseOne"
-            >
-              Accordion Item #1
-            </button>
-          </h2>
-          <div
-            id="collapseOne"
-            class="accordion-collapse collapse show"
-            data-bs-parent="#accordionExample"
-          >
-            <div class="accordion-body">
-              <strong>This is the first item's accordion body.</strong> It is
-              shown by default, until the collapse plugin adds the appropriate
-              classes that we use to style each element. These classes control
-              the overall appearance, as well as the showing and hiding via CSS
-              transitions. You can modify any of this with custom CSS or
-              overriding our default variables. It's also worth noting that just
-              about any HTML can go within the <code>.accordion-body</code>,
-              though the transition does limit overflow.
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button
-              class="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseTwo"
-              aria-expanded="false"
-              aria-controls="collapseTwo"
-            >
-              Accordion Item #2
-            </button>
-          </h2>
-          <div
-            id="collapseTwo"
-            class="accordion-collapse collapse"
-            data-bs-parent="#accordionExample"
-          >
-            <div class="accordion-body">
-              <strong>This is the second item's accordion body.</strong> It is
-              hidden by default, until the collapse plugin adds the appropriate
-              classes that we use to style each element. These classes control
-              the overall appearance, as well as the showing and hiding via CSS
-              transitions. You can modify any of this with custom CSS or
-              overriding our default variables. It's also worth noting that just
-              about any HTML can go within the <code>.accordion-body</code>,
-              though the transition does limit overflow.
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button
-              class="accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseThree"
-              aria-expanded="false"
-              aria-controls="collapseThree"
-            >
-              Accordion Item #3
-            </button>
-          </h2>
-          <div
-            id="collapseThree"
-            class="accordion-collapse collapse"
-            data-bs-parent="#accordionExample"
-          >
-            <div class="accordion-body">
-              <strong>This is the third item's accordion body.</strong> It is
-              hidden by default, until the collapse plugin adds the appropriate
-              classes that we use to style each element. These classes control
-              the overall appearance, as well as the showing and hiding via CSS
-              transitions. You can modify any of this with custom CSS or
-              overriding our default variables. It's also worth noting that just
-              about any HTML can go within the <code>.accordion-body</code>,
-              though the transition does limit overflow.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <section style="height: 100vh; background-color: lightcoral">
-      this is section 1
-    </section>
-
-    <section style="height: 100vh; background-color: lightblue">
-      this is section 2
-    </section>
-
-    <section style="height: 100vh; background-color: lightskyblue">
-      this is section 3
-    </section>
-
-    <section style="height: 100vh; background-color: lightgoldenrodyellow">
-      this is section 4
-    </section>
-
-    <div class="container-sm">
-      <h1>this is a container sm</h1>
-    </div>
-    <div class="container-md">
-      <h1>this is a container md</h1>
+      </nav>
     </div>
   </body>
 </html>

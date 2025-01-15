@@ -121,6 +121,11 @@ $utilities: map.merge(
         center-n: translate(-50%, -50%),
       ),
     ),
+    'translate': (
+      property: transform,
+      class: translate,
+      values: $translateXYValues,
+    ),
     'translate-y': (
       property: transform,
       class: translate-y,
@@ -245,18 +250,28 @@ $utilities: map.merge(
         dark: fill 0 linear-gradient(#0003, #000),
       ),
     ),
+    'resize': (
+      property: resize,
+      class: resize,
+      values: none horizontal vertical both,
+    ),
+    'cursor': (
+      property: cursor,
+      class: cursor,
+      values: pointer,
+    ),
     'overflow': (
       property: overflow,
       class: overflow,
       values: hidden visible auto scroll,
     ),
     'overflow-x': (
-      property: overflow,
+      property: overflow-x,
       class: overflow-x,
       values: hidden visible auto scroll clip,
     ),
     'overflow-y': (
-      property: overflow,
+      property: overflow-y,
       class: overflow-y,
       values: hidden visible auto scroll clip,
     ),
@@ -264,6 +279,11 @@ $utilities: map.merge(
       property: width,
       class: w,
       values: $percentage-values,
+    ),
+    'max-width': (
+      property: max-width,
+      class: max-w,
+      values: map.merge($percentage-values, $fixed-values),
     ),
     'height': (
       property: height,
