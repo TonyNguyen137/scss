@@ -47,6 +47,7 @@ export class Navbar {
   }
 
   _closeOffcanvas() {
+    this._setTransitionClass();
     this._setAriaExpanded(false);
   }
 
