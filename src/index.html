@@ -17,10 +17,15 @@
     <link rel="stylesheet" href="./scss/style.scss" />
     <script type="module" src="./js/index.js"></script>
     <title>Document</title>
+    <style>
+      body {
+        height: 500vh;
+      }
+    </style>
   </head>
   <body>
-    <div class="container" style="outline: 1px dashed red">
-      <nav class="navbar">
+    <nav class="navbar">
+      <div class="container navbar__container" style="outline: 1px dashed red">
         <img src="public/svg/logo.svg" alt="" />
         <button
           class="navbar__openBtn"
@@ -45,7 +50,7 @@
           class="navbar__offcanvas offcanvas-end"
           tabindex="-1"
           id="offcanvas"
-          aria-label=""
+          aria-label="offcanvas"
         >
           <header class="navbar__offcanvas-header">
             <button class="navbar__closeBtn" aria-label="close">
@@ -78,7 +83,7 @@
             </ul>
           </div>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   </body>
 </html>

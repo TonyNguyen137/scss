@@ -1,3 +1,5 @@
+@use '../abstracts' as *;
+
 .navbar {
   --_pd: 16px;
   --_offcanvas_width: 400px;
@@ -5,10 +7,11 @@
   --_transition-duration: 0.3s;
   --_transition-timing: ease-in-out;
 
-  display: flex;
-  justify-content: space-between;
-  column-gap: 16px;
-
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 16px;
+  }
   &__openBtn,
   &__closeBtn {
     cursor: pointer;
@@ -21,7 +24,8 @@
   }
 
   &__offcanvas {
-    outline: 2px solid black;
+    border-left: 1px solid var(--clr-primary);
+    z-index: $z-level-1;
     width: var(--_offcanvas_width);
     max-width: 100%;
     position: fixed;
@@ -29,7 +33,7 @@
     top: 0;
     bottom: 0;
     background-color: var(--_offcanvas-bg);
-    transform: translateX(100vw);
+    transform: translateX(100%);
     transition: transform var(--_transition-duration) var(--_transition-timing);
     visibility: hidden;
 

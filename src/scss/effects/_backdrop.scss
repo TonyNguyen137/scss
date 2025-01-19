@@ -1,18 +1,18 @@
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: var(--z, 2);
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--backgroundColor, #000);
-  transition: opacity var(--transitionDuration, 150ms) linear;
+// .backdrop {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   z-index: var(--z, 2);
+//   width: 100vw;
+//   height: 100vh;
+//   background-color: var(--backgroundColor, #000);
+//   transition: opacity var(--transitionDuration, 150ms) linear;
 
-  &--fade {
-    opacity: 0;
-  }
+//   &--fade {
+//     opacity: 0;
+//   }
 
-  &--show {
-    opacity: var(--opacity, 0.6);
-  }
-}
+//   &--show {
+//     opacity: var(--opacity, 0.6);
+//   }
+// }
