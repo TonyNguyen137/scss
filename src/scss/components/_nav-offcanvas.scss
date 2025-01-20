@@ -25,6 +25,7 @@
 
   &__offcanvas {
     border-left: 1px solid var(--clr-primary);
+    overflow-y: auto;
     z-index: $z-level-1;
     width: var(--_offcanvas_width);
     max-width: 100%;
