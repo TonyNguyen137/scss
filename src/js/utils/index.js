@@ -5,6 +5,8 @@ import {
   removeAttributesFrom,
   validatePropertiesOf,
   breakPoints,
+  wrap,
+  rangeWrapper,
 } from './utils.js';
 
 export {
@@ -14,4 +16,6 @@ export {
   removeAttributesFrom,
   validatePropertiesOf,
   breakPoints,
+  wrap,
+  rangeWrapper,
 };

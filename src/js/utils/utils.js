@@ -138,3 +138,22 @@ export function isIosDevice() {
         window.navigator.maxTouchPoints > 1))
   );
 }
+
+// inspired by GSAP.wrap()
+// wrapping a number within a given range
+export function wrap(min, max, value) {
+  return (
+    ((((value - min) % (max - min + 1)) + (max - min + 1)) % (max - min + 1)) +
+    min
+  );
+}
+
+export function rangeWrapper(min, max) {
+  return function (value) {
+    return (
+      ((((value - min) % (max - min + 1)) + (max - min + 1)) %
+        (max - min + 1)) +
+      min
+    );
+  };
+}

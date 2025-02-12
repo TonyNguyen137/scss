@@ -58,13 +58,6 @@ h4 {
   text-wrap: balance;
 }
 
-.list-none {
-  list-style: none;
-  a {
-    text-decoration: none;
-  }
-}
-
 /* Anything that has been anchored to should have extra scroll margin */
 :target {
   scroll-margin-block: 5ex;

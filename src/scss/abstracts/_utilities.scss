@@ -576,12 +576,12 @@ $utilities: map.merge(
     'align-self': (
       responsive: true,
       property: align-self,
-      values: start center end,
+      values: start center end baseline,
     ),
     'justify-self': (
       responsive: true,
       property: justify-self,
-      values: start center end,
+      values: start center end baseline,
     ),
     'flex': (
       property: flex,

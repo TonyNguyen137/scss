@@ -3,6 +3,7 @@ export class Backdrop {
     this._navbarEl = rootEl;
     this._containerEl = this._navbarEl.querySelector('.navbar__container');
     this._offcanvasEl = offcanvasEl;
+    this._backdropEl = null;
     this._initEventHandlers();
   }
 

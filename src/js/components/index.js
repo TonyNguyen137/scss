@@ -6,6 +6,7 @@ import { Navbar as NavbarLight } from './Navbar-Light.js';
 import { Navbar as NavOffcanvas } from './Nav-Offcanvas.js';
 
 import { Grabber } from './Grabber.js';
+import { Tabbar } from './Tabbar.js';
 
 export {
   NavOffcanvas,
@@ -15,4 +16,5 @@ export {
   Navbar,
   Grabber,
   NavbarLight,
+  Tabbar,
 };

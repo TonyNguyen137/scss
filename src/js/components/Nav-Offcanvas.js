@@ -1,4 +1,4 @@
-import { $, breakPoints } from '../utils';
+import { $ } from '../utils';
 import { Backdrop } from '../modules/nav-offcanvas/Backdrop';
 import { Tabber } from '../modules/nav-offcanvas/Tabber';
 import { Bodylocker } from '../modules/nav-offcanvas/Bodylocker';

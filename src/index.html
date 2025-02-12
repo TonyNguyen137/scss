@@ -20,102 +20,225 @@
     <style>
       body {
         height: 500vh;
+        background-color: #1a1a1a;
+        color: white;
+        background-image: url("data:image/svg+xml;utf8,<svg style='opacity:.75' width='1200' height='256' viewBox='0 0 1200 256' xmlns='http://www.w3.org/2000/svg'><defs><filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='.4'></feTurbulence></filter></defs><rect height='256' width='1200' filter='url(%23noise)' opacity='0.3'/></svg>");
       }
     </style>
   </head>
   <body>
-    <nav class="navbar">
-      <div class="container navbar__container" style="outline: 1px dashed red">
-        <img src="public/svg/logo.svg" alt="" />
-        <button
-          class="navbar__openBtn"
-          aria-expanded="false"
-          aria-controls="offcanvas"
-          aria-label="open menu"
-        >
-          <svg
-            class="navbar__hamburger-svg"
-            aria-hidden="true"
-            id="hamburger"
-            width="24"
-            height="20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g fill="#1D1C1E" fill-rule="evenodd">
-              <path d="M0 0h24v4H0zM0 8h24v4H0zM0 16h24v4H0z" />
-            </g>
-          </svg>
-        </button>
-        <div
-          class="navbar__offcanvas offcanvas-end"
-          tabindex="-1"
-          id="offcanvas"
-          aria-label="offcanvas"
-        >
-          <header class="navbar__offcanvas-header">
-            <button class="navbar__closeBtn" aria-label="close">
-              <svg
-                class="navbar__close-svg"
-                aria-hidden="true"
-                id="close"
-                width="20"
-                height="20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M17.071.1L19.9 2.93l-7.071 7.07 7.071 7.072-2.828 2.828L10 12.828l-7.071 7.071L.1 17.071 7.17 10 .102 2.929 2.929.1l7.07 7.07 7.072-7.07z"
-                  fill="#1D1C1E"
-                  fill-rule="evenodd"
-                />
-              </svg>
-            </button>
-          </header>
-          <div class="navbar__offcanvas-body">
-            <ul class="navbar__list">
-              <li class="navbar__item">
-                <a class="navbar__link active" aria-current="page" href="#"
-                  >Home</a
-                >
-              </li>
-              <li class="navbar__item">
-                <a class="navbar__link" href="#">Link</a>
-              </li>
-              <li class="navbar__item">
-                <a class="navbar__link active" aria-current="page" href="#"
-                  >Home</a
-                >
-              </li>
-              <li class="navbar__item">
-                <a class="navbar__link" href="#">Link</a>
-              </li>
-              <li class="navbar__item">
-                <a class="navbar__link active" aria-current="page" href="#"
-                  >Home</a
-                >
-              </li>
-              <li class="navbar__item">
-                <a class="navbar__link" href="#">Link</a>
-              </li>
-              <li class="navbar__item">
-                <a class="navbar__link active" aria-current="page" href="#"
-                  >Home</a
-                >
-              </li>
-              <li class="navbar__item">
-                <a class="navbar__link" href="#">Link</a>
-              </li>
-              <li class="navbar__item">
-                <a class="navbar__link active" aria-current="page" href="#"
-                  >Home</a
-                >
-              </li>
-              <li class="navbar__item">
-                <a class="navbar__link" href="#">Link</a>
-              </li>
-            </ul>
+    <div class="container">
+      <div class="tl_container">
+        <!-- A plain set of anchor links in HTML -->
+
+        <ul class="tl_list 1">
+          <li><a href="#A" class="a">Section A</a></li>
+          <li><a href="#B" class="b ON">Section B</a></li>
+          <li><a href="#C" class="c">Section C</a></li>
+        </ul>
+
+        <section id="A" class="tl_section a">
+          <h2>Content heading A</h2>
+          <p>
+            Copy with an <a href="#">Example focusable link</a> as content for
+            A1.
+          </p>
+        </section>
+
+        <section id="B" class="tl_section b">
+          <h2>Content heading B</h2>
+          <p>
+            Copy with an <a href="#">Example focusable link</a> as content for
+            B1.
+          </p>
+        </section>
+
+        <section id="C" class="tl_section c">
+          <h2>Content heading C</h2>
+          <p>Copy without a focusable link as content for C1.</p>
+
+          <!-- A second embedded tablist example -->
+          <ul class="tl_list 2">
+            <li><a href="#D" class="d">Sub-section D</a></li>
+            <li><a href="#E" class="tl_lnk-on e">Sub-section E</a></li>
+          </ul>
+
+          <div id="D" class="tl_section d">
+            <h2>Content heading D</h2>
+            <p>Copy without a focusable link as content for D.</p>
           </div>
-        </div>
+
+          <div id="E" class="tl_section e">
+            <h2>Content heading E</h2>
+            <p>Copy without a focusable link as content for E.</p>
+          </div>
+        </section>
       </div>
-    </nav>
+    </div>
+    <br />
+    <br />
+    <div class="container">
+      <div class="tabbar">
+        <div class="tabbar__list" role="tablist">
+          <button
+            class="tabbar__tab"
+            id="tab-1"
+            role="tab"
+            aria-selected="true"
+            aria-controls="tabpanel-1"
+          >
+            Tab 1
+          </button>
+          <button
+            class="tabbar__tab"
+            id="tab-2"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tabpanel-2"
+            tabindex="-1"
+          >
+            Tab 2
+          </button>
+          <button
+            class="tabbar__tab"
+            id="tab-3"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tabpanel-3"
+            tabindex="-1"
+          >
+            Tab 3
+          </button>
+          <button
+            class="tabbar__tab"
+            id="tab-4"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tabpanel-4"
+            tabindex="-1"
+          >
+            Tab 4
+          </button>
+        </div>
+        <section
+          class="tabbar__panel"
+          id="tabpanel-1"
+          role="tabpanel"
+          aria-hidden="false"
+          aria-labelledby="tab-1"
+          tabindex="0"
+        >
+          <h2>Content heading 1</h2>
+          <p>
+            Copy with an <a href="#">Example focusable link</a> as content for
+            A1.
+          </p>
+        </section>
+
+        <section
+          class="tabbar__panel"
+          id="tabpanel-2"
+          role="tabpanel"
+          aria-hidden="true"
+          aria-labelledby="tab-2"
+          tabindex="0"
+        >
+          <h2>Content heading 2</h2>
+          <p>
+            Copy with an <a href="#">Example focusable link</a> as content for
+            B1.
+          </p>
+        </section>
+
+        <section
+          class="tabbar__panel"
+          id="tabpanel-3"
+          role="tabpanel"
+          aria-hidden="true"
+          aria-labelledby="tab-3"
+          tabindex="0"
+        >
+          <h2>Content heading 3</h2>
+          <p>
+            Copy without a focusable link as content for HEADING 3. Lorem ipsum
+            dolor sit amet consectetur adipisicing elit. Rerum, enim sunt eos
+            fugit harum autem reprehenderit qui atque ut perferendis culpa eius
+            nobis adipisci corporis suscipit quae, dolorum nemo. Nihil!
+          </p>
+
+          <!-- A second embedded tablist example -->
+          <div>
+            <div class="tabbar__list" role="tablist">
+              <button
+                class="tabbar__tab"
+                id="tab-1-1"
+                role="tab"
+                aria-selected="true"
+                aria-controls="tabpanel-1-1"
+              >
+                Tab 1
+              </button>
+              <button
+                class="tabbar__tab"
+                id="tab-1-2"
+                role="tab"
+                aria-selected="false"
+                aria-controls="tabpanel-2-1"
+                tabindex="-1"
+              >
+                Tab 2
+              </button>
+            </div>
+            <section
+              class="tabbar__panel"
+              id="tabpanel-1-1"
+              role="tabpanel"
+              aria-hidden="false"
+              aria-labelledby="tab-1-1"
+              tabindex="0"
+            >
+              <h2>Content heading D</h2>
+              <p>
+                Copy with an <a href="#">Example focusable link</a> as content
+                for A1.
+              </p>
+            </section>
+
+            <section
+              class="tabbar__panel"
+              id="tabpanel-1-2"
+              role="tabpanel"
+              aria-hidden="true"
+              aria-labelledby="tab-1-2"
+              tabindex="0"
+            >
+              <h2>Content heading E</h2>
+              <p>
+                Copy with an <a href="#">Example focusable link</a> as content
+                for B1.
+              </p>
+            </section>
+          </div>
+        </section>
+
+        <section
+          class="tabbar__panel"
+          id="tabpanel-4"
+          role="tabpanel"
+          aria-hidden="true"
+          aria-labelledby="tab-4"
+          tabindex="0"
+        >
+          <h2>Content heading 4</h2>
+          <p>
+            Copy with an <a href="#">Example focusable link</a> as content for
+            A1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam,
+            fuga architecto? Iste dignissimos, tempora illum repudiandae harum
+            accusamus est ipsa velit libero quisquam molestias debitis vero
+            accusantium. Unde, temporibus recusandae?
+          </p>
+        </section>
+      </div>
+    </div>
   </body>
 </html>

@@ -24,7 +24,7 @@
 
   // custom properties for default hover color
   @include generate-color-custom-properties(
-    map.get($color-theme, default, hover),
+    map.get($color-theme, $selected-theme, hover),
     $hover-prefix
   );
 

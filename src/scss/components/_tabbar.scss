@@ -1,1 +1,155 @@
 @use '../abstracts' as *;
+
+.tabbar {
+  // background-color: red;
+
+  &__list {
+    display: flex;
+  }
+
+  &__tab {
+    border: none;
+    background-color: transparent;
+    flex: 1;
+    font-size: px-to-rem(24);
+    padding: 16px;
+  }
+
+  &__tab:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem lightblue;
+  }
+
+  &__tab[aria-selected='true'],
+  &__panel[aria-hidden='false'] {
+    outline: 1px solid lightskyblue;
+  }
+
+  &__panel[aria-hidden='true'] {
+    display: none;
+  }
+
+  &__panel {
+    padding: 16px 24px;
+  }
+
+  &__panel:focus {
+    box-shadow: 0 0 0 0.25rem lightblue;
+  }
+}
+
+.new_version {
+  color: #ccc;
+  background-color: hsla(240, 50%, 25%, 0.25);
+  border: 2px solid red;
+  margin: 2rem 0;
+  padding: 1rem;
+  position: relative;
+}
+.new_version > * {
+  margin: 0;
+}
+.new_version > a {
+  display: inline-block;
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin: 1rem 0;
+}
+.new_version > a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+.new_version > p {
+  display: block;
+  font-weight: 300;
+}
+
+/* Tab styling (optional) */
+
+.tl_container {
+  margin: 2rem 0;
+}
+
+.tl_list {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+  justify-content: left;
+  list-style: none;
+}
+
+.tl_list li {
+  margin: 0;
+  width: 33.3333%;
+  text-align: center;
+  border-radius: 4px 4px 0 0;
+}
+
+.tl_list a {
+  color: #fff;
+  padding: 1rem 0.5rem;
+  display: block;
+  border: none;
+  text-decoration: none;
+  text-shadow: none;
+}
+.tl_list a:hover,
+.tl_list a:focus {
+  text-shadow: 0 2px 4px #000;
+}
+
+/* White focus ring - so you can see when it's focussed (not required) */
+.tl_section h2:focus {
+  outline: 1px solid currentcolor;
+}
+
+/* Section styling (optional) */
+
+.tl_section {
+  padding: 1rem 1.5rem;
+  min-height: 8rem;
+  border-radius: 0 0 4px 4px;
+  text-shadow: none;
+}
+.tl_section h2 {
+  margin-top: 1rem;
+}
+
+/* tab & panel colour */
+
+.a,
+.a:hover,
+.a:focus {
+  background-color: rgba(255, 85, 160, 0.3);
+}
+.b,
+.b:hover,
+.b:focus {
+  background-color: rgba(160, 255, 85, 0.3);
+}
+.c,
+.c:hover,
+.c:focus {
+  background-color: rgba(85, 160, 255, 0.3);
+}
+.d,
+.d:hover,
+.d:focus {
+  background-color: rgba(85, 160, 255, 0.25);
+}
+.e,
+.e:hover,
+.e:focus {
+  background-color: rgba(85, 160, 255, 0.5);
+}
+
+/* 
+Section styling (required)
+Removes hidden sections from the keychain. 
+Only used when JavaScript is available.
+*/
+[role='tabpanel'][aria-hidden='true'] {
+  display: none;
+}

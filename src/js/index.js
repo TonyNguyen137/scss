@@ -4,21 +4,19 @@ import {
   NavbarOffcanvas,
   NavbarLight,
   NavOffcanvas,
+  Tabbar,
 } from './components';
 import { Backdrop, BodyScrollLocker, ScrollLocker } from './modules';
 import { $$ } from './utils';
 
-let content = document.querySelector('.content');
+console.log(`instantiation took ${timeTaken} milliseconds`);
 
-// Capture the start time
-const startTime = performance.now();
+const st = performance.now();
+let tab1 = new Tabbar();
 
-new NavOffcanvas();
-
-const endTime = performance.now();
-
+const et = performance.now();
 // Calculate the time taken to instantiate the class
-const timeTaken = endTime - startTime;
+const delta = et - st;
 
 // content.textContent = `miliseconds: ${timeTaken}ms`;
-console.log(`instantiation took ${timeTaken} milliseconds`);
+console.log(`custom instantiation took ${delta} milliseconds`);

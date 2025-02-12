@@ -10,8 +10,9 @@
   &__container {
     display: flex;
     justify-content: space-between;
-    column-gap: 16px;
+    column-gap: var(--_pd);
   }
+
   &__openBtn,
   &__closeBtn {
     cursor: pointer;
