@@ -24,6 +24,9 @@ Modifications may have been made to the original functions.
   $factor: math.pow(10, $precision);
   @return math.div(math.round($number * $factor), $factor);
 }
+@function apply-unit($value, $unit) {
+  @return #{$value}#{$unit}; // Ensures no space
+}
 
 // Removes 'em, rem', multiply with 16 and returns the unitless value
 @function remove-unit-and-convert($value) {

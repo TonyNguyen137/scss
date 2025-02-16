@@ -1,11 +1,9 @@
 import { $, wrap } from '../utils';
 
-export class Tabbar {
-  constructor(rootEl = '.tabbar', options) {
+export class Tabs {
+  constructor(rootEl = '.tabs', options) {
     this._rootEl = typeof rootEl === 'string' ? $(rootEl) : rootEl;
-    this._tabListEls = Array.from(
-      this._rootEl.querySelectorAll('.tabbar__list')
-    );
+    this._tabListEls = Array.from(this._rootEl.querySelectorAll('.tabs__list'));
 
     let i = this._tabListEls.length;
 
@@ -15,12 +13,12 @@ export class Tabbar {
   }
 
   _initialiseTabList(tabList) {
-    tabList.tabEls = Array.from(tabList.querySelectorAll('.tabbar__tab'));
+    tabList.tabEls = Array.from(tabList.querySelectorAll('.tabs__tab'));
     tabList.lastTabIndex = tabList.tabEls.length - 1;
 
     // exclude panels inside a different nested tabbar__list
     tabList.panelEls = Array.from(
-      tabList.parentNode.querySelectorAll(':scope > .tabbar__panel')
+      tabList.parentNode.querySelectorAll(':scope > .tabs__panel')
     );
     tabList.currentActiveTabEl = tabList.querySelector("[aria-selected='true'");
 
@@ -93,16 +91,16 @@ export class Tabbar {
 
 /*
 
-Tabbar light
+tabs light
 
-export class Tabbar {
-  constructor(rootEl = '.tabbar') {
+export class tabs {
+  constructor(rootEl = '.tabs') {
     this._rootEl = typeof rootEl === 'string' ? $(rootEl) : rootEl;
-    this._tabListEl = this._rootEl.querySelector('.tabbar__list');
-    this._tabEls = Array.from(this._tabListEl.querySelectorAll('.tabbar__tab'));
+    this._tabListEl = this._rootEl.querySelector('.tabs__list');
+    this._tabEls = Array.from(this._tabListEl.querySelectorAll('.tabs__tab'));
     this._lastTabIndex = this._tabEls.length - 1;
     this._panelEls = Array.from(
-      this._rootEl.querySelectorAll('.tabbar__panel')
+      this._rootEl.querySelectorAll('.tabs__panel')
     );
 
     this._currentActiveTabEl = this._tabListEl.querySelector(

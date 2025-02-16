@@ -1,3 +1,4 @@
+@use 'node_modules/utopia-core-scss/src/utopia' as utopia;
 @use '../abstracts' as *;
 @use 'sass:map';
 @use 'sass:meta';
@@ -9,15 +10,19 @@
 
   // custom properties for default color theme
   @include generate-color-custom-properties(
-    if($active-theme == null or $active-theme == (), (), $active-theme),
+    if(
+      $selected-theme-hex-colors == null or $selected-theme-hex-colors == (),
+      (),
+      $selected-theme-hex-colors
+    ),
     $color-prefix
   );
 
   @include generate-color-custom-properties-rgb(
     if(
-      $active-theme-rgb == null or $active-theme-rgb == (),
+      $selected-theme-rgb-colors == null or $selected-theme-rgb-colors == (),
       (),
-      $active-theme-rgb
+      $selected-theme-rgb-colors
     ),
     $color-prefix
   );
@@ -29,7 +34,22 @@
   );
 
   // generates custom properties with clamp() values
-  @include generate-clamp-custom-properties($size-clamp, $clamp-prefix);
+  @include generate-clamp-custom-properties(
+    $size-clamp,
+    $size-prefix,
+    $size-relative-to,
+    $size-threshold-unit,
+    $size-preferred-unit
+  );
+
+  // generates custom properties with clamp() values
+  @include generate-clamp-custom-properties(
+    $spacing-clamp,
+    $spacing-prefix,
+    $spacing-relative-to,
+    $spacing-threshold-unit,
+    $spacing-preferred-unit
+  );
 
   //generate (responsive) custom properties
   @include generate-custom-properties($custom-properties);
@@ -43,6 +63,19 @@
   //     }
   //   }
   // }
+
+  // @include utopia.generateClamps(
+  //   (
+  //     'minWidth': 576,
+  //     'maxWidth': 1400,
+  //     'pairs': (
+  //       (32, 150),
+  //     ),
+  //     'usePx': false,
+  //     'relativeTo': 'viewport',
+  //     'prefix': 'space-',
+  //   )
+  // );
 }
 
 @if $enable-color-themes {

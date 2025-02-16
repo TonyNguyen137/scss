@@ -18,6 +18,10 @@ $negative-sizes: if(
 $utilities: ();
 $utilities: map.merge(
   (
+    'flex-center': (
+      class: flex-align-center-sss,
+      placeholder: '%flex-align-center',
+    ),
     'clear-float': (
       class: clear-float,
       state: '::after',
@@ -342,9 +346,7 @@ $utilities: map.merge(
     'inset': (
       property: inset,
       class: inset,
-      values: (
-        full: 0,
-      ),
+      values: 0,
     ),
     'border-top': (
       property: border-top,
@@ -686,7 +688,7 @@ $utilities: map.merge(
       values:
         map.merge(
           map-loop(
-            $active-theme-rgb,
+            $selected-theme-rgb-colors,
             rgba-css-var,
             '$key',
             'alpha',
@@ -703,7 +705,7 @@ $utilities: map.merge(
       class: bg,
       values:
         map.merge(
-          $active-theme,
+          $selected-theme-hex-colors,
           (
             'transparent': transparent,
           )
@@ -714,7 +716,7 @@ $utilities: map.merge(
       property: color,
       class: text-hover,
       state: ':hover',
-      values: $active-theme,
+      values: $selected-theme-hex-colors,
     ),
     'text-color-alpha': (
       property: color,
@@ -722,7 +724,7 @@ $utilities: map.merge(
       values:
         map.merge(
           map-loop(
-            $active-theme-rgb,
+            $selected-theme-rgb-colors,
             rgba-css-var,
             '$key',
             'alpha',
@@ -739,7 +741,7 @@ $utilities: map.merge(
       class: text,
       values:
         map.merge(
-          $active-theme,
+          $selected-theme-hex-colors,
           (
             'transparent': transparent,
           )

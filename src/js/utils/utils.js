@@ -139,6 +139,24 @@ export function isIosDevice() {
   );
 }
 
+export function toggleTheme(
+  selector = '.switch__input',
+  options = { onTrue: 'dark' }
+) {
+  let input = document.querySelector(selector);
+  let theme = options.onTrue;
+
+  input.addEventListener('change', (e) => {
+    let isChecked = e.target.checked;
+
+    if (isChecked) {
+      document.documentElement.setAttribute('data-theme', theme);
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  });
+}
+
 // inspired by GSAP.wrap()
 // wrapping a number within a given range
 export function wrap(min, max, value) {

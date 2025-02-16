@@ -12,6 +12,7 @@ Modifications may have been made to the original mixins.
 @use 'sass:selector';
 @use 'functions' as *;
 @use 'variables' as *;
+@use 'placeholder' as *;
 
 @mixin generate-breakpoints($grid-breakpoints) {
   @each $bp in map.keys($grid-breakpoints) {
@@ -286,6 +287,19 @@ Modifications may have been made to the original mixins.
   $is-local-vars: map.get($utility, local-vars);
   $is-rtl: map.get($utility, rtl);
 
+  // class with @extends
+  @if (map.has-key($utility, placeholder)) {
+    $placeholder: map.get($utility, placeholder);
+    $class-name: map.get($utility, class);
+
+    // @debug placeholder $placeholder;
+    // @debug class-name $class-name;
+
+    .#{$class-name} {
+      @extend #{$placeholder};
+    }
+  }
+
   // maps $custom-property as value to a property
   @if $custom-property-value {
     $property-class: if(
@@ -318,6 +332,7 @@ Modifications may have been made to the original mixins.
     $suffix-class: null;
     $dash-index: string.index($property-class, '-');
     $state: if(map.has-key($utility, state), map.get($utility, state), '');
+
     @if $dash-index {
       $prefix-class: string.slice($property-class, 1, $dash-index - 1);
       $suffix-class: string.slice($property-class, $dash-index + 1);
@@ -341,6 +356,7 @@ Modifications may have been made to the original mixins.
       }
     }
   }
+
   @if $state {
     @each $key, $value in $values {
       // Use custom class if present
@@ -657,33 +673,66 @@ Modifications may have been made to the original mixins.
   }
 }
 
-@mixin generate-clamp-custom-properties($clamp-map, $clamp-prefix: '') {
+@mixin generate-clamp-custom-properties(
+  $clamp-map,
+  $clamp-prefix: '',
+  $relative-to: 'viewport',
+  $threshold-unit: 'px',
+  $unit: 'px'
+) {
+  // @debug unit $unit;
+
   @each $key, $map in $clamp-map {
+    // @debug $key, $map;
+
     $threshold: map.keys($map);
     $sizeMin: map.get($map, list.nth($threshold, 1));
     $sizeMax: map.get($map, list.nth($threshold, 2));
 
-    $viewportMin: remove-unit-and-convert(
-      map.get($grid-breakpoints, list.nth($threshold, 1))
-    );
-    $viewportMax: remove-unit-and-convert(
-      map.get($grid-breakpoints, list.nth($threshold, 2))
-    );
+    // @debug threshhold $threshold;
+    // @debug sizeMin $sizeMin;
+    // @debug sizeMax $sizeMax;
+
+    // $viewportMin: remove-unit-and-convert(
+    //   map.get($grid-breakpoints, list.nth($threshold, 1))
+    // );
+    // $viewportMax: remove-unit-and-convert(
+    //   map.get($grid-breakpoints, list.nth($threshold, 2))
+    // );
+
+    $viewportMin: remove-unit-and-convert(list.nth($threshold, 1));
+    $viewportMax: remove-unit-and-convert(list.nth($threshold, 2));
 
     $deltaSize: $sizeMax - $sizeMin;
     $deltaViewport: $viewportMax - $viewportMin;
-    $change: round-to(math.div($deltaSize, $deltaViewport));
+    $change: round-to(math.div($deltaSize, $deltaViewport), 6);
 
-    $preferred: px-to-rem($sizeMax - ($viewportMax * $change));
+    // @debug change $change;
+    // @debug $change * 100vw;
 
-    $rateOfChange: 100vw * $change;
+    // $preferred: round-to($sizeMax - ($viewportMax * $change), 4) * 1px;
+    $preferred: if(
+      $unit == 'rem',
+      round-to(math.div($sizeMax - ($viewportMax * $change), 16) * 1rem, 4),
+      round-to($sizeMax - ($viewportMax * $change), 4) * 1px
+    );
 
-    $sizeMin: px-to-rem($sizeMin);
-    $sizeMax: px-to-rem($sizeMax);
+    $rateOfChange: null;
+
+    @if $relative-to == 'viewport' {
+      $rateOfChange: round-to(100vw * $change);
+    } @else if $relative-to == 'container' {
+      $rateOfChange: round-to(100cqi * $change);
+    } @else {
+      @error 'Invalid value for $relativeTo. Expected "viewport" or "container".';
+    }
+
+    $sizeMin: if($threshold-unit == 'rem', px-to-rem($sizeMin), $sizeMin * 1px);
+    $sizeMax: if($threshold-unit == 'rem', px-to-rem($sizeMax), $sizeMax * 1px);
 
     --#{$prefix}#{$clamp-prefix}#{$key}: clamp(
       #{$sizeMin},
-      #{$preferred} + #{$rateOfChange},
+      calc(#{$preferred} + #{$rateOfChange}),
       #{$sizeMax}
     );
   }

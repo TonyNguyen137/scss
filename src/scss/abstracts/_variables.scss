@@ -6,6 +6,7 @@ Modifications may have been made to the original code.
 */
 @use 'functions' as *;
 @use 'sass:map';
+@use 'sass:string';
 
 /* ****************************************************** */
 /* general setting
@@ -94,12 +95,15 @@ $color-theme: (
       'danger': $danger,
       'light': $light,
       'dark': $dark,
+
+      'zero': #000,
+      'quindecenary': #fff,
     ),
   ),
 );
 
 // The loop reduces the structure of $color-theme from nesting greater than 2 levels to a 2-level hierarchy.
-$color-theme-map: ();
+// $color-theme-map: ();
 // @each $theme-name, $map in $color-theme {
 //   $color-theme-map: map.merge(
 //     $color-theme-map,
@@ -110,13 +114,13 @@ $color-theme-map: ();
 // }
 
 $selected-theme: default;
-$active-theme: map.get(
-  if($color-theme-map == (), $color-theme, $color-theme-map),
-  $selected-theme,
-  color
-);
+$selected-theme-hex-colors: map.get($color-theme, $selected-theme, color);
 
-$active-theme-rgb: map-loop($active-theme, to-rgb, '$value');
+$selected-theme-rgb-colors: map-loop(
+  $selected-theme-hex-colors,
+  to-rgb,
+  '$value'
+);
 
 // ------------------------------------------------------
 
@@ -142,10 +146,6 @@ $fw-black: 900;
 
 $factor: 4px;
 $sizes-regular: ();
-$sizes-irregular: (
-  121px: 121px,
-  67px: 67px,
-);
 
 @for $i from 0 through 30 {
   $sizes-regular: map.merge(
@@ -156,14 +156,10 @@ $sizes-irregular: (
   );
 }
 
-// @each $size in $sizes-list {
-//   $sizes-regular: map.merge(
-//     $sizes-regular,
-//     (
-//       $size: if($size == 0, $size, $factor * $size),
-//     )
-//   );
-// }
+$sizes-irregular: (
+  121px: 121px,
+  67px: 67px,
+);
 
 // ------------------------------------------------------
 
@@ -203,10 +199,12 @@ $z--1: -1;
 /* ****************************************************** */
 $custom-properties: (
   'xs': (
-    'z-level-1': 999,
-    'z-level-2': 998,
-    'z-level-3': 997,
-    'z-level-4': 996,
+    'z-level-1': $z-level-1,
+    'z-level-2': $z-level-2,
+    'z-level-3': $z-level-3,
+    'z-level-4': $z-level-4,
+    'z-defeault': 0,
+    'z--1': -1,
   ),
   'md': (),
   'lg': (),
@@ -220,15 +218,27 @@ $custom-properties: (
 /* custom properties for clamp()
 /* ****************************************************** */
 
-$clamp-prefix: fluid-;
+$size-prefix: fluid-;
+$size-relative-to: 'viewport';
+$size-threshold-unit: 'rem';
+$size-preferred-unit: 'rem';
+
 $size-clamp: (
-  card-font: (
-    sm: 16,
-    md: 48,
-  ),
   heading: (
-    sm: 16,
-    xxl: 128,
+    576px: 32,
+    1400px: 150,
+  ),
+);
+
+$spacing-prefix: spacing-;
+$spacing-relative-to: 'viewport';
+$spacing-threshold-unit: 'px';
+$spacing-preferred-unit: 'px';
+
+$spacing-clamp: (
+  '15-30': (
+    576px: 32,
+    1400px: 150,
   ),
 );
 
@@ -249,7 +259,7 @@ $transition-collapse-width: width 0.35s ease !default;
 // ------------------------------------------------------
 
 /* ****************************************************** */
-/* values for utility map
+/* maps for the utility map in abstracts/utilities.scss
 /* ****************************************************** */
 
 $order-values: (
