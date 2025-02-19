@@ -27,217 +27,41 @@
     </style>
   </head>
   <body>
-    <div class="container">
-      <div class="tl_container">
-        <!-- A plain set of anchor links in HTML -->
-        <ul class="tl_list 1">
-          <li><a href="#A" class="a">Section A</a></li>
-          <li><a href="#B" class="b ON">Section B</a></li>
-          <li><a href="#C" class="c">Section C</a></li>
-        </ul>
-
-        <section id="A" class="tl_section a">
-          <h2>Content heading A</h2>
-          <p>
-            Copy with an <a href="#">Example focusable link</a> as content for
-            A1.
-          </p>
-        </section>
-
-        <section id="B" class="tl_section b">
-          <h2>Content heading B</h2>
-          <p>
-            Copy with an <a href="#">Example focusable link</a> as content for
-            B1.
-          </p>
-        </section>
-
-        <section id="C" class="tl_section c">
-          <h2>Content heading C</h2>
-          <p>Copy without a focusable link as content for C1.</p>
-
-          <!-- A second embedded tablist example -->
-          <ul class="tl_list 2">
-            <li><a href="#D" class="d">Sub-section D</a></li>
-            <li><a href="#E" class="tl_lnk-on e">Sub-section E</a></li>
-          </ul>
-
-          <div id="D" class="tl_section d">
-            <h2>Content heading D</h2>
-            <p>Copy without a focusable link as content for D.</p>
+    <header class="p-4 bg-primary">
+      <div class="container d-flex col-gap-3">
+        <div class="dropdown">
+          <button class="dropdown__toggle">Information</button>
+          <div class="dropdown__menu">
+            <ul class="dropdown__list">
+              <li>
+                <a href="#">link a</a>
+              </li>
+              <li>
+                <a href="#">link b</a>
+              </li>
+              <li>
+                <a href="#">link c</a>
+              </li>
+            </ul>
           </div>
-
-          <div id="E" class="tl_section e">
-            <h2>Content heading E</h2>
-            <p>Copy without a focusable link as content for E.</p>
-          </div>
-        </section>
-      </div>
-    </div>
-    <br />
-    <br />
-    <div class="container">
-      <div class="tabs">
-        <div class="tabs__list" role="tablist">
-          <button
-            class="tabs__tab"
-            id="tab-1"
-            role="tab"
-            aria-selected="true"
-            aria-controls="tabpanel-1"
-          >
-            Tab 1
-          </button>
-          <button
-            class="tabs__tab"
-            id="tab-2"
-            role="tab"
-            aria-selected="false"
-            aria-controls="tabpanel-2"
-            tabindex="-1"
-          >
-            Tab 2
-          </button>
-          <button
-            class="tabs__tab"
-            id="tab-3"
-            role="tab"
-            aria-selected="false"
-            aria-controls="tabpanel-3"
-            tabindex="-1"
-          >
-            Tab 3
-          </button>
-          <button
-            class="tabs__tab"
-            id="tab-4"
-            role="tab"
-            aria-selected="false"
-            aria-controls="tabpanel-4"
-            tabindex="-1"
-          >
-            Tab 4
-          </button>
         </div>
-        <section
-          class="tabs__panel"
-          id="tabpanel-1"
-          role="tabpanel"
-          aria-hidden="false"
-          aria-labelledby="tab-1"
-          tabindex="0"
-        >
-          <h2>Content heading 1</h2>
-          <p>
-            Copy with an <a href="#">Example focusable link</a> as content for
-            A1.
-          </p>
-        </section>
-
-        <section
-          class="tabs__panel"
-          id="tabpanel-2"
-          role="tabpanel"
-          aria-hidden="true"
-          aria-labelledby="tab-2"
-          tabindex="0"
-        >
-          <h2>Content heading 2</h2>
-          <p>
-            Copy with an <a href="#">Example focusable link</a> as content for
-            B1.
-          </p>
-        </section>
-
-        <section
-          class="tabs__panel"
-          id="tabpanel-3"
-          role="tabpanel"
-          aria-hidden="true"
-          aria-labelledby="tab-3"
-          tabindex="0"
-        >
-          <h2>Content heading 3</h2>
-          <p>
-            Copy without a focusable link as content for HEADING 3. Lorem ipsum
-            dolor sit amet consectetur adipisicing elit. Rerum, enim sunt eos
-            fugit harum autem reprehenderit qui atque ut perferendis culpa eius
-            nobis adipisci corporis suscipit quae, dolorum nemo. Nihil!
-          </p>
-
-          <!-- A second embedded tablist example -->
-          <div>
-            <div class="tabs__list" role="tablist">
-              <button
-                class="tabs__tab"
-                id="tab-1-1"
-                role="tab"
-                aria-selected="true"
-                aria-controls="tabpanel-1-1"
-              >
-                Tab 1
-              </button>
-              <button
-                class="tabs__tab"
-                id="tab-1-2"
-                role="tab"
-                aria-selected="false"
-                aria-controls="tabpanel-2-1"
-                tabindex="-1"
-              >
-                Tab 2
-              </button>
-            </div>
-            <section
-              class="tabs__panel"
-              id="tabpanel-1-1"
-              role="tabpanel"
-              aria-hidden="false"
-              aria-labelledby="tab-1-1"
-              tabindex="0"
-            >
-              <h2>Content heading D</h2>
-              <p>
-                Copy with an <a href="#">Example focusable link</a> as content
-                for A1.
-              </p>
-            </section>
-
-            <section
-              class="tabs__panel"
-              id="tabpanel-1-2"
-              role="tabpanel"
-              aria-hidden="true"
-              aria-labelledby="tab-1-2"
-              tabindex="0"
-            >
-              <h2>Content heading E</h2>
-              <p>
-                Copy with an <a href="#">Example focusable link</a> as content
-                for B1.
-              </p>
-            </section>
+        <div class="dropdown">
+          <button class="dropdown__toggle">pricing</button>
+          <div class="dropdown__menu">
+            <ul class="dropdown__list">
+              <li>
+                <a href="#">link a</a>
+              </li>
+              <li>
+                <a href="#">link b</a>
+              </li>
+              <li>
+                <a href="#">link c</a>
+              </li>
+            </ul>
           </div>
-        </section>
-
-        <section
-          class="tabs__panel"
-          id="tabpanel-4"
-          role="tabpanel"
-          aria-hidden="true"
-          aria-labelledby="tab-4"
-          tabindex="0"
-        >
-          <h2>Content heading 4</h2>
-          <p>
-            Copy with an <a href="#">Example focusable link</a> as content for
-            A1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam,
-            fuga architecto? Iste dignissimos, tempora illum repudiandae harum
-            accusamus est ipsa velit libero quisquam molestias debitis vero
-            accusantium. Unde, temporibus recusandae?
-          </p>
-        </section>
+        </div>
       </div>
-    </div>
+    </header>
   </body>
 </html>

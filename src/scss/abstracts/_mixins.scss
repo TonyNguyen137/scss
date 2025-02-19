@@ -287,6 +287,34 @@ Modifications may have been made to the original mixins.
   $is-local-vars: map.get($utility, local-vars);
   $is-rtl: map.get($utility, rtl);
 
+  @if ($key == 'clamp-size') {
+    $keys: map.keys($values);
+    $prefix: map.get($utility, prefix);
+
+    @each $className in $keys {
+      .#{$prefix}#{$className} {
+        font-size: var(--#{$prefix}#{$className});
+      }
+    }
+  }
+
+  @if ($key == 'clamp-space') {
+    $keys: map.keys($values);
+    $prefix: map.get($utility, prefix);
+    @debug $keys;
+    @debug $prefix;
+
+    @each $className in $keys {
+      .py-#{$prefix}#{$className} {
+        padding-block: var(--#{$prefix}#{$className});
+      }
+
+      .mb-#{$prefix}#{$className} {
+        margin-bottom: var(--#{$prefix}#{$className});
+      }
+    }
+  }
+
   // class with @extends
   @if (map.has-key($utility, placeholder)) {
     $placeholder: map.get($utility, placeholder);

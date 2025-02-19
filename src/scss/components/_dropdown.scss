@@ -1,0 +1,41 @@
+@use '../abstracts' as *;
+
+.dropdown {
+  position: relative;
+  outline: 1px solid gold;
+
+  &__toggle {
+    @extend %button-default-style;
+  }
+
+  &.active &__menu {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  // &__toggle:focus + &__menu {
+  //   visibility: visible;
+  //   opacity: 1;
+  // }
+
+  &__list {
+    @extend %list-default-style;
+  }
+
+  &__menu {
+    outline: 1px solid white;
+    position: absolute;
+    left: 0;
+    top: calc(100% + 0.25rem);
+    padding: 0.75rem;
+    border-radius: 4px;
+    transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    white-space: nowrap;
+  }
+
+  &__link {
+  }
+}

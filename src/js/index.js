@@ -5,6 +5,7 @@ import {
   NavbarLight,
   NavOffcanvas,
   Tabs,
+  Dropdown,
 } from './components';
 import { Backdrop, BodyScrollLocker, ScrollLocker } from './modules';
 import { $$ } from './utils';
@@ -180,7 +181,8 @@ accessibleTabs6.init({
 });
 
 const st = performance.now();
-let tab1 = new Tabs();
+// let tab1 = new Tabs();
+new Dropdown();
 
 const et = performance.now();
 // Calculate the time taken to instantiate the class

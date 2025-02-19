@@ -615,6 +615,14 @@ $utilities: map.merge(
       property: object-fit,
       values: contain cover fill scale-down none,
     ),
+    'clamp-size': (
+      values: $size-clamp,
+      prefix: $size-prefix,
+    ),
+    'clamp-space': (
+      values: $spacing-clamp,
+      prefix: $spacing-prefix,
+    ),
     'float': (
       property: float,
       class: float,

@@ -2,7 +2,7 @@
 @use 'sass:map';
 .navbar {
   --_navbar-height: 56px;
-  background-color: $clr-primary;
+  background-color: var(--clr-primary);
   z-index: var(--z-level-1, 3);
   position: relative;
   margin-inline: auto;

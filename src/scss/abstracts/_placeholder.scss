@@ -1,8 +1,16 @@
-%remove-button-styling {
+%button-default-style {
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
+%list-default-style {
+  list-style: none;
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
+}
 %flex-center {
   display: flex;
   justify-content: center;

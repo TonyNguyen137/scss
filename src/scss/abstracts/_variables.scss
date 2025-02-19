@@ -218,19 +218,23 @@ $custom-properties: (
 /* custom properties for clamp()
 /* ****************************************************** */
 
-$size-prefix: fluid-;
+$size-prefix: fs-fluid-;
 $size-relative-to: 'viewport';
 $size-threshold-unit: 'rem';
 $size-preferred-unit: 'rem';
 
 $size-clamp: (
-  heading: (
+  heading-1: (
     576px: 32,
     1400px: 150,
   ),
+  heading-2: (
+    375px: 16,
+    992px: 28,
+  ),
 );
 
-$spacing-prefix: spacing-;
+$spacing-prefix: fluid-;
 $spacing-relative-to: 'viewport';
 $spacing-threshold-unit: 'px';
 $spacing-preferred-unit: 'px';
@@ -239,6 +243,10 @@ $spacing-clamp: (
   '15-30': (
     576px: 32,
     1400px: 150,
+  ),
+  '50-15': (
+    992px: 50,
+    1400px: 120,
   ),
 );
 
