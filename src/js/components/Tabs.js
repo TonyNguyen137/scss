@@ -3,23 +3,48 @@ import { $, wrap } from '../utils';
 export class Tabs {
   constructor(rootEl = '.tabs', options) {
     this._rootEl = typeof rootEl === 'string' ? $(rootEl) : rootEl;
+    if (!this._rootEl) return;
     this._tabListEls = Array.from(this._rootEl.querySelectorAll('.tabs__list'));
+    this._wrapperPanelEls = Array.from(
+      this._rootEl.querySelectorAll('.tabs__wrapper-panels')
+    );
 
     let i = this._tabListEls.length;
 
     while (i--) {
-      this._initialiseTabList(this._tabListEls[i]);
+      this._initialiseTabList(this._tabListEls[i], i);
     }
   }
 
-  _initialiseTabList(tabList) {
+  // reset() {
+  //   const FIRST_TAB_INDEX = 0;
+
+  //   let activeTabEls = this._rootEl.querySelectorAll(
+  //     '.tabs__tab[aria-selected="true"]'
+  //   );
+
+  //   activeTabEls.forEach((tab, i) => {
+  //     let activeTabElIndex = this._tabListEls[i].tabEls.indexOf(tab);
+
+  //     if (activeTabElIndex === FIRST_TAB_INDEX) return;
+  //     let tabListEl = this._tabListEls[i];
+  //     let firstTabEl = tabListEl.tabEls[FIRST_TAB_INDEX];
+
+  //     this._setTab(tab, false, tabListEl);
+  //     this._setTab(firstTabEl, true, tabListEl);
+  //     tabListEl.currentActiveTabEl = firstTabEl;
+  //   });
+  // }
+
+  _initialiseTabList(tabList, i) {
     tabList.tabEls = Array.from(tabList.querySelectorAll('.tabs__tab'));
+
     tabList.lastTabIndex = tabList.tabEls.length - 1;
 
-    // exclude panels inside a different nested tabbar__list
     tabList.panelEls = Array.from(
-      tabList.parentNode.querySelectorAll(':scope > .tabs__panel')
+      this._wrapperPanelEls[i].querySelectorAll('.tabs__panel')
     );
+
     tabList.currentActiveTabEl = tabList.querySelector("[aria-selected='true'");
 
     tabList.addEventListener('click', this._activeTab.bind(this));
@@ -76,9 +101,11 @@ export class Tabs {
   }
 
   _activeTab(e) {
-    if (e.target === e.currentTarget.currentActiveTabEl) return;
+    let clickedTabEl = e.target.closest('.tabs__tab');
 
-    let clickedTabEl = e.target;
+    if (clickedTabEl === e.currentTarget.currentActiveTabEl || !clickedTabEl)
+      return;
+
     let parentTabListEl = e.currentTarget;
     let currentActiveTabEl = parentTabListEl.currentActiveTabEl;
 

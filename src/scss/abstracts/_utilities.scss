@@ -354,6 +354,12 @@ $utilities: map.merge(
         solid: 1px solid #979797,
       ),
     ),
+    'list-none': (
+      property: list-style,
+      class: list,
+      values: none,
+      // responsive: true,
+    ),
     'order': (
       property: order,
       class: order,

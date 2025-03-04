@@ -1,0 +1,69 @@
+@use '../abstracts' as *;
+@use 'sass:map';
+@use 'sass:math';
+
+.grid-split-screen {
+  --_bg: transparent;
+
+  display: grid;
+  row-gap: var(--row-gap, 1rem);
+
+  > *:not(img) {
+    padding-inline: $container-padding-x;
+    background-color: var(--_bg);
+    max-width: var(--_container-width);
+    margin-inline: auto;
+  }
+
+  > img:last-child {
+    order: -1;
+  }
+
+  /* == expanded == */
+  @each $bp, $width in map.remove($grid-breakpoints, 'xs') {
+    @include mq($bp) {
+      --_container-width: #{map.get($container-max-widths, $bp)};
+      --_container-width-half: #{math.div(
+          map.get($container-max-widths, $bp),
+          2
+        )};
+    }
+
+    @include mq($bp) {
+      &[data-expanded='#{$bp}'] {
+        grid-template-columns:
+          1fr minmax(0, var(--_container-width-half))
+          minmax(0, var(--_container-width-half)) 1fr;
+        position: relative;
+
+        > img {
+          grid-column: 1 / 3;
+        }
+
+        > *:not(img) {
+          grid-column: 2 / 3;
+        }
+
+        > img:last-child {
+          order: 0;
+          grid-column: 3 / -1;
+        }
+
+        > *:not(img):last-child {
+          grid-column: 3 / 4;
+        }
+
+        > *:not(img)::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: var(--_bg);
+          grid-column: 1 / 2;
+        }
+        > *:not(img):last-child::before {
+          grid-column: 4 / 5;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+@use '../abstracts' as *;
+
+.grid-cols {
+  /* == configuration == */
+  --min-col-size: 275px;
+  --auto-mode: auto-fill;
+  /* =================== */
+
+  padding: 12px;
+  background-color: #3674b5;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(
+    var(--auto-mode),
+    minmax(min(var(--min-col-size), 100%), 1fr)
+  );
+
+  /* modifiers */
+  &--auto-fit {
+    --auto-mode: auto-fit;
+  }
+}

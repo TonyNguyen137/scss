@@ -8,7 +8,7 @@ import {
   Dropdown,
 } from './components';
 import { Backdrop, BodyScrollLocker, ScrollLocker } from './modules';
-import { $$ } from './utils';
+import { $$, $ } from './utils';
 
 var accessibleTabs6 = (function () {
   'use strict';
@@ -181,8 +181,12 @@ accessibleTabs6.init({
 });
 
 const st = performance.now();
-// let tab1 = new Tabs();
-new Dropdown();
+let tab1 = new Tabs();
+let reset = $('.reset');
+reset.addEventListener('click', () => {
+  tab1.reset();
+});
+// new Dropdown();
 
 const et = performance.now();
 // Calculate the time taken to instantiate the class

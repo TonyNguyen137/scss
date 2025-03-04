@@ -27,41 +27,201 @@
     </style>
   </head>
   <body>
-    <header class="p-4 bg-primary">
-      <div class="container d-flex col-gap-3">
-        <div class="dropdown">
-          <button class="dropdown__toggle">Information</button>
-          <div class="dropdown__menu">
-            <ul class="dropdown__list">
-              <li>
-                <a href="#">link a</a>
-              </li>
-              <li>
-                <a href="#">link b</a>
-              </li>
-              <li>
-                <a href="#">link c</a>
-              </li>
-            </ul>
-          </div>
+    <div class="container">
+      <div class="tabs">
+        <div class="tabs__list" role="tablist">
+          <button
+            class="tabs__tab"
+            id="tab-1"
+            role="tab"
+            aria-selected="true"
+            aria-controls="tabpanel-1"
+          >
+            Tab 1
+          </button>
+          <button
+            class="tabs__tab"
+            id="tab-2"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tabpanel-2"
+            tabindex="-1"
+          >
+            Tab 2
+          </button>
+          <button
+            class="tabs__tab"
+            id="tab-3"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tabpanel-3"
+            tabindex="-1"
+          >
+            Tab 3
+          </button>
+          <button
+            class="tabs__tab"
+            id="tab-4"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tabpanel-4"
+            tabindex="-1"
+          >
+            Tab 4
+          </button>
         </div>
-        <div class="dropdown">
-          <button class="dropdown__toggle">pricing</button>
-          <div class="dropdown__menu">
-            <ul class="dropdown__list">
-              <li>
-                <a href="#">link a</a>
-              </li>
-              <li>
-                <a href="#">link b</a>
-              </li>
-              <li>
-                <a href="#">link c</a>
-              </li>
-            </ul>
-          </div>
+
+        <div class="tabs__wrapper-panels">
+          <section
+            class="tabs__panel"
+            id="tabpanel-1"
+            role="tabpanel"
+            aria-hidden="false"
+            aria-labelledby="tab-1"
+            tabindex="0"
+          >
+            <h2>Content heading 1</h2>
+            <p>
+              Copy with an <a href="#">Example focusable link</a> as content for
+              A1.
+            </p>
+          </section>
+
+          <section
+            class="tabs__panel"
+            id="tabpanel-2"
+            role="tabpanel"
+            aria-hidden="true"
+            aria-labelledby="tab-2"
+            tabindex="0"
+          >
+            <h2>Content heading 2</h2>
+            <p>
+              Copy with an <a href="#">Example focusable link</a> as content for
+              B1.
+            </p>
+          </section>
+
+          <section
+            class="tabs__panel"
+            id="tabpanel-3"
+            role="tabpanel"
+            aria-hidden="true"
+            aria-labelledby="tab-3"
+            tabindex="0"
+          >
+            <h2>Content heading 3</h2>
+            <p>
+              Copy without a focusable link as content for HEADING 3. Lorem
+              ipsum dolor sit amet consectetur adipisicing elit. Rerum, enim
+              sunt eos fugit harum autem reprehenderit qui atque ut perferendis
+              culpa eius nobis adipisci corporis suscipit quae, dolorum nemo.
+              Nihil!
+            </p>
+
+            <!-- A second embedded tablist example -->
+            <div>
+              <div class="tabs__list" role="tablist">
+                <button
+                  class="tabs__tab"
+                  id="tab-1-1"
+                  role="tab"
+                  aria-selected="true"
+                  aria-controls="tabpanel-1-1"
+                >
+                  Tab 1
+                </button>
+                <button
+                  class="tabs__tab"
+                  id="tab-1-2"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="tabpanel-2-1"
+                  tabindex="-1"
+                >
+                  Tab 2
+                </button>
+              </div>
+              <div class="tabs__wrapper-panels">
+                <section
+                  class="tabs__panel"
+                  id="tabpanel-1-1"
+                  role="tabpanel"
+                  aria-hidden="false"
+                  aria-labelledby="tab-1-1"
+                  tabindex="0"
+                >
+                  <h2>Content heading D</h2>
+                  <p>
+                    Copy with an <a href="#">Example focusable link</a> as
+                    content for A1.
+                  </p>
+                </section>
+
+                <section
+                  class="tabs__panel"
+                  id="tabpanel-1-2"
+                  role="tabpanel"
+                  aria-hidden="true"
+                  aria-labelledby="tab-1-2"
+                  tabindex="0"
+                >
+                  <h2>Content heading E</h2>
+                  <p>
+                    Copy with an <a href="#">Example focusable link</a> as
+                    content for B1.
+                  </p>
+                </section>
+              </div>
+            </div>
+          </section>
+
+          <section
+            class="tabs__panel"
+            id="tabpanel-4"
+            role="tabpanel"
+            aria-hidden="true"
+            aria-labelledby="tab-4"
+            tabindex="0"
+          >
+            <h2>Content heading 4</h2>
+            <p>
+              Copy with an <a href="#">Example focusable link</a> as content for
+              A1. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Veniam, fuga architecto? Iste dignissimos, tempora illum
+              repudiandae harum accusamus est ipsa velit libero quisquam
+              molestias debitis vero accusantium. Unde, temporibus recusandae?
+            </p>
+          </section>
         </div>
       </div>
-    </header>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="container" style="border: 1px solid white">
+      <h1>this is a heading 1</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem officia,
+        repellat expedita, sapiente suscipit esse culpa pariatur corrupti fuga
+        incidunt, fugiat voluptates eaque natus. Quidem magni enim distinctio
+        amet omnis.
+      </p>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="grid-split-screen" data-expanded="md">
+      <div>
+        <h2>This is a random heading 2</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet,
+          deserunt ex! Quo nostrum omnis sit illo, quaerat alias, voluptas
+          doloribus cumque quas commodi adipisci porro reiciendis quam pariatur
+          ex possimus!
+        </p>
+      </div>
+      <img src="https://picsum.photos/id/237/1200/600" alt="" />
+    </div>
   </body>
 </html>

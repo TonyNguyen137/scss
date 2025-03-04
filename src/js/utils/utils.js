@@ -158,10 +158,10 @@ export function toggleTheme(
 }
 
 // inspired by GSAP.wrap()
-// wrapping a number within a given range
-export function wrap(min, max, value) {
+// Returns the next number in a range after the given index.
+export function wrap(min, max, index) {
   return (
-    ((((value - min) % (max - min + 1)) + (max - min + 1)) % (max - min + 1)) +
+    ((((index - min) % (max - min + 1)) + (max - min + 1)) % (max - min + 1)) +
     min
   );
 }
