@@ -7,8 +7,10 @@ import {
   breakPoints,
   wrap,
   rangeWrapper,
-} from './utils.js';
+  debounce,
+} from './utilities.js';
 
+import { liveSearch } from './live-search.js';
 export {
   $,
   $$,
@@ -18,4 +20,6 @@ export {
   breakPoints,
   wrap,
   rangeWrapper,
+  liveSearch,
+  debounce,
 };
