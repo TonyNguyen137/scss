@@ -1,9 +1,9 @@
-import { $ } from '../utils';
+import { Utils } from '../utils';
 
 export class TopScroller {
   #btnEl;
   constructor(btnEl) {
-    this.#btnEl = typeof btnEl === 'string' ? $(btnEl) : btnEl;
+    this.#btnEl = typeof btnEl === 'string' ? Utils.select(btnEl) : btnEl;
     this.#btnEl.addEventListener('click', this.#scrollToTop);
   }
 

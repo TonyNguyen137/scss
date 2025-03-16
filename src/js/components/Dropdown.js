@@ -1,4 +1,4 @@
-import { $, $$ } from '../utils';
+import { Utils } from '../utils';
 
 export class Dropdown {
   constructor(dropdownEl = '.dropdown') {

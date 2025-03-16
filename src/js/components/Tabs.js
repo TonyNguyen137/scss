@@ -1,62 +1,39 @@
-import { $, wrap } from '../utils';
+import { Utils } from '../utils';
 
 export class Tabs {
-  constructor(rootEl = '.tabs', options) {
-    this._rootEl = typeof rootEl === 'string' ? $(rootEl) : rootEl;
-    if (!this._rootEl) return;
-    this._tabListEls = Array.from(this._rootEl.querySelectorAll('.tabs__list'));
-    this._wrapperPanelEls = Array.from(
-      this._rootEl.querySelectorAll('.tabs__wrapper-panels')
-    );
-
-    let i = this._tabListEls.length;
+  constructor() {
+    this._rootEls = Utils.toArray('.tabs');
+    if (!this._rootEls) return;
+    let i = this._rootEls.length; // total number of .tabs components on the page
 
     while (i--) {
-      this._initialiseTabList(this._tabListEls[i], i);
+      this._initRootEl(this._rootEls[i]);
     }
   }
 
-  // reset() {
-  //   const FIRST_TAB_INDEX = 0;
-
-  //   let activeTabEls = this._rootEl.querySelectorAll(
-  //     '.tabs__tab[aria-selected="true"]'
-  //   );
-
-  //   activeTabEls.forEach((tab, i) => {
-  //     let activeTabElIndex = this._tabListEls[i].tabEls.indexOf(tab);
-
-  //     if (activeTabElIndex === FIRST_TAB_INDEX) return;
-  //     let tabListEl = this._tabListEls[i];
-  //     let firstTabEl = tabListEl.tabEls[FIRST_TAB_INDEX];
-
-  //     this._setTab(tab, false, tabListEl);
-  //     this._setTab(firstTabEl, true, tabListEl);
-  //     tabListEl.currentActiveTabEl = firstTabEl;
-  //   });
-  // }
-
-  _initialiseTabList(tabList, i) {
-    tabList.tabEls = Array.from(tabList.querySelectorAll('.tabs__tab'));
-
-    tabList.lastTabIndex = tabList.tabEls.length - 1;
-
-    tabList.panelEls = Array.from(
-      this._wrapperPanelEls[i].querySelectorAll('.tabs__panel')
+  _initRootEl(rootEl) {
+    rootEl.tabListEl = Utils.$('.tabs__list', rootEl);
+    rootEl.tabEls = Utils.toArray('.tabs__tab', rootEl.tabListEl);
+    rootEl.currentActiveTabEl = Utils.$("[aria-selected='true']", rootEl);
+    rootEl.wrapperPanelsEl = Utils.$('.tabs__wrapper-panels', rootEl);
+    // Prevent selecting panels from nested tabs
+    rootEl.panelEls = Utils.toArray(
+      ':scope > .tabs__panel',
+      rootEl.wrapperPanelsEl
     );
 
-    tabList.currentActiveTabEl = tabList.querySelector("[aria-selected='true'");
-
-    tabList.addEventListener('click', this._activeTab.bind(this));
-    tabList.addEventListener('keydown', this._keypressed.bind(this));
+    // Event Listener
+    rootEl.tabListEl.addEventListener('click', this._activeTab.bind(this));
+    rootEl.tabListEl.addEventListener('keydown', this._keypressed.bind(this));
   }
 
-  _setTab(tab, switchOn, tabList) {
-    let index = tabList.tabEls.indexOf(tab);
-    tab.ariaSelected = switchOn;
-    tabList.panelEls[index].ariaHidden = !switchOn;
+  _setTab(tab, isEnabled, rootEl) {
+    tab.ariaSelected = isEnabled;
 
-    if (switchOn) {
+    let index = rootEl.tabEls.indexOf(tab);
+    rootEl.panelEls[index].ariaHidden = !isEnabled;
+
+    if (isEnabled) {
       tab.removeAttribute('tabindex');
     } else {
       tab.tabIndex = '-1';
@@ -65,23 +42,20 @@ export class Tabs {
 
   _moveTab(event, direction = 0) {
     event.preventDefault();
-    let tabListEl = event.currentTarget;
-    let currentActiveTabEl = tabListEl.currentActiveTabEl;
-    let currentActiveTabIndex = tabListEl.tabEls.indexOf(currentActiveTabEl);
-    let firstTabIndex = 0;
-    let lastTabIndex = tabListEl.lastTabIndex;
-    let nextTabIndex = wrap(
-      firstTabIndex,
-      lastTabIndex,
+    const rootEl = event.currentTarget.closest('.tabs');
+    const currentActiveTabIndex = rootEl.tabEls.indexOf(
+      rootEl.currentActiveTabEl
+    );
+
+    const nextTabEl = Utils.wrapArray(
+      rootEl.tabEls,
       currentActiveTabIndex + direction
     );
 
-    let nextTabEl = tabListEl.tabEls[nextTabIndex];
-
-    this._setTab(currentActiveTabEl, false, tabListEl);
-    this._setTab(nextTabEl, true, tabListEl);
+    this._setTab(rootEl.currentActiveTabEl, false, rootEl);
+    this._setTab(nextTabEl, true, rootEl);
     nextTabEl.focus();
-    tabListEl.currentActiveTabEl = nextTabEl;
+    rootEl.currentActiveTabEl = nextTabEl;
   }
 
   // Event Handler
@@ -101,102 +75,36 @@ export class Tabs {
   }
 
   _activeTab(e) {
-    let clickedTabEl = e.target.closest('.tabs__tab');
+    const clickedTabEl = e.target.closest('.tabs__tab');
 
     if (clickedTabEl === e.currentTarget.currentActiveTabEl || !clickedTabEl)
       return;
 
-    let parentTabListEl = e.currentTarget;
-    let currentActiveTabEl = parentTabListEl.currentActiveTabEl;
+    const rootEl = e.currentTarget.closest('.tabs');
 
-    this._setTab(currentActiveTabEl, false, parentTabListEl);
-    this._setTab(clickedTabEl, true, parentTabListEl);
+    this._setTab(rootEl.currentActiveTabEl, false, rootEl);
+    this._setTab(clickedTabEl, true, rootEl);
 
-    parentTabListEl.currentActiveTabEl = clickedTabEl;
+    rootEl.currentActiveTabEl = clickedTabEl;
   }
 }
 
-/*
+function reset() {
+  const FIRST_TAB_INDEX = 0;
 
-tabs light
+  let activeTabEls = this._rootEl.querySelectorAll(
+    '.tabs__tab[aria-selected="true"]'
+  );
 
-export class tabs {
-  constructor(rootEl = '.tabs') {
-    this._rootEl = typeof rootEl === 'string' ? $(rootEl) : rootEl;
-    this._tabListEl = this._rootEl.querySelector('.tabs__list');
-    this._tabEls = Array.from(this._tabListEl.querySelectorAll('.tabs__tab'));
-    this._lastTabIndex = this._tabEls.length - 1;
-    this._panelEls = Array.from(
-      this._rootEl.querySelectorAll('.tabs__panel')
-    );
+  activeTabEls.forEach((tab, i) => {
+    let activeTabElIndex = this._tabListEls[i].tabEls.indexOf(tab);
 
-    this._currentActiveTabEl = this._tabListEl.querySelector(
-      "[aria-selected='true']"
-    );
+    if (activeTabElIndex === FIRST_TAB_INDEX) return;
+    let tabListEl = this._tabListEls[i];
+    let firstTabEl = tabListEl.tabEls[FIRST_TAB_INDEX];
 
-    this._tabListEl.addEventListener('clicked', this._activeTab.bind(this));
-    this._tabListEl.addEventListener('keydown', this._keypressed.bind(this));
-  }
-
-  _getTabIndex(tab) {
-    return this._tabEls.indexOf(tab);
-  }
-
-  _setTab(tab, switchOn) {
-    let index = this._getTabIndex(tab);
-    tab.ariaSelected = switchOn;
-    this._panelEls[index].ariaHidden = !switchOn;
-
-    if (switchOn) {
-      tab.removeAttribute('tabindex');
-    } else {
-      tab.tabIndex = '-1';
-    }
-  }
-
-  _moveTab(event, direction = 0) {
-    event.preventDefault();
-
-    let currentActiveTabIndex = this._getTabIndex(this._currentActiveTabEl);
-    let minIndex = 0;
-    let maxIndex = this._lastTabIndex;
-
-    let nextTabIndex = wrap(
-      minIndex,
-      maxIndex,
-      currentActiveTabIndex + direction
-    );
-
-    let nextTabEl = this._tabEls[nextTabIndex];
-
-    this._setTab(this._currentActiveTabEl, false);
-    this._setTab(nextTabEl, true);
-    nextTabEl.focus();
-    this._currentActiveTabEl = nextTabEl;
-  }
-
-  // event handlers
-  _activeTab(event) {
-    if (event.target === this._currentActiveTabEl) return;
-    let clickedTabEl = event.target;
-    this._setTab(currentActiveTabEl, false);
-    this._setTab(clickedTabEl, true);
-    this._currentActiveTabEl = clickedTabEl;
-  }
-
-  _keypressed(event) {
-    switch (event.key) {
-      case 'ArrowLeft':
-      case 'ArrowUp':
-        this._moveTab(event, -1);
-        break;
-      case 'ArrowRight':
-      case 'ArrowDown':
-        this._moveTab(event, +1);
-        break;
-      default:
-        return;
-    }
-  }
+    this._setTab(tab, false, tabListEl);
+    this._setTab(firstTabEl, true, tabListEl);
+    tabListEl.currentActiveTabEl = firstTabEl;
+  });
 }
-  */

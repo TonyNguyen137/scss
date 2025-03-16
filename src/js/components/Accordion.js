@@ -1,8 +1,9 @@
-import { $ } from '../utils';
+import { Utils } from '../utils';
 // accordion-grid
 export class Accordion {
   constructor(selector, config = {}) {
-    this._accordionEl = typeof selector === 'string' ? $(selector) : selector;
+    this._accordionEl =
+      typeof selector === 'string' ? Utils.select(selector) : selector;
     this._currentToggleEl = null;
     this._currentGridEl = null;
     this._prevToggleEl = null;

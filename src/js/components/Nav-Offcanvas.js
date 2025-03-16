@@ -1,11 +1,12 @@
-import { $ } from '../utils';
+import { Utils } from '../utils';
 import { Backdrop } from '../modules/nav-offcanvas/Backdrop';
 import { Tabber } from '../modules/nav-offcanvas/Tabber';
 import { Bodylocker } from '../modules/nav-offcanvas/Bodylocker';
 
 export class Navbar {
   constructor(navbarEl = '.navbar', options = {}) {
-    this._rootEl = typeof navbarEl === 'string' ? $(navbarEl) : navbarEl;
+    this._rootEl =
+      typeof navbarEl === 'string' ? Utils.select(navbarEl) : navbarEl;
     this._openBtnEl = this._rootEl.querySelector('.navbar__openBtn');
     this._closeBtnEl = this._rootEl.querySelector('.navbar__closeBtn');
     this._isExpanded = null;

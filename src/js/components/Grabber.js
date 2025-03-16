@@ -1,8 +1,9 @@
-import { $ } from '../utils';
+import { Utils } from '../utils';
 
 export class Grabber {
   constructor(selector) {
-    this._grabberEl = typeof selector === 'string' ? $(selector) : selector;
+    this._grabberEl =
+      typeof selector === 'string' ? Utils.select(selector) : selector;
     this._grabberInnerEl = this._grabberEl.querySelector('.grabber__inner');
     this._grabbed = false;
     this._isInit = false;

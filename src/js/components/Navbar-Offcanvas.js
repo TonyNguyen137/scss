@@ -1,10 +1,4 @@
-import {
-  $,
-  breakPoints,
-  setAttributesTo,
-  removeAttributesFrom,
-  validatePropertiesOf,
-} from '../utils';
+import { breakPoints, Utils } from '../utils';
 import { BodyScrollLocker, Backdrop, FocusTrapper } from '../modules';
 
 export class Navbar {
@@ -13,7 +7,8 @@ export class Navbar {
 
     const { transitionDuration = 300 } = config;
 
-    this._navbarEl = typeof selector === 'string' ? $(selector) : selector;
+    this._navbarEl =
+      typeof selector === 'string' ? Utils.select(selector) : selector;
     this._offcanvasEl = this._navbarEl.querySelector('.navbar__offcanvas');
     this._btnOpenEl = this._navbarEl.querySelector('.navbar__btn--open');
     this._btnCloseEl = this._navbarEl.querySelector('.navbar__btn--close');

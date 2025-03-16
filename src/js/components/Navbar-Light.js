@@ -1,9 +1,10 @@
-import { $, breakPoints } from '../utils';
+import { Utils } from '../utils';
 import { FocusTrapper } from '../modules';
 
 export class Navbar {
   constructor(navbarEl, config = {}) {
-    this._navbarEl = typeof navbarEl === 'string' ? $(navbarEl) : navbarEl;
+    this._navbarEl =
+      typeof navbarEl === 'string' ? Utils.select(navbarEl) : navbarEl;
     this._toggleEl = this._navbarEl.querySelector('.navbar__toggle');
     this._collapseEl = this._navbarEl.querySelector('.navbar__collapse');
     this._collapseElHeight = null;

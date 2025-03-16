@@ -20,9 +20,6 @@
     <style>
       body {
         height: 500vh;
-        background-color: #1a1a1a;
-        color: white;
-        background-image: url("data:image/svg+xml;utf8,<svg style='opacity:.75' width='1200' height='256' viewBox='0 0 1200 256' xmlns='http://www.w3.org/2000/svg'><defs><filter id='noise'><feTurbulence type='fractalNoise' baseFrequency='.4'></feTurbulence></filter></defs><rect height='256' width='1200' filter='url(%23noise)' opacity='0.3'/></svg>");
       }
 
       form {
@@ -96,196 +93,25 @@
   </head>
   <body>
     <div class="container">
-      <div class="tabs">
-        <div class="tabs__list" role="tablist">
-          <button
-            class="tabs__tab"
-            id="tab-1"
-            role="tab"
-            aria-selected="true"
-            aria-controls="tabpanel-1"
-          >
-            Tab 1
-          </button>
-          <button
-            class="tabs__tab"
-            id="tab-2"
-            role="tab"
-            aria-selected="false"
-            aria-controls="tabpanel-2"
-            tabindex="-1"
-          >
-            Tab 2
-          </button>
-          <button
-            class="tabs__tab"
-            id="tab-3"
-            role="tab"
-            aria-selected="false"
-            aria-controls="tabpanel-3"
-            tabindex="-1"
-          >
-            Tab 3
-          </button>
-          <button
-            class="tabs__tab"
-            id="tab-4"
-            role="tab"
-            aria-selected="false"
-            aria-controls="tabpanel-4"
-            tabindex="-1"
-          >
-            Tab 4
-          </button>
-        </div>
-
-        <div class="tabs__wrapper-panels">
-          <section
-            class="tabs__panel"
-            id="tabpanel-1"
-            role="tabpanel"
-            aria-hidden="false"
-            aria-labelledby="tab-1"
-            tabindex="0"
-          >
-            <h2>Content heading 1</h2>
-            <p>
-              Copy with an <a href="#">Example focusable link</a> as content for
-              A1.
-            </p>
-          </section>
-
-          <section
-            class="tabs__panel"
-            id="tabpanel-2"
-            role="tabpanel"
-            aria-hidden="true"
-            aria-labelledby="tab-2"
-            tabindex="0"
-          >
-            <h2>Content heading 2</h2>
-            <p>
-              Copy with an <a href="#">Example focusable link</a> as content for
-              B1.
-            </p>
-          </section>
-
-          <section
-            class="tabs__panel"
-            id="tabpanel-3"
-            role="tabpanel"
-            aria-hidden="true"
-            aria-labelledby="tab-3"
-            tabindex="0"
-          >
-            <h2>Content heading 3</h2>
-            <p>
-              Copy without a focusable link as content for HEADING 3. Lorem
-              ipsum dolor sit amet consectetur adipisicing elit. Rerum, enim
-              sunt eos fugit harum autem reprehenderit qui atque ut perferendis
-              culpa eius nobis adipisci corporis suscipit quae, dolorum nemo.
-              Nihil!
-            </p>
-
-            <!-- A second embedded tablist example -->
-            <div>
-              <div class="tabs__list" role="tablist">
-                <button
-                  class="tabs__tab"
-                  id="tab-1-1"
-                  role="tab"
-                  aria-selected="true"
-                  aria-controls="tabpanel-1-1"
-                >
-                  Tab 1
-                </button>
-                <button
-                  class="tabs__tab"
-                  id="tab-1-2"
-                  role="tab"
-                  aria-selected="false"
-                  aria-controls="tabpanel-2-1"
-                  tabindex="-1"
-                >
-                  Tab 2
-                </button>
-              </div>
-              <div class="tabs__wrapper-panels">
-                <section
-                  class="tabs__panel"
-                  id="tabpanel-1-1"
-                  role="tabpanel"
-                  aria-hidden="false"
-                  aria-labelledby="tab-1-1"
-                  tabindex="0"
-                >
-                  <h2>Content heading D</h2>
-                  <p>
-                    Copy with an <a href="#">Example focusable link</a> as
-                    content for A1.
-                  </p>
-                </section>
-
-                <section
-                  class="tabs__panel"
-                  id="tabpanel-1-2"
-                  role="tabpanel"
-                  aria-hidden="true"
-                  aria-labelledby="tab-1-2"
-                  tabindex="0"
-                >
-                  <h2>Content heading E</h2>
-                  <p>
-                    Copy with an <a href="#">Example focusable link</a> as
-                    content for B1.
-                  </p>
-                </section>
-              </div>
-            </div>
-          </section>
-
-          <section
-            class="tabs__panel"
-            id="tabpanel-4"
-            role="tabpanel"
-            aria-hidden="true"
-            aria-labelledby="tab-4"
-            tabindex="0"
-          >
-            <h2>Content heading 4</h2>
-            <p>
-              Copy with an <a href="#">Example focusable link</a> as content for
-              A1. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Veniam, fuga architecto? Iste dignissimos, tempora illum
-              repudiandae harum accusamus est ipsa velit libero quisquam
-              molestias debitis vero accusantium. Unde, temporibus recusandae?
-            </p>
-          </section>
-        </div>
-      </div>
-    </div>
-    <br />
-    <br />
-    <br />
-
-    <div class="container">
-      <form class="search-form">
-        <input type="text" class="search" placeholder="City or State" />
-        <ul class="suggestions">
-          <li>Filter for a city</li>
-          <li>or a state</li>
+      <nav class="pagination" aria-label="Page navigation example">
+        <ul class="pagination__list">
+          <li class="pagination__item disabled">
+            <a class="pagination__link">Previous</a>
+          </li>
+          <li class="pagination__item">
+            <a class="pagination__link" href="#">1</a>
+          </li>
+          <li class="pagination__item active" aria-current="page">
+            <a class="pagination__link" href="#">2</a>
+          </li>
+          <li class="pagination__item">
+            <a class="pagination__link" href="#">3</a>
+          </li>
+          <li class="pagination__item">
+            <a class="pagination__link" href="#">Next</a>
+          </li>
         </ul>
-      </form>
-    </div>
-
-    <input class="input" type="text" style="color: black" />
-    <div>
-      <b>Default:</b>
-      <span id="default"></span>
-    </div>
-    <div>
-      <b>Debounce:</b>
-      <span id="debounce"></span>
+      </nav>
     </div>
   </body>
 </html>
