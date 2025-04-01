@@ -282,9 +282,9 @@ $transition-collapse-width: width 0.35s ease;
 /* ****************************************************** */
 /* line-height
 /* ****************************************************** */
-$line-height-base: 1.5 !default;
-$line-height-sm: 1.25 !default;
-$line-height-lg: 2 !default;
+$line-height-base: 1.5;
+$line-height-sm: 1.25;
+$line-height-lg: 2;
 
 // ------------------------------------------------------
 
@@ -385,15 +385,6 @@ $utilities-border-subtle: (
   'danger-subtle': var(--#{$prefix}danger-border-subtle),
   'light-subtle': var(--#{$prefix}light-border-subtle),
   'dark-subtle': var(--#{$prefix}dark-border-subtle),
-);
-
-$order-values: (
-  0: 0,
-  1: 1,
-  2: 2,
-  3: 3,
-  4: 4,
-  5: 5,
 );
 
 $percentage-values: (
