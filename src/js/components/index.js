@@ -7,8 +7,10 @@ import { Navbar as NavOffcanvas } from './Nav-Offcanvas.js';
 import { Dropdown } from './Dropdown.js';
 import { Grabber } from './Grabber.js';
 import { Tabs } from './Tabs.js';
+import { Suggestion } from './Suggestion.js';
 
 export {
+  Suggestion,
   Dropdown,
   NavOffcanvas,
   TopScroller,

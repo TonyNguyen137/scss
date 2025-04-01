@@ -1,5 +1,5 @@
 /* 
-This file contains SCSS functions sourced from the Bootstrap framework.
+This file contains some SCSS functions sourced from the Bootstrap framework.
 Source: https://github.com/twbs/bootstrap/blob/main/scss/_functions.scss
 These functions are used in accordance with Bootstrap's open-source license (MIT).
 Modifications may have been made to the original functions.
@@ -10,14 +10,16 @@ Modifications may have been made to the original functions.
 @use 'sass:color';
 @use 'sass:list';
 
+$prefix: '';
+
 @function px-to-rem($pixels) {
   $base-font-size: 16;
-  @return round-to(math.div($pixels, $base-font-size)) * 1rem;
+  @return round-to(math.div($pixels, $base-font-size), 3) * 1rem;
 }
 
 @function px-to-em($pixels) {
   $base-font-size: 16;
-  @return math.div($pixels, 16) * 1em;
+  @return round-to(math.div($pixels, 16), 3) * 1em;
 }
 
 @function round-to($number, $precision: 4) {
@@ -87,26 +89,50 @@ Modifications may have been made to the original functions.
   @return if($min != 0, $min, null);
 }
 
+// @function map-loop($map, $func, $args...) {
+//   $_map: ();
+
+//   // @debug type-of args meta.type-of($args);
+//   // @debug args__ $args;
+//   // @debug map $map;
+//   @each $key, $value in $map {
+//     // allow to pass the $key and $value of the map as an function argument
+//     // @debug a key $key value $value;
+//     $_args: ();
+//     @each $arg in $args {
+//       // @debug arg $arg;
+//       $_args: list.append(
+//         $_args,
+//         if($arg == '$key', $key, if($arg == '$value', $value, $arg))
+//       );
+//       // @debug append arg $_args;
+//     }
+
+//     // @debug after each loop _args $_args;
+
+//     $_map: map.merge(
+//       $_map,
+//       (
+//         $key: meta.call(meta.get-function($func), $_args...),
+//       )
+//     );
+//     // @debug _map $_map;
+//   }
+//   // @debug return _map $_map;
+//   @return $_map;
+// }
 @function map-loop($map, $func, $args...) {
   $_map: ();
 
-  // @debug type-of args meta.type-of($args);
-  // @debug args__ $args;
-  // @debug map $map;
   @each $key, $value in $map {
     // allow to pass the $key and $value of the map as an function argument
-    // @debug a key $key value $value;
     $_args: ();
     @each $arg in $args {
-      // @debug arg $arg;
       $_args: list.append(
         $_args,
         if($arg == '$key', $key, if($arg == '$value', $value, $arg))
       );
-      // @debug append arg $_args;
     }
-
-    // @debug after each loop _args $_args;
 
     $_map: map.merge(
       $_map,
@@ -114,9 +140,8 @@ Modifications may have been made to the original functions.
         $key: meta.call(meta.get-function($func), $_args...),
       )
     );
-    // @debug _map $_map;
   }
-  // @debug return _map $_map;
+
   @return $_map;
 }
 
@@ -136,26 +161,46 @@ Modifications may have been made to the original functions.
   @return var(--#{$prefix}#{$color-prefix}#{$identifier});
 }
 
-@function rgba-css-var($identifier, $target, $color-prefix, $prefix: '') {
+// @function rgba-css-var($identifier, $target, $color-prefix, $prefix: '') {
+//   @if $identifier == 'body' and $target == 'bg' {
+//     @return rgba(
+//       var(--#{$prefix}#{$color-prefix}#{$identifier}-bg-rgb),
+//       var(--#{$target})
+//     );
+//   }
+//   @if $identifier == 'body' and $target == 'text' {
+//     @return rgba(
+//       var(--#{$prefix}#{$color-prefix}#{$identifier}-color-rgb),
+//       var(--#{$target})
+//     );
+//   } @else {
+//     @return rgba(
+//       var(--#{$prefix}#{$color-prefix}#{$identifier}-rgb),
+//       var(--#{$target}, 1)
+//     );
+//   }
+// }
+
+// stylelint-disable scss/dollar-variable-pattern
+@function rgba-css-var($identifier, $target) {
   @if $identifier == 'body' and $target == 'bg' {
     @return rgba(
-      var(--#{$prefix}#{$color-prefix}#{$identifier}-bg-rgb),
-      var(--#{$target})
+      var(--#{$prefix}#{$identifier}-bg-rgb),
+      var(--#{$prefix}#{$target}-opacity)
     );
   }
   @if $identifier == 'body' and $target == 'text' {
     @return rgba(
-      var(--#{$prefix}#{$color-prefix}#{$identifier}-color-rgb),
-      var(--#{$target})
+      var(--#{$prefix}#{$identifier}-color-rgb),
+      var(--#{$prefix}#{$target}-opacity)
     );
   } @else {
     @return rgba(
-      var(--#{$prefix}#{$color-prefix}#{$identifier}-rgb),
-      var(--#{$target}, 1)
+      var(--#{$prefix}#{$identifier}-rgb),
+      var(--#{$prefix}#{$target}-opacity)
     );
   }
 }
-
 @function negativify-map($map) {
   $result: ();
   @each $key, $value in $map {

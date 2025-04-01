@@ -1,10 +1,11 @@
 @use '../abstracts/' as *;
 
 html {
-  box-sizing: border-box;
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
+  color-scheme: dark light; /* Default dark */
+  hanging-punctuation: first last; /* Not supported in Chrome */
 }
 
 *,
@@ -12,7 +13,7 @@ html {
 *::after {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 body {
@@ -29,8 +30,10 @@ img {
   background-size: cover;
 }
 
-svg {
+picture,
+video {
   display: block;
+  max-width: 100%;
 }
 
 select,
@@ -60,7 +63,9 @@ label {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
   text-wrap: balance;
 }
 

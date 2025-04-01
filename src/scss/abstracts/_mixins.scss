@@ -209,7 +209,7 @@ Modifications may have been made to the original mixins.
       //
       // Make use of `.g-*`, `.gx-*` or `.gy-*` utilities to change spacing between the columns.
       @if ($enable-gutters) {
-        @each $key, $value in $gutters {
+        @each $key, $value in $sizes-regular {
           .g#{$infix}-#{$key},
           .gx#{$infix}-#{$key} {
             --#{$bs-prefix}gutter-x: #{$value};
@@ -248,7 +248,7 @@ Modifications may have been made to the original mixins.
     }
   }
 }
-@mixin generate-utility(
+@mixin generate-complex-utility(
   $utility,
   $infix: '',
   $key,
@@ -510,28 +510,22 @@ Modifications may have been made to the original mixins.
 
 // Utility generator
 // Used to generate utilities & print utilities
-@mixin generate-utilit-2(
-  $utility,
-  $infix: '',
-  $key,
-  $is-rfs-media-query: false
-) {
+@mixin generate-utility($utility, $infix: '', $is-rfs-media-query: false) {
   $values: map.get($utility, values);
-  // @debug utility $utility;
-  // @debug values $values;
 
-  // Check if the list is not empty before accessing the first element
-  @if list.length($values) > 0 {
-    // If the values are a list or string, convert it into a map
-    @if meta.type-of($values) ==
-      'string' or
-      meta.type-of(list.nth($values, 1)) !=
-      'list'
-    {
-      $values: list.zip($values, $values);
-    }
+  // If the values are a list or string, convert it into a map
+  @if meta.type-of($values) ==
+    'string' or
+    meta.type-of(list.nth($values, 1)) !=
+    'list'
+  {
+    $values: list.zip($values, $values);
   }
-
+  $is-important: if(
+    map.has-key($utility, important),
+    map.get($utility, important),
+    false
+  );
   @each $key, $value in $values {
     $properties: map.get($utility, property);
 
@@ -539,7 +533,6 @@ Modifications may have been made to the original mixins.
     @if meta.type-of($properties) == 'string' {
       $properties: list.append((), $properties);
     }
-    // @debug $properties;
 
     // Use custom class if present
     $property-class: if(
@@ -550,13 +543,12 @@ Modifications may have been made to the original mixins.
     $property-class: if($property-class == null, '', $property-class);
 
     // Use custom CSS variable name if present, otherwise default to `class`
-    $custom-property-value: if(
-      map.has-key($utility, custom-property-value),
-      map.get($utility, custom-property-value),
+    $css-variable-name: if(
+      map.has-key($utility, css-variable-name),
+      map.get($utility, css-variable-name),
       map.get($utility, class)
     );
 
-    // @debug css name $custom-property-value;
     // State params to generate pseudo-classes
     $state: if(map.has-key($utility, state), map.get($utility, state), ());
 
@@ -573,38 +565,22 @@ Modifications may have been made to the original mixins.
       ''
     );
 
-    // @if map-get($utility, rfs) {
-    //   // Inside the media query
-    //   @if $is-rfs-media-query {
-    //     $val: rfs-value($value);
+    @if map.get($utility, rfs) {
+      // Inside the media query
+      @if $is-rfs-media-query {
+        $val: rfs-value($value);
 
-    //     // Do not render anything if fluid and non fluid values are the same
-    //     $value: if($val == rfs-fluid-value($value), null, $val);
-    //   } @else {
-    //     $value: rfs-fluid-value($value);
-    //   }
-    // }
-
-    // @debug TEST;
+        // Do not render anything if fluid and non fluid values are the same
+        $value: if($val == rfs-fluid-value($value), null, $val);
+      } @else {
+        $value: rfs-fluid-value($value);
+      }
+    }
 
     $is-css-var: map.get($utility, css-var);
     $is-local-vars: map.get($utility, local-vars);
     $is-rtl: map.get($utility, rtl);
 
-    // @debug is_css $is-css-var;
-
-    // @debug global $is-global-vars;
-    @if $value == null and map.has-key($utility, custom-property-value) {
-      $class: map.get($utility, class);
-      $property: map.get($utility, property);
-      $variable: map.get($utility, custom-property-value);
-
-      // @debug $property $class $variable;
-
-      .#{$class + $infix} {
-        #{$property}: var(--#{$variable});
-      }
-    }
     @if $value != null {
       @if $is-rtl == false {
         /* rtl:begin:remove */
@@ -612,40 +588,17 @@ Modifications may have been made to the original mixins.
 
       @if $is-css-var {
         .#{$property-class + $infix + $property-class-modifier} {
-          --#{$prefix}#{$is-css-var}: #{$value};
+          --#{$prefix}#{$css-variable-name}: #{$value};
         }
 
         @each $pseudo in $state {
-          // @debug pseudo $pseudo;
           .#{$property-class
             + $infix
             + $property-class-modifier}-#{$pseudo}:#{$pseudo} {
-            --#{$prefix}#{$custom-property-value}: #{$value};
+            --#{$prefix}#{$css-variable-name}: #{$value};
           }
         }
       } @else {
-        $is-important: if(map.get($utility, important), true, false);
-
-        @if ($value == transparent) {
-          .#{$property-class + $infix + $property-class-modifier} {
-            @each $property in $properties {
-              #{$property}: $value if($is-important, !important, null);
-            }
-          }
-        } @else {
-          .#{$property-class + $infix + $property-class-modifier} {
-            @each $property in $properties {
-              @if $is-local-vars {
-                @each $local-var, $variable in $is-local-vars {
-                  --#{$prefix}#{$local-var}: #{$variable};
-                }
-              }
-
-              #{$property}: $value if($is-important, !important, null);
-            }
-          }
-        }
-
         .#{$property-class + $infix + $property-class-modifier} {
           @each $property in $properties {
             @if $is-local-vars {
@@ -653,15 +606,14 @@ Modifications may have been made to the original mixins.
                 --#{$prefix}#{$local-var}: #{$variable};
               }
             }
-
             #{$property}: $value if($is-important, !important, null);
           }
         }
 
         @each $pseudo in $state {
-          // @debug pseudo2 $pseudo;
-
-          .#{$property-class + $infix + $property-class-modifier}:#{$pseudo} {
+          .#{$property-class
+            + $infix
+            + $property-class-modifier}-#{$pseudo}:#{$pseudo} {
             @each $property in $properties {
               @if $is-local-vars {
                 @each $local-var, $variable in $is-local-vars {
@@ -674,20 +626,12 @@ Modifications may have been made to the original mixins.
         }
       }
 
-      // @if $is-rtl == false {
-      //   /* rtl:end:remove */
-      // }
+      @if $is-rtl == false {
+        /* rtl:end:remove */
+      }
     }
   }
 }
-
-// @mixin generate-custom-properties($map, $property-prefix: '') {
-//   @each $variable-name, $value in $map {
-//     // @debug $variable-name, $value;
-
-//     --#{$prefix}#{$property-prefix}#{$variable-name}: #{$value};
-//   }
-// }
 
 @mixin generate-custom-properties($map, $property-prefix: '') {
   @each $breakpoint in map.keys($map) {

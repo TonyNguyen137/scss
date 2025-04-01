@@ -4,10 +4,9 @@ Source: https://github.com/twbs/bootstrap/blob/main/scss/_variables.scss
 The code used in accordance with Bootstrap's open-source license (MIT).
 Modifications may have been made to the original code.
 */
-@use 'functions' as *;
 @use 'sass:map';
 @use 'sass:string';
-
+@use 'functions' as *;
 /* ****************************************************** */
 /* general setting
 /* ****************************************************** */
@@ -59,6 +58,22 @@ $container-max-widths: (
 // ------------------------------------------------------
 
 /* ****************************************************** */
+/* Bootstrap Grid System */
+/* ****************************************************** */
+$bs-prefix: bs-;
+$enable-bootstrap-grid-system: true;
+$enable-gutters: false;
+$grid-columns: 12;
+$grid-gutter-width: 24px;
+$grid-row-columns: 6;
+
+// container setting
+$enable-container-classes: true;
+$enable-max-container-classes: true;
+$container-padding-x: 12px;
+
+// ------------------------------------------------------
+/* ****************************************************** */
 /* color Theme
 /* ****************************************************** */
 
@@ -95,23 +110,11 @@ $color-theme: (
       'danger': $danger,
       'light': $light,
       'dark': $dark,
-
       'zero': #000,
       'quindecenary': #fff,
     ),
   ),
 );
-
-// The loop reduces the structure of $color-theme from nesting greater than 2 levels to a 2-level hierarchy.
-// $color-theme-map: ();
-// @each $theme-name, $map in $color-theme {
-//   $color-theme-map: map.merge(
-//     $color-theme-map,
-//     (
-//       $theme-name: deep-loop($map),
-//     )
-//   );
-// }
 
 $selected-theme: default;
 $selected-theme-hex-colors: map.get($color-theme, $selected-theme, color);
@@ -122,21 +125,38 @@ $selected-theme-rgb-colors: map-loop(
   '$value'
 );
 
-// ------------------------------------------------------
+/* ****************************************************** */
+/* Gray colors
+/* ****************************************************** */
+
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000;
+
+$body-color: $gray-900;
+$body-bg: $white;
 
 /* ****************************************************** */
 /* Font weight */
 /* ****************************************************** */
 
-$fw-thin: 100;
-$fw-extra-light: 200;
-$fw-light: 300;
-$fw-regular: 400;
-$fw-medium: 500;
-$fw-semi-bold: 600;
-$fw-bold: 700;
-$fw-extra-bold: 800;
-$fw-black: 900;
+$font-weight-thin: 100;
+$font-weight-extra-light: 200;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extra-bold: 800;
+$font-weight-black: 900;
 
 // ------------------------------------------------------
 
@@ -144,7 +164,7 @@ $fw-black: 900;
 /* Spacing */
 /* ****************************************************** */
 
-$factor: 4px;
+$factor: 0.25rem;
 $sizes-regular: ();
 
 @for $i from 0 through 30 {
@@ -157,40 +177,39 @@ $sizes-regular: ();
 }
 
 $sizes-irregular: (
-  121px: 121px,
-  67px: 67px,
+  i121: 121px,
+  i67: 67px,
+);
+
+$negative-spacers: if(
+  $enable-negative-margins,
+  map.merge(negativify-map($sizes-regular), negativify-map($sizes-irregular)),
+  null
 );
 
 // ------------------------------------------------------
 
 /* ****************************************************** */
-/* Bootstrap Grid System */
+/* Box shadow
 /* ****************************************************** */
-$bs-prefix: bs-;
-$enable-bootstrap-grid-system: true;
-$grid-columns: 12;
-$grid-gutter-width: 24px;
-$grid-row-columns: 6;
-$enable-gutters: false;
-$gutters: $sizes-regular;
-
-// container setting
-$enable-container-classes: true;
-$enable-max-container-classes: true;
-$container-padding-x: 12px;
+$box-shadow: 0 0.5rem 1rem rgba($black, 0.15);
+$box-shadow-sm: 0 0.125rem 0.25rem rgba($black, 0.075);
+$box-shadow-lg: 0 1rem 3rem rgba($black, 0.175);
+$box-shadow-inset: inset 0 1px 2px rgba($black, 0.075);
 
 // ------------------------------------------------------
 
 /* ****************************************************** */
-/* Z-index master list
+/* Z-index
 /* ****************************************************** */
-
-$z-level-1: 999;
-$z-level-2: 998;
-$z-level-3: 997;
-$z-level-4: 996;
-$z-default: 0;
-$z--1: -1;
+$zindex-levels: (
+  n1: -1,
+  0: 0,
+  1: 999,
+  2: 998,
+  3: 997,
+  4: 996,
+);
 
 // ------------------------------------------------------
 
@@ -199,12 +218,7 @@ $z--1: -1;
 /* ****************************************************** */
 $custom-properties: (
   'xs': (
-    'z-level-1': $z-level-1,
-    'z-level-2': $z-level-2,
-    'z-level-3': $z-level-3,
-    'z-level-4': $z-level-4,
-    'z-defeault': 0,
-    'z--1': -1,
+    'z-level-1': 1,
   ),
   'md': (),
   'lg': (),
@@ -258,17 +272,120 @@ $spacing-clamp: (
 $enable-transitions: true;
 $enable-reduced-motion: false;
 
-$transition-base: all 0.2s ease-in-out !default;
-$transition-fade: opacity 0.15s linear !default;
-// scss-docs-start collapse-transition
-$transition-collapse: height 0.35s ease !default;
-$transition-collapse-width: width 0.35s ease !default;
+$transition-base: all 0.2s ease-in-out;
+$transition-fade: opacity 0.15s linear;
+$transition-collapse: height 0.35s ease;
+$transition-collapse-width: width 0.35s ease;
 
+// ------------------------------------------------------
+
+/* ****************************************************** */
+/* line-height
+/* ****************************************************** */
+$line-height-base: 1.5 !default;
+$line-height-sm: 1.25 !default;
+$line-height-lg: 2 !default;
+
+// ------------------------------------------------------
+
+/* ****************************************************** */
+/* Utilities colors
+/* ****************************************************** */
+
+$utilities-text-emphasis-colors: (
+  'primary-emphasis': var(--#{$prefix}primary-text-emphasis),
+  'secondary-emphasis': var(--#{$prefix}secondary-text-emphasis),
+  'success-emphasis': var(--#{$prefix}success-text-emphasis),
+  'info-emphasis': var(--#{$prefix}info-text-emphasis),
+  'warning-emphasis': var(--#{$prefix}warning-text-emphasis),
+  'danger-emphasis': var(--#{$prefix}danger-text-emphasis),
+  'light-emphasis': var(--#{$prefix}light-text-emphasis),
+  'dark-emphasis': var(--#{$prefix}dark-text-emphasis),
+);
+
+$utilities-colors: $selected-theme-rgb-colors;
+
+$utilities-text: map.merge(
+  $utilities-colors,
+  (
+    'black': to-rgb($black),
+    'white': to-rgb($white),
+    'body': to-rgb($body-color),
+  )
+);
+$utilities-text-colors: map-loop($utilities-text, rgba-css-var, '$key', 'text');
+$utilities-links-underline: map-loop(
+  $utilities-colors,
+  rgba-css-var,
+  '$key',
+  'link-underline'
+);
+
+$utilities-bg: map.merge(
+  $utilities-colors,
+  (
+    'black': to-rgb($black),
+    'white': to-rgb($white),
+    'body': to-rgb($body-bg),
+  )
+);
+$utilities-bg-colors: map-loop($utilities-bg, rgba-css-var, '$key', 'bg');
+
+$utilities-bg-subtle: (
+  'primary-subtle': var(--#{$prefix}primary-bg-subtle),
+  'secondary-subtle': var(--#{$prefix}secondary-bg-subtle),
+  'success-subtle': var(--#{$prefix}success-bg-subtle),
+  'info-subtle': var(--#{$prefix}info-bg-subtle),
+  'warning-subtle': var(--#{$prefix}warning-bg-subtle),
+  'danger-subtle': var(--#{$prefix}danger-bg-subtle),
+  'light-subtle': var(--#{$prefix}light-bg-subtle),
+  'dark-subtle': var(--#{$prefix}dark-bg-subtle),
+);
 // ------------------------------------------------------
 
 /* ****************************************************** */
 /* maps for the utility map in abstracts/utilities.scss
 /* ****************************************************** */
+
+$utilities-colors: $selected-theme-rgb-colors;
+$border-width: 1px;
+$border-widths: (
+  1: 1px,
+  2: 2px,
+  3: 3px,
+  4: 4px,
+  5: 5px,
+);
+$border-style: solid;
+$border-color: $gray-300;
+$border-color-translucent: rgba($black, 0.175);
+
+// scss-docs-start utilities-border-colors
+$utilities-border: map.merge(
+  $utilities-colors,
+  (
+    'black': to-rgb($black),
+    'white': to-rgb($white),
+  )
+);
+
+$utilities-border-colors: map-loop(
+  $utilities-border,
+  rgba-css-var,
+  '$key',
+  'border'
+);
+
+$utilities-border-subtle: (
+  'primary-subtle': var(--#{$prefix}primary-border-subtle),
+  'secondary-subtle': var(--#{$prefix}secondary-border-subtle),
+  'success-subtle': var(--#{$prefix}success-border-subtle),
+  'info-subtle': var(--#{$prefix}info-border-subtle),
+  'warning-subtle': var(--#{$prefix}warning-border-subtle),
+  'danger-subtle': var(--#{$prefix}danger-border-subtle),
+  'light-subtle': var(--#{$prefix}light-border-subtle),
+  'dark-subtle': var(--#{$prefix}dark-border-subtle),
+);
 
 $order-values: (
   0: 0,
@@ -277,15 +394,6 @@ $order-values: (
   3: 3,
   4: 4,
   5: 5,
-);
-
-// - z-index values
-$zindex-levels: (
-  n1: $z--1,
-  0: $z-default,
-  1: $z-level-1,
-  2: $z-level-2,
-  3: $z-level-3,
 );
 
 $percentage-values: (
@@ -311,26 +419,6 @@ $percentage-values: (
   100: 100%,
 );
 
-$font-weight: (
-  'thin': $fw-thin,
-  'extra-light': $fw-extra-light,
-  'light': $fw-light,
-  'regular': $fw-regular,
-  'medium': $fw-medium,
-  'semi-bold': $fw-semi-bold,
-  'bold': $fw-bold,
-  'extra-bold': $fw-extra-bold,
-  'black': $fw-black,
-);
-
-$opacity: (
-  0: 0,
-  10: 0.1,
-  25: 0.25,
-  50: 0.5,
-  75: 0.75,
-  100: 1,
-);
 $translateXYValues: (
   n50-n50: translate(-50%, -50%),
 );

@@ -63,7 +63,7 @@
   &__link:focus,
   &__link:focus-visible {
     z-index: 3;
-    color: var(--clr-hover);
+    color: var(--_clr-hover);
     background-color: var(--_bg-focused);
     box-shadow: var(--_box-shadow-focused);
     outline: 0px;

@@ -35,17 +35,26 @@ export class Utils {
     return scope.querySelector(selector);
   }
 
-  // sets and removes multiple attributes of an Element
-  static setAttributesTo(element, attributes) {
-    Object.entries(attributes).forEach(([key, value]) => {
-      element.setAttribute(key, value);
-    });
-  }
+  /**
+   * Selects all elements matching the given CSS selector within a specified scope.
+   *
+   * @param {string} selector - The CSS selector to match elements.
+   * @param {Document|Element} [scope=document] - The root element to search within. Defaults to `document`.
+   * @returns {NodeList} A NodeList containing all matching elements.
+   *
+   * @example
+   * Select all divs in the document
+   * const divs = MyClass.$$('div');
+   * console.log(divs); // NodeList of all <div> elements
+   *
+   * @example
+   * const container = document.getElementById('app');
+   * const buttons = MyClass.$$('button', container);
+   * console.log(buttons); // NodeList of all buttons inside #app
+   */
 
-  static removeAttributesFrom(element, ...attributes) {
-    attributes.forEach((attribute) => {
-      element.removeAttribute(attribute);
-    });
+  static $$(selector, scope = document) {
+    return scope.querySelectorAll(selector);
   }
 
   /**
@@ -129,13 +138,55 @@ export class Utils {
    * @param {Document | HTMLElement} [parent=document] - The parent element to query within. Defaults to `document`.
    * @returns {Array | false}
    */
-  static toArray(selector, scope = document) {
-    if (typeof selector === 'string') {
-      const elements = Array.from(scope.querySelectorAll(selector));
+  static toArray(input, scope = document) {
+    if (typeof input === 'string') {
+      const elements = Array.from(scope.querySelectorAll(input));
       return elements.length ? elements : false;
     }
 
-    return Array.from(selector);
+    return Array.from(input);
+  }
+
+  // sets and removes multiple attributes of an Element
+  static setAttributesTo(element, attributes) {
+    Object.entries(attributes).forEach(([key, value]) => {
+      element.setAttribute(key, value);
+    });
+  }
+
+  static removeAttributesFrom(element, ...attributes) {
+    attributes.forEach((attribute) => {
+      element.removeAttribute(attribute);
+    });
+  }
+
+  /**
+   * Escapes a string to prevent XSS attacks by converting special HTML characters
+   * into their corresponding HTML entities.
+   *
+   * Converts:
+   * - `&` → `&amp;`
+   * - `<` → `&lt;`
+   * - `>` → `&gt;`
+   * - `"` → `&quot;`
+   * - `'` → `&#039;`
+   *
+   * @param {string} unsafe - The input string that may contain HTML characters.
+   * @returns {string} The escaped string with special characters replaced by HTML entities.
+   *
+   * @example
+   * const userInput = '<script>alert("XSS")</script>';
+   * const safeOutput = escapeHTML(userInput);
+   * console.log(safeOutput); // &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;
+   */
+
+  static escapeHTML(unsafe) {
+    return unsafe
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 }
 
@@ -165,6 +216,7 @@ export function rangeWrapper(min, max) {
     );
   };
 }
+
 export function toggleTheme(
   selector = '.switch__input',
   options = { onTrue: 'dark' }
